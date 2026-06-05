@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A股资金复盘 · 2099-01-02</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1d2430;
+      --muted: #687386;
+      --line: #dfe4ea;
+      --pos: #c9362c;
+      --pos-bg: #f8dfdc;
+      --neg: #16815d;
+      --neg-bg: #dff1eb;
+      --warn: #9a6412;
+      --warn-bg: #f7ead3;
+      --blue: #2563a9;
+      --blue-bg: #dce9f8;
+      --shadow: 0 8px 22px rgba(31, 42, 68, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.45;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(246, 247, 249, 0.96);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 28px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    h1, h2 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: 28px; line-height: 1.1; }
+    h2 { font-size: 17px; }
+    .date-pill {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .subtitle { color: var(--muted); margin-top: 6px; font-size: 13px; }
+    main {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 22px 28px 36px;
+      display: grid;
+      gap: 18px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric, .panel, .empty-state {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .metric { padding: 14px; min-height: 104px; border-left: 4px solid var(--blue); }
+    .metric.pos { border-left-color: var(--pos); }
+    .metric.neg { border-left-color: var(--neg); }
+    .metric-label { color: var(--muted); font-size: 13px; }
+    .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
+    .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.8fr);
+      gap: 18px;
+    }
+    .panel { padding: 18px; overflow: hidden; }
+    .panel.wide { min-width: 0; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-head span { color: var(--muted); font-size: 12px; }
+    .heat-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .heat-row {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fbfcfd;
+    }
+    .heat-head, .heat-foot, .rank-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .heat-head span, .heat-foot, .sub { color: var(--muted); font-size: 12px; }
+    .bar-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 9px 0 7px;
+    }
+    .bar-track.compact { height: 7px; margin-top: 6px; }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.pos { background: var(--pos); }
+    .bar-fill.neg { background: var(--neg); }
+    .bar-fill.warn { background: var(--warn); }
+    .signals { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .signals li {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      background: var(--blue-bg);
+    }
+    .signals li.pos { border-left-color: var(--pos); background: var(--pos-bg); }
+    .signals li.neg { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signals li.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signals span { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; font-size: 13px; }
+    th { color: var(--muted); font-weight: 700; background: #f9fafb; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; width: 74px; }
+    .name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sub { margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pos { color: var(--pos); }
+    .neg { color: var(--neg); }
+    .neutral { color: var(--blue); }
+    .rank-title { font-weight: 800; margin-bottom: 12px; }
+    .rank-row { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .rank-meta span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .empty, .empty-state { color: var(--muted); padding: 18px; }
+    .empty-state h2 { color: var(--text); margin-bottom: 8px; }
+    code {
+      background: #e9edf2;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 28px 28px;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    @media (max-width: 1100px) {
+      .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      header { padding: 14px 16px; }
+      .topline { align-items: flex-start; flex-direction: column; }
+      main { padding: 16px; }
+      .summary-grid, .heat-list { grid-template-columns: 1fr; }
+      .metric-value { font-size: 22px; }
+      table { min-width: 760px; }
+      .panel { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="topline">
+      <div>
+        <h1>A股资金复盘</h1>
+        <div class="subtitle">快照：etf_watchlist_2099-01-02.csv · 生成：2026-05-07 23:50</div>
+      </div>
+      <div class="date-pill">2099-01-02</div>
+    </div>
+  </header>
+  <main>
+      <section class="summary-grid">
+      <article class="metric neutral">
+        <div class="metric-label">权益ETF</div>
+        <div class="metric-value">-</div>
+        <div class="metric-note">等待基线</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">宽基/成长</div>
+        <div class="metric-value">-</div>
+        <div class="metric-note">等待基线</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">避险现金</div>
+        <div class="metric-value">-</div>
+        <div class="metric-note">等待基线</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">跨境外溢</div>
+        <div class="metric-value">-</div>
+        <div class="metric-note">等待基线</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">权益成交</div>
+        <div class="metric-value">454.0亿</div>
+        <div class="metric-note">观察活跃度</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">匹配覆盖</div>
+        <div class="metric-value">17/43</div>
+        <div class="metric-note">观察池ETF</div>
+      </article>
+    </section>
+
+      <section class="split">
+        <article class="panel wide">
+          <div class="section-head">
+            <h2>分类资金热力</h2>
+            <span>首日按成交额排序</span>
+          </div>
+          <div class="heat-list">
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>宽基核心</strong>
+                <span>5只 · 5/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:100.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>164.0亿</span>
+                <span>成交 164.0亿 · 均涨跌 0.96%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>避险现金</strong>
+                <span>2只 · 1/1 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:82.3%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>135.0亿</span>
+                <span>成交 135.0亿 · 均涨跌 -0.10%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>新宽基</strong>
+                <span>2只 · 2/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:57.3%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>94.0亿</span>
+                <span>成交 94.0亿 · 均涨跌 0.89%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>科技主线</strong>
+                <span>2只 · 2/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:42.1%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>69.0亿</span>
+                <span>成交 69.0亿 · 均涨跌 3.35%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>成长弹性</strong>
+                <span>2只 · 2/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:36.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>59.0亿</span>
+                <span>成交 59.0亿 · 均涨跌 2.02%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>金融地产</strong>
+                <span>1只 · 1/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:31.7%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>52.0亿</span>
+                <span>成交 52.0亿 · 均涨跌 2.80%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>跨境外溢</strong>
+                <span>1只 · 1/0 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:20.1%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>33.0亿</span>
+                <span>成交 33.0亿 · 均涨跌 2.40%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>红利低波</strong>
+                <span>1只 · 0/1 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:5.5%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>9.0亿</span>
+                <span>成交 9.0亿 · 均涨跌 -0.10%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>消费医药</strong>
+                <span>1只 · 0/1 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:4.3%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>7.0亿</span>
+                <span>成交 7.0亿 · 均涨跌 -0.60%</span>
+              </div>
+            </div>
+            </div>
+        </article>
+        <aside class="panel">
+          <div class="section-head">
+            <h2>今日信号</h2>
+            <span>622.0亿总成交</span>
+          </div>
+          <ul class="signals">
+        <li class="neutral">
+          <strong>建立基线</strong>
+          <span>首日先看成交活跃度，下一次运行开始看份额变化。</span>
+        </li>
+        
+
+        <li class="pos">
+          <strong>最强分类</strong>
+          <span>科技主线 均涨跌 3.35%，成交 69.0亿。</span>
+        </li>
+        </ul>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>重点ETF</h2>
+          <span>按份额变化、成交额、价格异动和优先级综合筛选</span>
+        </div>
+        
+      <table>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>ETF</th>
+            <th>分类</th>
+            <th>估算申赎</th>
+            <th>份额变化</th>
+            <th>成交额</th>
+            <th>涨跌</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td class="code">511880</td>
+              <td>
+                <div class="name">样例货币ETF</div>
+                <div class="sub">货币 · 成交活跃</div>
+              </td>
+              <td>避险现金</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">120.0亿</td>
+              <td class="num pos">0.01%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">512880</td>
+              <td>
+                <div class="name">样例证券ETF</div>
+                <div class="sub">证券 · 成交活跃</div>
+              </td>
+              <td>金融地产</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">52.0亿</td>
+              <td class="num pos">2.80%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">512480</td>
+              <td>
+                <div class="name">样例半导体ETF</div>
+                <div class="sub">半导体 · 成交活跃</div>
+              </td>
+              <td>科技主线</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">41.0亿</td>
+              <td class="num pos">3.10%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">515880</td>
+              <td>
+                <div class="name">样例通信ETF</div>
+                <div class="sub">通信 · 成交活跃</div>
+              </td>
+              <td>科技主线</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">28.0亿</td>
+              <td class="num pos">3.60%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">510300</td>
+              <td>
+                <div class="name">样例沪深300ETF</div>
+                <div class="sub">沪深300 · 成交活跃</div>
+              </td>
+              <td>宽基核心</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">62.0亿</td>
+              <td class="num pos">0.80%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">513180</td>
+              <td>
+                <div class="name">样例恒生科技ETF</div>
+                <div class="sub">港股科技 · 成交活跃</div>
+              </td>
+              <td>跨境外溢</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">33.0亿</td>
+              <td class="num pos">2.40%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159915</td>
+              <td>
+                <div class="name">样例创业板ETF</div>
+                <div class="sub">创业板 · 成交活跃</div>
+              </td>
+              <td>成长弹性</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">36.0亿</td>
+              <td class="num pos">1.95%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">563360</td>
+              <td>
+                <div class="name">样例中证A500ETF</div>
+                <div class="sub">A500 · 成交活跃</div>
+              </td>
+              <td>新宽基</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">51.0亿</td>
+              <td class="num pos">0.90%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159338</td>
+              <td>
+                <div class="name">样例中证A500ETF深市</div>
+                <div class="sub">A500 · 成交活跃</div>
+              </td>
+              <td>新宽基</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">43.0亿</td>
+              <td class="num pos">0.88%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">588000</td>
+              <td>
+                <div class="name">样例科创50ETF</div>
+                <div class="sub">科创50 · 成交活跃</div>
+              </td>
+              <td>成长弹性</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">23.0亿</td>
+              <td class="num pos">2.10%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">510500</td>
+              <td>
+                <div class="name">样例中证500ETF</div>
+                <div class="sub">中证500 · 成交活跃</div>
+              </td>
+              <td>宽基核心</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">29.0亿</td>
+              <td class="num pos">1.20%</td>
+            </tr>
+            
+            <tr>
+              <td class="code">512100</td>
+              <td>
+                <div class="name">样例中证1000ETF</div>
+                <div class="sub">中证1000 · 成交活跃</div>
+              </td>
+              <td>宽基核心</td>
+              <td class="pos num">-</td>
+              <td class="num">-</td>
+              <td class="num">21.0亿</td>
+              <td class="num pos">1.60%</td>
+            </tr>
+            </tbody>
+      </table>
+    
+      </section>
+
+      <section class="split">
+        <article class="panel"><div class="rank-title">成交活跃靠前</div>
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>511880 样例货币ETF</span>
+                <strong class="pos">120.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:100.0%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>510300 样例沪深300ETF</span>
+                <strong class="pos">62.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:51.7%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512880 样例证券ETF</span>
+                <strong class="pos">52.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:43.3%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>563360 样例中证A500ETF</span>
+                <strong class="pos">51.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:42.5%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159338 样例中证A500ETF深市</span>
+                <strong class="pos">43.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:35.8%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512480 样例半导体ETF</span>
+                <strong class="pos">41.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:34.2%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159915 样例创业板ETF</span>
+                <strong class="pos">36.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:30.0%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>510050 样例上证50ETF</span>
+                <strong class="pos">34.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:28.3%"></div></div>
+            </div>
+            </article>
+        <article class="panel"><div class="rank-title">涨跌幅靠前</div>
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>515880 样例通信ETF</span>
+                <strong class="pos">3.60%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:100.0%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512480 样例半导体ETF</span>
+                <strong class="pos">3.10%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:86.1%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512880 样例证券ETF</span>
+                <strong class="pos">2.80%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:77.8%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>513180 样例恒生科技ETF</span>
+                <strong class="pos">2.40%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:66.7%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>588000 样例科创50ETF</span>
+                <strong class="pos">2.10%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:58.3%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159915 样例创业板ETF</span>
+                <strong class="pos">1.95%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:54.2%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512100 样例中证1000ETF</span>
+                <strong class="pos">1.60%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:44.4%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>510500 样例中证500ETF</span>
+                <strong class="pos">1.20%</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:33.3%"></div></div>
+            </div>
+            </article>
+      </section>
+    </main>
+  <footer>口径：估算申赎 = 份额变化 x 最新价。成交额用于观察活跃度，不等于真实净流入。</footer>
+</body>
+</html>

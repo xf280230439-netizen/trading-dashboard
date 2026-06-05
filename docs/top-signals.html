@@ -1,0 +1,1986 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大牛市顶部信号 · 2026-06-05</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1d2430;
+      --muted: #687386;
+      --line: #dfe4ea;
+      --pos: #c9362c;
+      --pos-bg: #f8dfdc;
+      --neg: #16815d;
+      --neg-bg: #dff1eb;
+      --warn: #9a6412;
+      --warn-bg: #f7ead3;
+      --blue: #2563a9;
+      --blue-bg: #dce9f8;
+      --unavailable: #8a94a3;
+      --unavailable-bg: #eef1f4;
+      --shadow: 0 8px 22px rgba(31, 42, 68, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(246, 247, 249, 0.96);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 28px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    h1, h2 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: 28px; line-height: 1.1; }
+    h2 { font-size: 17px; }
+    .date-pill {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .head-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .site-nav {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      padding: 6px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .site-nav a:hover {
+      color: var(--text);
+      background: var(--blue-bg);
+    }
+    .subtitle { color: var(--muted); margin-top: 6px; font-size: 13px; }
+    main {
+      max-width: 1360px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 22px 28px 36px;
+      display: grid;
+      gap: 18px;
+    }
+    main > * { min-width: 0; max-width: 100%; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric, .panel, .empty-state {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .metric { padding: 14px; min-height: 104px; border-left: 4px solid var(--blue); }
+    .metric.pos { border-left-color: var(--pos); }
+    .metric.neg { border-left-color: var(--neg); }
+    .metric.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+      box-shadow: none;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; }
+    .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
+    .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .data-status {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .status-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 12px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .status-item.unavailable {
+      background: var(--unavailable-bg);
+      box-shadow: none;
+      color: var(--unavailable);
+    }
+    .status-item span,
+    .status-item em {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-style: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status-item strong {
+      display: block;
+      margin: 4px 0 3px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.8fr);
+      gap: 18px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .money-alerts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .futures-cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+    .alert-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .alert-card.pos { border-left-color: var(--pos); background: linear-gradient(90deg, var(--pos-bg), #fff 34%); }
+    .alert-card.neg { border-left-color: var(--neg); background: linear-gradient(90deg, var(--neg-bg), #fff 34%); }
+    .alert-card.warn { border-left-color: var(--warn); background: linear-gradient(90deg, var(--warn-bg), #fff 34%); }
+    .alert-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .alert-top em { font-style: normal; font-variant-numeric: tabular-nums; }
+    .alert-state {
+      font-size: 28px;
+      font-weight: 850;
+      margin-top: 8px;
+      line-height: 1.1;
+    }
+    .alert-card.pos .alert-state { color: var(--pos); }
+    .alert-card.neg .alert-state { color: var(--neg); }
+    .alert-card.warn .alert-state { color: var(--warn); }
+    .alert-card p {
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .alert-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .alert-metric {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 6px;
+      padding: 8px;
+      min-width: 0;
+    }
+    .alert-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .alert-metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .panel { padding: 18px; min-width: 0; overflow: hidden; }
+    .panel.wide { min-width: 0; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-head span { min-width: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .heat-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .heat-row {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fbfcfd;
+    }
+    .heat-head, .heat-foot, .rank-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .heat-head span, .heat-foot, .sub { color: var(--muted); font-size: 12px; }
+    .bar-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 9px 0 7px;
+    }
+    .bar-track.compact { height: 7px; margin-top: 6px; }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.pos { background: var(--pos); }
+    .bar-fill.neg { background: var(--neg); }
+    .bar-fill.warn { background: var(--warn); }
+    .signals { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .signals li {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      background: var(--blue-bg);
+    }
+    .signals li.pos { border-left-color: var(--pos); background: var(--pos-bg); }
+    .signals li.neg { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signals li.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signals span { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .table-scroll { width: 100%; overflow-x: auto; }
+    .table-scroll table { min-width: 860px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; font-size: 13px; vertical-align: middle; }
+    th { color: var(--muted); font-weight: 700; background: #f9fafb; }
+    th.sortable {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      padding-right: 22px;
+    }
+    th.sortable::after {
+      content: "↕";
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aeb8c5;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    th.sortable.sort-asc::after {
+      content: "↑";
+      color: var(--blue);
+    }
+    th.sortable.sort-desc::after {
+      content: "↓";
+      color: var(--blue);
+    }
+    th.sortable:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .etf-table .col-code { width: 82px; }
+    .etf-table .col-name { width: auto; }
+    .etf-table .col-category { width: 96px; }
+    .etf-table .col-flow,
+    .etf-table .col-share,
+    .etf-table .col-activity,
+    .etf-table .col-change { width: 112px; }
+    .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; width: 74px; }
+    .etf-main {
+      display: grid;
+      grid-template-rows: 18px 16px;
+      gap: 2px;
+      min-width: 0;
+      align-content: center;
+    }
+    .name {
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 750;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .category-cell { color: var(--text); }
+    .unavailable,
+    .unavailable .metric-value,
+    .unavailable .metric-note,
+    .unavailable .metric-label { color: var(--unavailable); }
+    .unavailable-row {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .pos { color: var(--pos); }
+    .neg { color: var(--neg); }
+    .neutral { color: var(--blue); }
+    td.unavailable, .rank-row .unavailable { color: var(--unavailable); }
+    .rank-title { font-weight: 800; margin-bottom: 12px; }
+    .rank-row { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .rank-meta span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chart-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+    svg { display: block; width: 100%; height: auto; }
+    .chart-bg { fill: #fbfcfd; }
+    .grid-line { stroke: #dfe4ea; stroke-width: 1; }
+    .grid-line.vertical { stroke-dasharray: 4 5; }
+    .axis-line { stroke: #aeb8c5; stroke-width: 1.2; }
+    .axis-label { fill: var(--muted); font-size: 12px; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      background: #fbfcfd;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .trend-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 10px;
+      min-width: 0;
+    }
+    .trend-card.unavailable {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .trend-head,
+    .trend-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .trend-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .trend-head span {
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .trend-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .trend-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mini-svg {
+      display: block;
+      width: 100%;
+      height: 118px;
+      margin-top: 6px;
+    }
+    .mini-zero {
+      stroke: #cfd7e1;
+      stroke-width: 1;
+      stroke-dasharray: 4 5;
+    }
+    .mini-empty {
+      min-height: 118px;
+      display: grid;
+      place-items: center;
+    }
+    .top-signal-hero {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 2fr);
+      gap: 16px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .pressure-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .pressure-card.normal { border-left-color: var(--pos); }
+    .pressure-card.warn { border-left-color: var(--warn); }
+    .pressure-card.danger { border-left-color: var(--neg); }
+    .pressure-value {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .pressure-card.normal .pressure-value { color: var(--pos); }
+    .pressure-card.warn .pressure-value { color: var(--warn); }
+    .pressure-card.danger .pressure-value { color: var(--neg); }
+    .pressure-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .pressure-fill { height: 100%; background: var(--blue); }
+    .pressure-card.normal .pressure-fill { background: var(--pos); }
+    .pressure-card.warn .pressure-fill { background: var(--warn); }
+    .pressure-card.danger .pressure-fill { background: var(--neg); }
+    .pressure-copy {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card.normal { border-left-color: var(--pos); }
+    .signal-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signal-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signal-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .signal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+    .signal-top strong { min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+    .signal-group {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+    .signal-number {
+      font-size: 25px;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .signal-card.normal .signal-number { color: var(--pos); }
+    .signal-card.warn .signal-number { color: var(--warn); }
+    .signal-card.danger .signal-number { color: var(--neg); }
+    .signal-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+      min-height: 34px;
+      overflow-wrap: anywhere;
+    }
+    .status-pill {
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .signal-source {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-card {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 14px;
+    }
+    .wechat-index-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .wechat-index-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .wechat-index-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .wechat-index-top, .wechat-index-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+    .wechat-index-top > div, .wechat-index-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .wechat-index-kicker {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+    .wechat-index-card h3 { margin: 0; font-size: 18px; }
+    .wechat-index-number {
+      margin-top: 16px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .wechat-index-meta {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .wechat-index-card .chart-wrap { margin-top: 14px; }
+    .wechat-index-track {
+      height: 10px;
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #d8dee7;
+    }
+    .wechat-index-track span {
+      display: block;
+      width: 36%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--unavailable);
+      opacity: .45;
+    }
+    .tdx-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .tdx-metric {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-metric.pos { border-left-color: var(--pos); }
+    .tdx-metric.neg { border-left-color: var(--neg); }
+    .tdx-metric.warn { border-left-color: var(--warn); }
+    .tdx-metric span, .tdx-metric em {
+      display: block;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-style: normal;
+      overflow-wrap: anywhere;
+    }
+    .tdx-metric strong {
+      display: block;
+      margin: 5px 0 3px;
+      color: var(--text);
+      font-size: 18px;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-observation {
+      margin-top: 12px;
+      border-left: 4px solid var(--warn);
+      background: var(--warn-bg);
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .tdx-index-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tdx-index-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-index-top, .tdx-index-meta, .tdx-leader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      min-width: 0;
+    }
+    .tdx-index-top strong { min-width: 0; color: var(--text); font-size: 13px; overflow-wrap: anywhere; }
+    .tdx-index-top span { flex: 0 0 auto; font-size: 12px; font-weight: 800; }
+    .tdx-index-close {
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-index-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-leader-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .tdx-leader-block { min-width: 0; }
+    .tdx-leader-block h3 { margin: 0 0 8px; font-size: 14px; }
+    .tdx-leader-row {
+      border-top: 1px solid var(--line);
+      padding: 7px 0;
+      font-size: 12px;
+    }
+    .tdx-leader-name {
+      min-width: 0;
+      flex: 1 1 auto;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tdx-leader-code { flex: 0 0 auto; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tdx-leader-row strong { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+    .tdx-unusual {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      font-size: 13px;
+    }
+    .tdx-unusual > div { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tdx-unusual span {
+      display: inline-flex;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fbfcfd;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-unusual span strong { color: var(--text); }
+    .tdx-source { margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .down-rain-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .down-rain-layout .tdx-metric-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .down-rain-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .07) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #eef6f2 100%);
+      background-size: 34px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .down-rain-card.severe, .down-rain-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e3f1ec 100%);
+      background-size: 34px 100%, 100% 100%;
+    }
+    .down-rain-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .storm-mark {
+      position: relative;
+      width: 34px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .storm-mark span {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--neg);
+      transform: rotate(22deg);
+      opacity: .75;
+    }
+    .storm-mark span:nth-child(1) { left: 8px; height: 24px; opacity: .45; }
+    .storm-mark span:nth-child(2) { left: 16px; height: 34px; opacity: .85; }
+    .storm-mark span:nth-child(3) { left: 25px; height: 28px; opacity: .58; }
+    .down-rain-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .down-rain-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .storm-scale {
+      height: 8px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe8e4;
+    }
+    .storm-scale span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--warn), var(--neg));
+    }
+    .storm-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(16, minmax(18px, 1fr));
+      gap: 7px;
+      align-items: end;
+      height: 230px;
+      margin-top: 14px;
+      padding: 18px 4px 0;
+      border-top: 1px solid rgba(104, 115, 134, .20);
+    }
+    .storm-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-top: 1px dashed rgba(104, 115, 134, .36);
+      pointer-events: none;
+    }
+    .storm-line.high { bottom: calc(80% + 22px); }
+    .storm-line.mid { bottom: calc(69% + 22px); }
+    .storm-line span {
+      position: absolute;
+      right: 0;
+      top: -18px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .down-day {
+      position: relative;
+      display: grid;
+      grid-template-rows: 20px 1fr 16px;
+      gap: 4px;
+      min-width: 0;
+      height: 100%;
+      align-items: end;
+      justify-items: center;
+      color: var(--muted);
+    }
+    .rain-value {
+      align-self: start;
+      font-size: 10px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .rain-needle {
+      position: relative;
+      width: 100%;
+      height: var(--h);
+      min-height: 22px;
+      align-self: end;
+    }
+    .rain-needle span {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 7px;
+      height: 100%;
+      border-radius: 999px 999px 4px 4px;
+      background: var(--blue);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.45) inset;
+    }
+    .rain-needle::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      width: 15px;
+      height: 15px;
+      border-radius: 10px 10px 10px 2px;
+      background: var(--blue);
+      transform: translateX(-50%) rotate(45deg);
+      box-shadow: 0 4px 10px rgba(22, 129, 93, .18);
+    }
+    .down-day.warn .rain-needle span,
+    .down-day.warn .rain-needle::before { background: var(--warn); }
+    .down-day.severe .rain-needle span,
+    .down-day.severe .rain-needle::before,
+    .down-day.extreme .rain-needle span,
+    .down-day.extreme .rain-needle::before { background: var(--neg); }
+    .down-day.extreme .rain-needle span {
+      width: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.55) inset, 0 0 16px rgba(22,129,93,.25);
+    }
+    .rain-date {
+      font-size: 10px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .breadth-line-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(37, 99, 169, .05) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #f2f7f5 100%);
+      background-size: 36px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .breadth-line-card.severe, .breadth-line-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e8f3ef 100%);
+      background-size: 36px 100%, 100% 100%;
+    }
+    .breadth-line-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .wave-mark {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .wave-mark span {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--blue);
+      transform-origin: center;
+    }
+    .wave-mark span:nth-child(1) { top: 9px; transform: rotate(-12deg); opacity: .55; }
+    .wave-mark span:nth-child(2) { top: 16px; transform: rotate(10deg); background: var(--neg); opacity: .9; }
+    .wave-mark span:nth-child(3) { top: 23px; transform: rotate(-8deg); background: var(--warn); opacity: .75; }
+    .wave-mark span:nth-child(4) { top: 30px; transform: rotate(12deg); opacity: .45; }
+    .breadth-line-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-line-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .breadth-line-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-meta span {
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-line-svg {
+      display: block;
+      width: 100%;
+      height: 286px;
+      margin-top: 10px;
+      overflow: visible;
+    }
+    .breadth-plot-bg { fill: rgba(255, 255, 255, .70); }
+    .breadth-grid-line line {
+      stroke: rgba(104, 115, 134, .28);
+      stroke-dasharray: 6 7;
+      stroke-width: 1;
+    }
+    .breadth-grid-line.warn line { stroke: rgba(217, 119, 6, .48); }
+    .breadth-grid-line.danger line { stroke: rgba(22, 129, 93, .55); }
+    .breadth-grid-line text {
+      fill: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-area { fill: url(#breadthArea); }
+    .breadth-path {
+      fill: none;
+      stroke: var(--neg);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .breadth-ma-path {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 5 6;
+    }
+    .point-hit { fill: transparent; pointer-events: all; }
+    .point-dot {
+      fill: var(--blue);
+      stroke: #fff;
+      stroke-width: 1.5;
+      opacity: .75;
+    }
+    .breadth-point.warn .point-dot { fill: var(--warn); }
+    .breadth-point.severe .point-dot,
+    .breadth-point.extreme .point-dot { fill: var(--neg); }
+    .breadth-point.extreme .point-dot { r: 5; }
+    .point-tip {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .12s ease;
+    }
+    .breadth-point:hover .point-tip,
+    .breadth-point:focus .point-tip { opacity: 1; }
+    .point-tip rect {
+      fill: #ffffff;
+      stroke: var(--line);
+      filter: drop-shadow(0 8px 18px rgba(15, 23, 42, .13));
+    }
+    .point-tip text {
+      fill: var(--text);
+      font-size: 11px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+    .point-tip text + text {
+      fill: var(--muted);
+      font-weight: 650;
+    }
+    .breadth-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .breadth-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-legend i {
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--neg);
+    }
+    .breadth-legend i.ma {
+      background: var(--blue);
+      background-image: repeating-linear-gradient(90deg, transparent 0 5px, #fff 5px 8px);
+    }
+    .integration-link {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--text);
+      text-decoration: none;
+      background: #fbfcfd;
+    }
+    .integration-link:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .integration-link strong { display: block; font-size: 15px; }
+    .integration-link span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .social-disclosure {
+      border-left: 5px solid var(--blue);
+    }
+    .social-disclosure.warn {
+      border-left-color: var(--warn);
+      background: var(--warn-bg);
+    }
+    .social-disclosure p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 5px 0 0;
+    }
+    .social-action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .social-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .social-bar-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+    }
+    .social-bar-card h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+    .social-bar-list {
+      display: grid;
+      gap: 10px;
+    }
+    .social-bar-row {
+      min-width: 0;
+    }
+    .social-bar-head,
+    .social-bar-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .social-bar-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .social-bar-head span {
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .social-bar-track {
+      height: 8px;
+      margin-top: 5px;
+      border-radius: 999px;
+      background: #e8edf3;
+      overflow: hidden;
+    }
+    .social-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .social-bar-fill.new { background: var(--blue); }
+    .social-bar-fill.increase { background: var(--pos); }
+    .social-bar-fill.decrease { background: var(--neg); }
+    .social-bar-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .action-block {
+      min-width: 0;
+    }
+    .action-block h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+    .action-pill {
+      display: inline-block;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .empty, .empty-state { color: var(--muted); padding: 18px; }
+    .empty-state h2 { color: var(--text); margin-bottom: 8px; }
+    code {
+      background: #e9edf2;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 28px 28px;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    @media (max-width: 1100px) {
+      .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .data-status { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .trend-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .social-action-grid { grid-template-columns: 1fr; }
+      .social-chart-grid { grid-template-columns: 1fr; }
+      .down-rain-layout { grid-template-columns: 1fr; }
+      .tdx-metric-grid, .tdx-index-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .tdx-leader-grid { grid-template-columns: 1fr; }
+      .money-alerts { grid-template-columns: 1fr; }
+      .futures-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      header { padding: 14px 16px; }
+      .topline { align-items: flex-start; flex-direction: column; }
+      .head-actions { width: 100%; max-width: 100%; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
+      .site-nav, .date-pill { flex: 0 0 auto; }
+      main { padding: 16px; }
+      .summary-grid, .data-status, .heat-list { grid-template-columns: 1fr; }
+      .trend-grid { grid-template-columns: 1fr; }
+      .top-signal-hero, .signal-grid, .integration-grid, .wechat-index-grid { grid-template-columns: 1fr; }
+      .tdx-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tdx-index-grid { grid-template-columns: 1fr; }
+      .down-rain-chart { height: 200px; gap: 5px; }
+      .breadth-line-svg { height: 238px; }
+      .breadth-line-meta { display: grid; grid-template-columns: 1fr; gap: 3px; }
+      .storm-meta { display: grid; grid-template-columns: 1fr; gap: 2px; }
+      .futures-cards { grid-template-columns: 1fr; }
+      .alert-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-value { font-size: 22px; }
+      table { min-width: 760px; }
+      .panel { overflow-x: auto; }
+      .section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; align-items: flex-start; }
+      .status-pill { flex: 0 0 auto; }
+    }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const collator = new Intl.Collator("zh-Hans-CN", { numeric: true, sensitivity: "base" });
+
+      const cleanText = (cell) => (cell?.innerText || "").replace(/\s+/g, " ").trim();
+
+      const numericColumn = (header) => {
+        const text = header.textContent.trim();
+        return header.classList.contains("num") || /代码|ETF数|涨跌|涨\/跌|申赎|净额|成交|规模|份额|价格|市值/.test(text);
+      };
+
+      const parseValue = (cell, header) => {
+        const text = cleanText(cell);
+        const headerText = header.textContent.trim();
+        if (!text || text === "-") {
+          return { type: "empty", value: 0 };
+        }
+        if (/日期|时间|更新/.test(headerText)) {
+          const dateValue = Date.parse(text.replace(/\+08:00$/, ""));
+          if (!Number.isNaN(dateValue)) {
+            return { type: "number", value: dateValue };
+          }
+        }
+        if (headerText.includes("涨/跌")) {
+          const match = text.match(/(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)/);
+          if (match) {
+            return { type: "number", value: Number(match[1]) - Number(match[2]) };
+          }
+        }
+        if (numericColumn(header)) {
+          const normalized = text
+            .replace(/,/g, "")
+            .replace(/亿份|亿元|亿|%|只/g, "")
+            .replace(/\+/g, "");
+          const match = normalized.match(/-?\d+(?:\.\d+)?/);
+          if (match) {
+            return { type: "number", value: Number(match[0]) };
+          }
+        }
+        return { type: "text", value: text };
+      };
+
+      const compareValues = (a, b, direction) => {
+        if (a.type === "empty" && b.type === "empty") return 0;
+        if (a.type === "empty") return 1;
+        if (b.type === "empty") return -1;
+        let result = 0;
+        if (a.type === "number" && b.type === "number") {
+          result = a.value - b.value;
+        } else {
+          result = collator.compare(String(a.value), String(b.value));
+        }
+        return direction === "asc" ? result : -result;
+      };
+
+      document.querySelectorAll("table").forEach((table) => {
+        const headers = Array.from(table.querySelectorAll("thead th"));
+        const tbody = table.querySelector("tbody");
+        if (!headers.length || !tbody) return;
+
+        Array.from(tbody.rows).forEach((row, index) => {
+          row.dataset.originalIndex = String(index);
+        });
+
+        headers.forEach((header, columnIndex) => {
+          header.classList.add("sortable");
+          header.tabIndex = 0;
+          header.title = "点击排序";
+          header.setAttribute("aria-sort", "none");
+
+          const sort = () => {
+            const current = header.dataset.sortDirection;
+            const firstDirection = numericColumn(header) ? "desc" : "asc";
+            const direction = current === "asc" ? "desc" : current === "desc" ? "asc" : firstDirection;
+            const rows = Array.from(tbody.rows);
+
+            headers.forEach((item) => {
+              item.classList.remove("sort-asc", "sort-desc");
+              item.dataset.sortDirection = "";
+              item.setAttribute("aria-sort", "none");
+            });
+
+            header.dataset.sortDirection = direction;
+            header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
+            header.setAttribute("aria-sort", direction === "asc" ? "ascending" : "descending");
+
+            rows.sort((left, right) => {
+              const leftValue = parseValue(left.cells[columnIndex], header);
+              const rightValue = parseValue(right.cells[columnIndex], header);
+              const compared = compareValues(leftValue, rightValue, direction);
+              if (compared !== 0) return compared;
+              return Number(left.dataset.originalIndex) - Number(right.dataset.originalIndex);
+            });
+
+            rows.forEach((row) => tbody.appendChild(row));
+          };
+
+          header.addEventListener("click", sort);
+          header.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              sort();
+            }
+          });
+        });
+      });
+    });
+  </script>
+    
+</head>
+<body>
+  <header>
+    <div class="topline">
+      <div>
+        <h1>大牛市顶部信号</h1>
+        <div class="subtitle">周末动态复盘 · 全A 5532只 · 生成 2026-06-05T16:09:12</div>
+      </div>
+      <div class="head-actions">
+        <nav class="site-nav" aria-label="页面导航">
+          <a href="index.html">大盘复盘</a>
+          <a href="industry.html">行业ETF</a>
+          <a href="top-signals.html">顶部信号</a>
+          <a href="social-security.html">社保基金</a>
+        </nav>
+        <div class="date-pill">2026-06-05</div>
+      </div>
+    </div>
+  </header>
+  <main>
+      <section class="top-signal-hero">
+        <article class="pressure-card warn">
+          <div class="metric-label">顶部压力温度</div>
+          <div class="pressure-value">36</div>
+          <div class="pressure-track"><div class="pressure-fill" style="width:36%"></div></div>
+          <div class="pressure-copy">量化信号 7 项 · 留意 4 项 · 警惕 1 项</div>
+        </article>
+        <article class="panel">
+          <div class="section-head">
+            <h2>历史代理压力变化</h2>
+            <span>近一年代理回写 · 52期</span>
+          </div>
+          
+      <div class="chart-wrap">
+        <svg viewBox="0 0 1000 220" role="img" aria-label="趋势折线">
+          <rect x="0" y="0" width="1000" height="220" class="chart-bg" />
+          <line x1="52" y1="186.0" x2="982" y2="186.0" class="grid-line" /><text x="43" y="190.0" text-anchor="end" class="axis-label">22.0</text><line x1="52" y1="144.0" x2="982" y2="144.0" class="grid-line" /><text x="43" y="148.0" text-anchor="end" class="axis-label">38.5</text><line x1="52" y1="102.0" x2="982" y2="102.0" class="grid-line" /><text x="43" y="106.0" text-anchor="end" class="axis-label">55.0</text><line x1="52" y1="60.0" x2="982" y2="60.0" class="grid-line" /><text x="43" y="64.0" text-anchor="end" class="axis-label">71.5</text><line x1="52" y1="18.0" x2="982" y2="18.0" class="grid-line" /><text x="43" y="22.0" text-anchor="end" class="axis-label">88.0</text><text x="52.0" y="210" text-anchor="middle" class="axis-label">06-06</text><text x="526.1" y="210" text-anchor="middle" class="axis-label">12-05</text><text x="982.0" y="210" text-anchor="middle" class="axis-label">06-04</text>
+          <polyline points="52.0,140.2 70.2,165.6 88.5,165.6 106.7,165.6 124.9,140.2 143.2,165.6 161.4,114.7 179.6,114.7 197.9,89.3 216.1,89.3 234.4,89.3 252.6,89.3 270.8,63.8 289.1,38.4 307.3,38.4 325.5,38.4 343.8,63.8 362.0,63.8 380.2,38.4 398.5,63.8 416.7,63.8 434.9,63.8 453.2,63.8 471.4,63.8 489.6,89.3 507.9,114.7 526.1,63.8 544.4,114.7 562.6,89.3 580.8,114.7 599.1,140.2 617.3,89.3 635.5,38.4 653.8,38.4 672.0,38.4 690.2,63.8 708.5,63.8 726.7,63.8 744.9,63.8 763.2,63.8 781.4,89.3 799.6,114.7 817.9,114.7 836.1,165.6 854.4,114.7 872.6,89.3 890.8,89.3 909.1,89.3 927.3,89.3 945.5,63.8 963.8,89.3 982.0,89.3" fill="none" stroke="#d97706" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="982.0" cy="89.3" r="4" fill="#d97706" />
+        </svg>
+      </div>
+    
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>历史回写口径</h2>
+          <span>2025-06-06 至 2026-06-04</span>
+        </div>
+        <div class="integration-grid">
+          <div class="integration-link">
+            <strong>估值与活跃度</strong>
+            <span>中证全指滚动市盈率三年百分位 · 中证全指成交额三年百分位</span>
+          </div>
+          <div class="integration-link">
+            <strong>杠杆与外部联动</strong>
+            <span>融资余额三年百分位 · 融资买入额20日峰值回落 · 纳指60日高点回撤</span>
+          </div>
+        </div>
+      </section>
+
+      
+      <section class="panel">
+        <div class="section-head">
+          <h2>通达信盘面切片</h2>
+          <span>行情日期 2026-06-05 · 生成 2026-06-05T16:00:16</span>
+        </div>
+        <div class="tdx-metric-grid">
+      <article class="tdx-metric pos">
+        <span>沪深上涨家数</span>
+        <strong>3321</strong>
+        <em>通达信指数广度</em>
+      </article>
+    
+      <article class="tdx-metric neg">
+        <span>沪深下跌家数</span>
+        <strong>2137</strong>
+        <em>通达信指数广度</em>
+      </article>
+    
+      <article class="tdx-metric pos">
+        <span>上涨占比</span>
+        <strong>60.8%</strong>
+        <em>沪深上涨 / 涨跌合计</em>
+      </article>
+    
+      <article class="tdx-metric neutral">
+        <span>沪深成交额</span>
+        <strong>31010.7亿</strong>
+        <em>上证 + 深证成交额</em>
+      </article>
+    
+      <article class="tdx-metric warn">
+        <span>成长相对沪深300</span>
+        <strong>-1.8%</strong>
+        <em>创业板与科创50均值减沪深300</em>
+      </article>
+    
+      <article class="tdx-metric neutral">
+        <span>异动覆盖</span>
+        <strong>4554只</strong>
+        <em>28123 条盘中事件</em>
+      </article>
+    </div>
+        <div class="tdx-observation">涨跌广度处于中间区域，结合ETF申赎继续观察。</div>
+        <div class="tdx-index-grid">
+      <article class="tdx-index-card neg">
+        <div class="tdx-index-top">
+          <strong>上证指数</strong>
+          <span>-0.74%</span>
+        </div>
+        <div class="tdx-index-close">4027.74</div>
+        <div class="tdx-index-meta">
+          <span>成交 13638.9亿</span>
+          <span>涨 1284 / 跌 1008</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card neg">
+        <div class="tdx-index-top">
+          <strong>深证成指</strong>
+          <span>-2.21%</span>
+        </div>
+        <div class="tdx-index-close">15314.70</div>
+        <div class="tdx-index-meta">
+          <span>成交 17053.0亿</span>
+          <span>涨 1742 / 跌 1107</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card neg">
+        <div class="tdx-index-top">
+          <strong>创业板指</strong>
+          <span>-3.20%</span>
+        </div>
+        <div class="tdx-index-close">3957.94</div>
+        <div class="tdx-index-meta">
+          <span>成交 8210.3亿</span>
+          <span>涨 869 / 跌 508</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card pos">
+        <div class="tdx-index-top">
+          <strong>北证50</strong>
+          <span>+5.59%</span>
+        </div>
+        <div class="tdx-index-close">1299.07</div>
+        <div class="tdx-index-meta">
+          <span>成交 318.8亿</span>
+          <span>涨 295 / 跌 22</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card neg">
+        <div class="tdx-index-top">
+          <strong>科创50</strong>
+          <span>-4.01%</span>
+        </div>
+        <div class="tdx-index-close">1668.33</div>
+        <div class="tdx-index-meta">
+          <span>成交 1368.5亿</span>
+          <span>涨 296 / 跌 310</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card neg">
+        <div class="tdx-index-top">
+          <strong>沪深300</strong>
+          <span>-1.79%</span>
+        </div>
+        <div class="tdx-index-close">4816.92</div>
+        <div class="tdx-index-meta">
+          <span>成交 8398.6亿</span>
+          <span>涨 137 / 跌 155</span>
+        </div>
+      </article>
+    </div>
+        <div class="tdx-leader-grid">
+          <div class="tdx-leader-block">
+            <h3>成交额拥挤方向</h3>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">中际旭创</span>
+                <span class="tdx-leader-code">300308</span>
+                <strong class="neg">583.2亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">京东方Ａ</span>
+                <span class="tdx-leader-code">000725</span>
+                <strong class="pos">356.8亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">新易盛</span>
+                <span class="tdx-leader-code">300502</span>
+                <strong class="neg">341.7亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">兆易创新</span>
+                <span class="tdx-leader-code">603986</span>
+                <strong class="neg">275.7亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">亨通光电</span>
+                <span class="tdx-leader-code">600487</span>
+                <strong class="neg">247.4亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">天孚通信</span>
+                <span class="tdx-leader-code">300394</span>
+                <strong class="neg">224.7亿</strong>
+              </div>
+            
+          </div>
+          <div class="tdx-leader-block">
+            <h3>涨幅极端值</h3>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">N新睿</span>
+                <span class="tdx-leader-code">920211</span>
+                <strong class="pos">+800.67%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">丰光精密</span>
+                <span class="tdx-leader-code">920510</span>
+                <strong class="pos">+29.96%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">创远信科</span>
+                <span class="tdx-leader-code">920961</span>
+                <strong class="pos">+29.96%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">天力复合</span>
+                <span class="tdx-leader-code">920576</span>
+                <strong class="pos">+22.98%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">东方碳素</span>
+                <span class="tdx-leader-code">920175</span>
+                <strong class="pos">+20.52%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">冠龙节能</span>
+                <span class="tdx-leader-code">301151</span>
+                <strong class="pos">+20.03%</strong>
+              </div>
+            
+          </div>
+          <div class="tdx-leader-block">
+            <h3>跌幅极端值</h3>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">悦康药业</span>
+                <span class="tdx-leader-code">688658</span>
+                <strong class="neg">-15.77%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">固德威</span>
+                <span class="tdx-leader-code">688390</span>
+                <strong class="neg">-13.03%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">唯特偶</span>
+                <span class="tdx-leader-code">301319</span>
+                <strong class="neg">-12.94%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">星环科技</span>
+                <span class="tdx-leader-code">688031</span>
+                <strong class="neg">-11.74%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">汇金科技</span>
+                <span class="tdx-leader-code">300561</span>
+                <strong class="neg">-10.98%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">山科智能</span>
+                <span class="tdx-leader-code">300897</span>
+                <strong class="neg">-10.72%</strong>
+              </div>
+            
+          </div>
+        </div>
+        <div class="tdx-unusual">
+          <strong>盘中异动覆盖</strong>
+          <div><span><strong>主力买入</strong>788只</span><span><strong>主力卖出</strong>556只</span><span><strong>盘中强势</strong>1388只</span><span><strong>盘中弱势</strong>592只</span><span><strong>急速拉升</strong>1011只</span><span><strong>急速下跌</strong>522只</span><span><strong>高位回落</strong>638只</span><span><strong>封涨停板</strong>233只</span><span><strong>封跌停板</strong>445只</span></div>
+        </div>
+        <div class="tdx-source">盘后或周末读取时展示最近缓存收盘快照；用于辅助复盘，不参与顶部压力温度。</div>
+      </section>
+    
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>自动量化信号</h2>
+          <span>灰色条目不参与顶部压力温度</span>
+        </div>
+        <div class="signal-grid">
+      <article class="signal-card normal">
+        <div class="signal-top">
+          <strong>全A正PE中位数</strong>
+          <span class="status-pill">正常</span>
+        </div>
+        <div class="signal-group">核心估值</div>
+        <div class="signal-number">44.9倍</div>
+        <div class="signal-note">公开行情代理；不是万得全A剔除金融石化口径</div>
+        <div class="signal-source">东方财富全A行情</div>
+      </article>
+    
+      <article class="signal-card warn">
+        <div class="signal-top">
+          <strong>全A成交 / 流通市值</strong>
+          <span class="status-pill">留意</span>
+        </div>
+        <div class="signal-group">市场情绪</div>
+        <div class="signal-number">2.97%</div>
+        <div class="signal-note">单日超过3%时提高警惕</div>
+        <div class="signal-source">东方财富全A行情</div>
+      </article>
+    
+      <article class="signal-card warn">
+        <div class="signal-top">
+          <strong>融资余额 / 流通市值</strong>
+          <span class="status-pill">留意</span>
+        </div>
+        <div class="signal-group">市场情绪</div>
+        <div class="signal-number">2.81%</div>
+        <div class="signal-note">超过3%时杠杆拥挤度偏高</div>
+        <div class="signal-source">AKShare融资融券账户统计</div>
+      </article>
+    
+      <article class="signal-card danger">
+        <div class="signal-top">
+          <strong>融资买入额较20日峰值回落</strong>
+          <span class="status-pill">警惕</span>
+        </div>
+        <div class="signal-group">市场情绪</div>
+        <div class="signal-number">25.9%</div>
+        <div class="signal-note">当前融资买入占全A成交额同时展示在详情中</div>
+        <div class="signal-source">AKShare融资融券账户统计</div>
+      </article>
+    
+      <article class="signal-card normal">
+        <div class="signal-top">
+          <strong>重点权益ETF估算申赎</strong>
+          <span class="status-pill">正常</span>
+        </div>
+        <div class="signal-group">市场情绪</div>
+        <div class="signal-number">-60.7亿</div>
+        <div class="signal-note">沿用ETF观察池；净流出用于观察市场承接，不等于全市场基金份额增长</div>
+        <div class="signal-source">重点ETF份额快照</div>
+      </article>
+    
+      <article class="signal-card normal">
+        <div class="signal-top">
+          <strong>纳指60日高点回撤</strong>
+          <span class="status-pill">正常</span>
+        </div>
+        <div class="signal-group">美股联动</div>
+        <div class="signal-number">-1.0%</div>
+        <div class="signal-note">作为美股AI叙事转弱的自动代理</div>
+        <div class="signal-source">Yahoo Finance Nasdaq Composite</div>
+      </article>
+    
+      <article class="signal-card warn">
+        <div class="signal-top">
+          <strong>IPO审核池拟融资</strong>
+          <span class="status-pill">留意</span>
+        </div>
+        <div class="signal-group">融资减持</div>
+        <div class="signal-number">509.2亿</div>
+        <div class="signal-note">辅助观察融资压力；不等于实际发行规模</div>
+        <div class="signal-source">东方财富IPO审核数据</div>
+      </article>
+    </div>
+      </section>
+
+      <section class="split">
+        <article class="panel">
+          <div class="section-head">
+            <h2>融资余额趋势</h2>
+            <span>最近数据 2026-06-04</span>
+          </div>
+          
+      <div class="chart-wrap">
+        <svg viewBox="0 0 1000 220" role="img" aria-label="趋势折线">
+          <rect x="0" y="0" width="1000" height="220" class="chart-bg" />
+          <line x1="52" y1="186.0" x2="982" y2="186.0" class="grid-line" /><text x="43" y="190.0" text-anchor="end" class="axis-label">25054.5</text><line x1="52" y1="144.0" x2="982" y2="144.0" class="grid-line" /><text x="43" y="148.0" text-anchor="end" class="axis-label">26235.6</text><line x1="52" y1="102.0" x2="982" y2="102.0" class="grid-line" /><text x="43" y="106.0" text-anchor="end" class="axis-label">27416.7</text><line x1="52" y1="60.0" x2="982" y2="60.0" class="grid-line" /><text x="43" y="64.0" text-anchor="end" class="axis-label">28597.9</text><line x1="52" y1="18.0" x2="982" y2="18.0" class="grid-line" /><text x="43" y="22.0" text-anchor="end" class="axis-label">29779.0</text><text x="52.0" y="210" text-anchor="middle" class="axis-label">01-30</text><text x="522.9" y="210" text-anchor="middle" class="axis-label">04-07</text><text x="982.0" y="210" text-anchor="middle" class="axis-label">06-04</text>
+          <polyline points="52.0,117.3 63.8,119.4 75.5,120.4 87.3,125.4 99.1,129.6 110.9,135.7 122.6,135.5 134.4,136.8 146.2,142.5 157.9,142.0 169.7,162.2 181.5,150.2 193.3,141.8 205.0,134.6 216.8,133.9 228.6,132.4 240.4,140.4 252.1,143.3 263.9,140.4 275.7,142.5 287.4,142.6 299.2,139.1 311.0,137.2 322.8,136.0 334.5,140.6 346.3,137.1 358.1,140.3 369.8,139.4 381.6,140.9 393.4,147.1 405.2,151.2 416.9,153.7 428.7,152.5 440.5,152.8 452.3,155.7 464.0,152.9 475.8,155.8 487.6,155.5 499.3,159.4 511.1,165.6 522.9,164.3 534.7,158.5 546.4,155.9 558.2,154.0 570.0,148.3 581.7,142.5 593.5,138.8 605.3,135.0 617.1,134.2 628.8,123.8 640.6,121.5 652.4,116.7 664.2,115.3 675.9,119.3 687.7,113.8 699.5,113.7 711.2,112.4 723.0,118.4 734.8,103.8 746.6,93.2 758.3,87.5 770.1,76.6 781.9,70.6 793.6,62.5 805.4,59.2 817.2,61.3 829.0,55.7 840.7,53.9 852.5,51.5 864.3,54.5 876.1,53.5 887.8,44.5 899.6,41.9 911.4,40.4 923.1,38.4 934.9,48.9 946.7,51.6 958.5,51.1 970.2,48.1 982.0,45.8" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="982.0" cy="45.8" r="4" fill="#7c3aed" />
+        </svg>
+      </div>
+    
+        </article>
+        <article class="panel">
+          <div class="section-head">
+            <h2>纳指联动</h2>
+            <span>60日高点回撤 -1.0%</span>
+          </div>
+          
+      <div class="chart-wrap">
+        <svg viewBox="0 0 1000 220" role="img" aria-label="趋势折线">
+          <rect x="0" y="0" width="1000" height="220" class="chart-bg" />
+          <line x1="52" y1="186.0" x2="982" y2="186.0" class="grid-line" /><text x="43" y="190.0" text-anchor="end" class="axis-label">19786.8</text><line x1="52" y1="144.0" x2="982" y2="144.0" class="grid-line" /><text x="43" y="148.0" text-anchor="end" class="axis-label">21865.5</text><line x1="52" y1="102.0" x2="982" y2="102.0" class="grid-line" /><text x="43" y="106.0" text-anchor="end" class="axis-label">23944.3</text><line x1="52" y1="60.0" x2="982" y2="60.0" class="grid-line" /><text x="43" y="64.0" text-anchor="end" class="axis-label">26023.0</text><line x1="52" y1="18.0" x2="982" y2="18.0" class="grid-line" /><text x="43" y="22.0" text-anchor="end" class="axis-label">28101.8</text><text x="52.0" y="210" text-anchor="middle" class="axis-label">12-05</text><text x="520.8" y="210" text-anchor="middle" class="axis-label">03-09</text><text x="982.0" y="210" text-anchor="middle" class="axis-label">06-04</text>
+          <polyline points="52.0,109.4 59.6,110.0 67.1,109.4 74.7,107.9 82.2,109.1 89.8,117.1 97.4,119.9 104.9,118.8 112.5,127.3 120.0,120.9 127.6,114.9 135.2,112.4 142.7,109.7 150.3,108.7 157.9,109.1 165.4,111.5 173.0,112.6 180.5,116.2 188.1,116.3 195.7,113.1 203.2,110.0 210.8,109.3 218.3,111.4 225.9,107.5 233.5,106.3 241.0,106.7 248.6,111.5 256.1,110.4 263.7,110.7 271.3,122.0 278.8,116.5 286.4,112.3 294.0,111.0 301.5,108.9 309.1,104.6 316.6,103.8 324.2,107.2 331.8,111.7 339.3,109.1 346.9,115.9 354.4,123.0 362.0,130.4 369.6,120.4 377.1,116.3 384.7,119.0 392.2,119.7 399.8,129.2 407.4,130.2 414.9,129.6 422.5,126.1 430.0,127.5 437.6,123.4 445.2,128.6 452.7,123.8 460.3,118.0 467.9,123.5 475.4,127.8 483.0,126.2 490.5,130.8 498.1,125.0 505.7,126.1 513.2,133.4 520.8,127.2 528.3,127.2 535.9,126.8 543.5,135.0 551.0,139.2 558.6,133.7 566.1,131.6 573.7,138.2 581.3,139.5 588.8,148.4 596.4,142.4 604.0,146.1 611.5,142.7 619.1,153.2 626.6,162.5 634.2,165.6 641.8,149.6 649.3,144.5 656.9,143.7 664.4,141.4 672.0,140.9 679.6,128.5 687.1,124.7 694.7,123.0 702.2,117.4 709.8,108.2 717.4,100.6 724.9,98.8 732.5,91.4 740.0,92.7 747.6,95.6 755.2,87.6 762.7,92.0 770.3,84.0 777.9,83.0 785.4,87.5 793.0,87.3 800.5,82.8 808.1,78.4 815.7,79.3 823.2,74.1 830.8,63.7 838.3,64.4 845.9,55.5 853.5,54.9 861.0,58.7 868.6,52.3 876.1,47.6 883.7,55.9 891.3,58.6 898.8,63.1 906.4,55.0 914.0,54.5 921.5,53.5 929.1,47.2 936.6,46.8 944.2,41.9 951.8,40.8 959.3,38.5 966.9,38.4 974.4,43.2 982.0,43.7" fill="none" stroke="#2563a9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="982.0" cy="43.7" r="4" fill="#2563a9" />
+        </svg>
+      </div>
+    
+        </article>
+      </section>
+
+      
+      <section class="panel">
+        <div class="section-head">
+          <h2>微信热度观察</h2>
+          <span>全民讨论股票代理 · 微信指数小程序口径 · 暂不参与自动评分</span>
+        </div>
+        <div class="wechat-index-grid">
+          
+          <article class="wechat-index-card unavailable">
+            <div class="wechat-index-top">
+              <div>
+                <span class="wechat-index-kicker">微信指数关键词</span>
+                <h3>股票</h3>
+              </div>
+              <span class="status-pill">缺数据</span>
+            </div>
+            <div class="wechat-index-number">-</div>
+            <div class="wechat-index-track"><span></span></div>
+            <div class="wechat-index-meta"><span>周变化 -</span><span>等待人工核验</span></div>
+          </article>
+        
+          
+          <article class="wechat-index-card unavailable">
+            <div class="wechat-index-top">
+              <div>
+                <span class="wechat-index-kicker">微信指数关键词</span>
+                <h3>牛市</h3>
+              </div>
+              <span class="status-pill">缺数据</span>
+            </div>
+            <div class="wechat-index-number">-</div>
+            <div class="wechat-index-track"><span></span></div>
+            <div class="wechat-index-meta"><span>周变化 -</span><span>等待人工核验</span></div>
+          </article>
+        
+        </div>
+      </section>
+    
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>暂不可自动获取</h2>
+          <span>保留位置，避免遗漏原始框架</span>
+        </div>
+        <div class="signal-grid">
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>股票新增开户</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">公开接口最新数据较旧，不参与自动评分</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>全市场基金份额增长</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">重点权益ETF申赎已单独自动跟踪；全市场基金月度口径暂缺</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>再融资规模</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">公开口径不稳定，暂不自动评分</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>重要股东减持</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">需要公告聚合源或人工补录</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>美股AI叙事反转</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">使用纳指回撤作为自动代理，定性判断仍需人工</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>互联网泡沫对比</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">需要人工复盘补录</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    
+      <article class="signal-card unavailable">
+        <div class="signal-top">
+          <strong>美股巨头IPO</strong>
+          <span class="status-pill">缺数据</span>
+        </div>
+        <div class="signal-group">待补充</div>
+        <div class="signal-number">-</div>
+        <div class="signal-note">需要人工复盘补录</div>
+        <div class="signal-source">人工复盘 / 付费数据源</div>
+      </article>
+    </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>ETF资金观测</h2>
+          <span>etf_watchlist_2026-06-05.csv</span>
+        </div>
+        <div class="integration-grid">
+          <a class="integration-link" href="index.html">
+            <strong>大盘ETF复盘</strong>
+            <span>重点ETF、申赎、宽基走势、股指期货交割</span>
+          </a>
+          <a class="integration-link" href="industry.html">
+            <strong>行业ETF跟踪</strong>
+            <span>行业资金热力、回测折线、活跃ETF排行</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  <footer>顶部压力温度是复盘辅助，不是逃顶概率。历史代理线用于观察节奏，不等同于当日完整温度；自动评分只纳入可验证数据，灰色条目不参与评分。</footer>
+</body>
+</html>

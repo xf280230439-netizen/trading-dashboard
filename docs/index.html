@@ -1,0 +1,3960 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A股资金复盘 · 2026-06-05</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1d2430;
+      --muted: #687386;
+      --line: #dfe4ea;
+      --pos: #c9362c;
+      --pos-bg: #f8dfdc;
+      --neg: #16815d;
+      --neg-bg: #dff1eb;
+      --warn: #9a6412;
+      --warn-bg: #f7ead3;
+      --blue: #2563a9;
+      --blue-bg: #dce9f8;
+      --unavailable: #8a94a3;
+      --unavailable-bg: #eef1f4;
+      --shadow: 0 8px 22px rgba(31, 42, 68, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(246, 247, 249, 0.96);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 28px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    h1, h2 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: 28px; line-height: 1.1; }
+    h2 { font-size: 17px; }
+    .date-pill {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .head-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .site-nav {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      padding: 6px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .site-nav a:hover {
+      color: var(--text);
+      background: var(--blue-bg);
+    }
+    .subtitle { color: var(--muted); margin-top: 6px; font-size: 13px; }
+    main {
+      max-width: 1360px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 22px 28px 36px;
+      display: grid;
+      gap: 18px;
+    }
+    main > * { min-width: 0; max-width: 100%; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric, .panel, .empty-state {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .metric { padding: 14px; min-height: 104px; border-left: 4px solid var(--blue); }
+    .metric.pos { border-left-color: var(--pos); }
+    .metric.neg { border-left-color: var(--neg); }
+    .metric.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+      box-shadow: none;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; }
+    .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
+    .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .data-status {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .status-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 12px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .status-item.unavailable {
+      background: var(--unavailable-bg);
+      box-shadow: none;
+      color: var(--unavailable);
+    }
+    .status-item span,
+    .status-item em {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-style: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status-item strong {
+      display: block;
+      margin: 4px 0 3px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.8fr);
+      gap: 18px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .money-alerts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .futures-cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+    .alert-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .alert-card.pos { border-left-color: var(--pos); background: linear-gradient(90deg, var(--pos-bg), #fff 34%); }
+    .alert-card.neg { border-left-color: var(--neg); background: linear-gradient(90deg, var(--neg-bg), #fff 34%); }
+    .alert-card.warn { border-left-color: var(--warn); background: linear-gradient(90deg, var(--warn-bg), #fff 34%); }
+    .alert-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .alert-top em { font-style: normal; font-variant-numeric: tabular-nums; }
+    .alert-state {
+      font-size: 28px;
+      font-weight: 850;
+      margin-top: 8px;
+      line-height: 1.1;
+    }
+    .alert-card.pos .alert-state { color: var(--pos); }
+    .alert-card.neg .alert-state { color: var(--neg); }
+    .alert-card.warn .alert-state { color: var(--warn); }
+    .alert-card p {
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .alert-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .alert-metric {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 6px;
+      padding: 8px;
+      min-width: 0;
+    }
+    .alert-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .alert-metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .panel { padding: 18px; min-width: 0; overflow: hidden; }
+    .panel.wide { min-width: 0; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-head span { min-width: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .heat-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .heat-row {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fbfcfd;
+    }
+    .heat-head, .heat-foot, .rank-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .heat-head span, .heat-foot, .sub { color: var(--muted); font-size: 12px; }
+    .bar-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 9px 0 7px;
+    }
+    .bar-track.compact { height: 7px; margin-top: 6px; }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.pos { background: var(--pos); }
+    .bar-fill.neg { background: var(--neg); }
+    .bar-fill.warn { background: var(--warn); }
+    .signals { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .signals li {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      background: var(--blue-bg);
+    }
+    .signals li.pos { border-left-color: var(--pos); background: var(--pos-bg); }
+    .signals li.neg { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signals li.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signals span { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .table-scroll { width: 100%; overflow-x: auto; }
+    .table-scroll table { min-width: 860px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; font-size: 13px; vertical-align: middle; }
+    th { color: var(--muted); font-weight: 700; background: #f9fafb; }
+    th.sortable {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      padding-right: 22px;
+    }
+    th.sortable::after {
+      content: "↕";
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aeb8c5;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    th.sortable.sort-asc::after {
+      content: "↑";
+      color: var(--blue);
+    }
+    th.sortable.sort-desc::after {
+      content: "↓";
+      color: var(--blue);
+    }
+    th.sortable:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .etf-table .col-code { width: 82px; }
+    .etf-table .col-name { width: auto; }
+    .etf-table .col-category { width: 96px; }
+    .etf-table .col-flow,
+    .etf-table .col-share,
+    .etf-table .col-activity,
+    .etf-table .col-change { width: 112px; }
+    .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; width: 74px; }
+    .etf-main {
+      display: grid;
+      grid-template-rows: 18px 16px;
+      gap: 2px;
+      min-width: 0;
+      align-content: center;
+    }
+    .name {
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 750;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .category-cell { color: var(--text); }
+    .unavailable,
+    .unavailable .metric-value,
+    .unavailable .metric-note,
+    .unavailable .metric-label { color: var(--unavailable); }
+    .unavailable-row {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .pos { color: var(--pos); }
+    .neg { color: var(--neg); }
+    .neutral { color: var(--blue); }
+    td.unavailable, .rank-row .unavailable { color: var(--unavailable); }
+    .rank-title { font-weight: 800; margin-bottom: 12px; }
+    .rank-row { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .rank-meta span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chart-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+    svg { display: block; width: 100%; height: auto; }
+    .chart-bg { fill: #fbfcfd; }
+    .grid-line { stroke: #dfe4ea; stroke-width: 1; }
+    .grid-line.vertical { stroke-dasharray: 4 5; }
+    .axis-line { stroke: #aeb8c5; stroke-width: 1.2; }
+    .axis-label { fill: var(--muted); font-size: 12px; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      background: #fbfcfd;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .trend-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 10px;
+      min-width: 0;
+    }
+    .trend-card.unavailable {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .trend-head,
+    .trend-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .trend-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .trend-head span {
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .trend-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .trend-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mini-svg {
+      display: block;
+      width: 100%;
+      height: 118px;
+      margin-top: 6px;
+    }
+    .mini-zero {
+      stroke: #cfd7e1;
+      stroke-width: 1;
+      stroke-dasharray: 4 5;
+    }
+    .mini-empty {
+      min-height: 118px;
+      display: grid;
+      place-items: center;
+    }
+    .top-signal-hero {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 2fr);
+      gap: 16px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .pressure-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .pressure-card.normal { border-left-color: var(--pos); }
+    .pressure-card.warn { border-left-color: var(--warn); }
+    .pressure-card.danger { border-left-color: var(--neg); }
+    .pressure-value {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .pressure-card.normal .pressure-value { color: var(--pos); }
+    .pressure-card.warn .pressure-value { color: var(--warn); }
+    .pressure-card.danger .pressure-value { color: var(--neg); }
+    .pressure-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .pressure-fill { height: 100%; background: var(--blue); }
+    .pressure-card.normal .pressure-fill { background: var(--pos); }
+    .pressure-card.warn .pressure-fill { background: var(--warn); }
+    .pressure-card.danger .pressure-fill { background: var(--neg); }
+    .pressure-copy {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card.normal { border-left-color: var(--pos); }
+    .signal-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signal-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signal-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .signal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+    .signal-top strong { min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+    .signal-group {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+    .signal-number {
+      font-size: 25px;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .signal-card.normal .signal-number { color: var(--pos); }
+    .signal-card.warn .signal-number { color: var(--warn); }
+    .signal-card.danger .signal-number { color: var(--neg); }
+    .signal-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+      min-height: 34px;
+      overflow-wrap: anywhere;
+    }
+    .status-pill {
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .signal-source {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-card {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 14px;
+    }
+    .wechat-index-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .wechat-index-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .wechat-index-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .wechat-index-top, .wechat-index-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+    .wechat-index-top > div, .wechat-index-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .wechat-index-kicker {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+    .wechat-index-card h3 { margin: 0; font-size: 18px; }
+    .wechat-index-number {
+      margin-top: 16px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .wechat-index-meta {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .wechat-index-card .chart-wrap { margin-top: 14px; }
+    .wechat-index-track {
+      height: 10px;
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #d8dee7;
+    }
+    .wechat-index-track span {
+      display: block;
+      width: 36%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--unavailable);
+      opacity: .45;
+    }
+    .tdx-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .tdx-metric {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-metric.pos { border-left-color: var(--pos); }
+    .tdx-metric.neg { border-left-color: var(--neg); }
+    .tdx-metric.warn { border-left-color: var(--warn); }
+    .tdx-metric span, .tdx-metric em {
+      display: block;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-style: normal;
+      overflow-wrap: anywhere;
+    }
+    .tdx-metric strong {
+      display: block;
+      margin: 5px 0 3px;
+      color: var(--text);
+      font-size: 18px;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-observation {
+      margin-top: 12px;
+      border-left: 4px solid var(--warn);
+      background: var(--warn-bg);
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .tdx-index-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tdx-index-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-index-top, .tdx-index-meta, .tdx-leader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      min-width: 0;
+    }
+    .tdx-index-top strong { min-width: 0; color: var(--text); font-size: 13px; overflow-wrap: anywhere; }
+    .tdx-index-top span { flex: 0 0 auto; font-size: 12px; font-weight: 800; }
+    .tdx-index-close {
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-index-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-leader-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .tdx-leader-block { min-width: 0; }
+    .tdx-leader-block h3 { margin: 0 0 8px; font-size: 14px; }
+    .tdx-leader-row {
+      border-top: 1px solid var(--line);
+      padding: 7px 0;
+      font-size: 12px;
+    }
+    .tdx-leader-name {
+      min-width: 0;
+      flex: 1 1 auto;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tdx-leader-code { flex: 0 0 auto; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tdx-leader-row strong { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+    .tdx-unusual {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      font-size: 13px;
+    }
+    .tdx-unusual > div { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tdx-unusual span {
+      display: inline-flex;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fbfcfd;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-unusual span strong { color: var(--text); }
+    .tdx-source { margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .down-rain-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .down-rain-layout .tdx-metric-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .down-rain-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .07) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #eef6f2 100%);
+      background-size: 34px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .down-rain-card.severe, .down-rain-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e3f1ec 100%);
+      background-size: 34px 100%, 100% 100%;
+    }
+    .down-rain-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .storm-mark {
+      position: relative;
+      width: 34px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .storm-mark span {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--neg);
+      transform: rotate(22deg);
+      opacity: .75;
+    }
+    .storm-mark span:nth-child(1) { left: 8px; height: 24px; opacity: .45; }
+    .storm-mark span:nth-child(2) { left: 16px; height: 34px; opacity: .85; }
+    .storm-mark span:nth-child(3) { left: 25px; height: 28px; opacity: .58; }
+    .down-rain-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .down-rain-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .storm-scale {
+      height: 8px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe8e4;
+    }
+    .storm-scale span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--warn), var(--neg));
+    }
+    .storm-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(16, minmax(18px, 1fr));
+      gap: 7px;
+      align-items: end;
+      height: 230px;
+      margin-top: 14px;
+      padding: 18px 4px 0;
+      border-top: 1px solid rgba(104, 115, 134, .20);
+    }
+    .storm-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-top: 1px dashed rgba(104, 115, 134, .36);
+      pointer-events: none;
+    }
+    .storm-line.high { bottom: calc(80% + 22px); }
+    .storm-line.mid { bottom: calc(69% + 22px); }
+    .storm-line span {
+      position: absolute;
+      right: 0;
+      top: -18px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .down-day {
+      position: relative;
+      display: grid;
+      grid-template-rows: 20px 1fr 16px;
+      gap: 4px;
+      min-width: 0;
+      height: 100%;
+      align-items: end;
+      justify-items: center;
+      color: var(--muted);
+    }
+    .rain-value {
+      align-self: start;
+      font-size: 10px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .rain-needle {
+      position: relative;
+      width: 100%;
+      height: var(--h);
+      min-height: 22px;
+      align-self: end;
+    }
+    .rain-needle span {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 7px;
+      height: 100%;
+      border-radius: 999px 999px 4px 4px;
+      background: var(--blue);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.45) inset;
+    }
+    .rain-needle::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      width: 15px;
+      height: 15px;
+      border-radius: 10px 10px 10px 2px;
+      background: var(--blue);
+      transform: translateX(-50%) rotate(45deg);
+      box-shadow: 0 4px 10px rgba(22, 129, 93, .18);
+    }
+    .down-day.warn .rain-needle span,
+    .down-day.warn .rain-needle::before { background: var(--warn); }
+    .down-day.severe .rain-needle span,
+    .down-day.severe .rain-needle::before,
+    .down-day.extreme .rain-needle span,
+    .down-day.extreme .rain-needle::before { background: var(--neg); }
+    .down-day.extreme .rain-needle span {
+      width: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.55) inset, 0 0 16px rgba(22,129,93,.25);
+    }
+    .rain-date {
+      font-size: 10px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .breadth-line-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(37, 99, 169, .05) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #f2f7f5 100%);
+      background-size: 36px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .breadth-line-card.severe, .breadth-line-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e8f3ef 100%);
+      background-size: 36px 100%, 100% 100%;
+    }
+    .breadth-line-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .wave-mark {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .wave-mark span {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--blue);
+      transform-origin: center;
+    }
+    .wave-mark span:nth-child(1) { top: 9px; transform: rotate(-12deg); opacity: .55; }
+    .wave-mark span:nth-child(2) { top: 16px; transform: rotate(10deg); background: var(--neg); opacity: .9; }
+    .wave-mark span:nth-child(3) { top: 23px; transform: rotate(-8deg); background: var(--warn); opacity: .75; }
+    .wave-mark span:nth-child(4) { top: 30px; transform: rotate(12deg); opacity: .45; }
+    .breadth-line-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-line-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .breadth-line-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-meta span {
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-line-svg {
+      display: block;
+      width: 100%;
+      height: 286px;
+      margin-top: 10px;
+      overflow: visible;
+    }
+    .breadth-plot-bg { fill: rgba(255, 255, 255, .70); }
+    .breadth-grid-line line {
+      stroke: rgba(104, 115, 134, .28);
+      stroke-dasharray: 6 7;
+      stroke-width: 1;
+    }
+    .breadth-grid-line.warn line { stroke: rgba(217, 119, 6, .48); }
+    .breadth-grid-line.danger line { stroke: rgba(22, 129, 93, .55); }
+    .breadth-grid-line text {
+      fill: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-area { fill: url(#breadthArea); }
+    .breadth-path {
+      fill: none;
+      stroke: var(--neg);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .breadth-ma-path {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 5 6;
+    }
+    .point-hit { fill: transparent; pointer-events: all; }
+    .point-dot {
+      fill: var(--blue);
+      stroke: #fff;
+      stroke-width: 1.5;
+      opacity: .75;
+    }
+    .breadth-point.warn .point-dot { fill: var(--warn); }
+    .breadth-point.severe .point-dot,
+    .breadth-point.extreme .point-dot { fill: var(--neg); }
+    .breadth-point.extreme .point-dot { r: 5; }
+    .point-tip {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .12s ease;
+    }
+    .breadth-point:hover .point-tip,
+    .breadth-point:focus .point-tip { opacity: 1; }
+    .point-tip rect {
+      fill: #ffffff;
+      stroke: var(--line);
+      filter: drop-shadow(0 8px 18px rgba(15, 23, 42, .13));
+    }
+    .point-tip text {
+      fill: var(--text);
+      font-size: 11px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+    .point-tip text + text {
+      fill: var(--muted);
+      font-weight: 650;
+    }
+    .breadth-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .breadth-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-legend i {
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--neg);
+    }
+    .breadth-legend i.ma {
+      background: var(--blue);
+      background-image: repeating-linear-gradient(90deg, transparent 0 5px, #fff 5px 8px);
+    }
+    .integration-link {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--text);
+      text-decoration: none;
+      background: #fbfcfd;
+    }
+    .integration-link:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .integration-link strong { display: block; font-size: 15px; }
+    .integration-link span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .social-disclosure {
+      border-left: 5px solid var(--blue);
+    }
+    .social-disclosure.warn {
+      border-left-color: var(--warn);
+      background: var(--warn-bg);
+    }
+    .social-disclosure p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 5px 0 0;
+    }
+    .social-action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .social-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .social-bar-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+    }
+    .social-bar-card h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+    .social-bar-list {
+      display: grid;
+      gap: 10px;
+    }
+    .social-bar-row {
+      min-width: 0;
+    }
+    .social-bar-head,
+    .social-bar-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .social-bar-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .social-bar-head span {
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .social-bar-track {
+      height: 8px;
+      margin-top: 5px;
+      border-radius: 999px;
+      background: #e8edf3;
+      overflow: hidden;
+    }
+    .social-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .social-bar-fill.new { background: var(--blue); }
+    .social-bar-fill.increase { background: var(--pos); }
+    .social-bar-fill.decrease { background: var(--neg); }
+    .social-bar-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .action-block {
+      min-width: 0;
+    }
+    .action-block h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+    .action-pill {
+      display: inline-block;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .empty, .empty-state { color: var(--muted); padding: 18px; }
+    .empty-state h2 { color: var(--text); margin-bottom: 8px; }
+    code {
+      background: #e9edf2;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 28px 28px;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    @media (max-width: 1100px) {
+      .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .data-status { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .trend-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .social-action-grid { grid-template-columns: 1fr; }
+      .social-chart-grid { grid-template-columns: 1fr; }
+      .down-rain-layout { grid-template-columns: 1fr; }
+      .tdx-metric-grid, .tdx-index-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .tdx-leader-grid { grid-template-columns: 1fr; }
+      .money-alerts { grid-template-columns: 1fr; }
+      .futures-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      header { padding: 14px 16px; }
+      .topline { align-items: flex-start; flex-direction: column; }
+      .head-actions { width: 100%; max-width: 100%; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
+      .site-nav, .date-pill { flex: 0 0 auto; }
+      main { padding: 16px; }
+      .summary-grid, .data-status, .heat-list { grid-template-columns: 1fr; }
+      .trend-grid { grid-template-columns: 1fr; }
+      .top-signal-hero, .signal-grid, .integration-grid, .wechat-index-grid { grid-template-columns: 1fr; }
+      .tdx-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tdx-index-grid { grid-template-columns: 1fr; }
+      .down-rain-chart { height: 200px; gap: 5px; }
+      .breadth-line-svg { height: 238px; }
+      .breadth-line-meta { display: grid; grid-template-columns: 1fr; gap: 3px; }
+      .storm-meta { display: grid; grid-template-columns: 1fr; gap: 2px; }
+      .futures-cards { grid-template-columns: 1fr; }
+      .alert-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-value { font-size: 22px; }
+      table { min-width: 760px; }
+      .panel { overflow-x: auto; }
+      .section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; align-items: flex-start; }
+      .status-pill { flex: 0 0 auto; }
+    }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const collator = new Intl.Collator("zh-Hans-CN", { numeric: true, sensitivity: "base" });
+
+      const cleanText = (cell) => (cell?.innerText || "").replace(/\s+/g, " ").trim();
+
+      const numericColumn = (header) => {
+        const text = header.textContent.trim();
+        return header.classList.contains("num") || /代码|ETF数|涨跌|涨\/跌|申赎|净额|成交|规模|份额|价格|市值/.test(text);
+      };
+
+      const parseValue = (cell, header) => {
+        const text = cleanText(cell);
+        const headerText = header.textContent.trim();
+        if (!text || text === "-") {
+          return { type: "empty", value: 0 };
+        }
+        if (/日期|时间|更新/.test(headerText)) {
+          const dateValue = Date.parse(text.replace(/\+08:00$/, ""));
+          if (!Number.isNaN(dateValue)) {
+            return { type: "number", value: dateValue };
+          }
+        }
+        if (headerText.includes("涨/跌")) {
+          const match = text.match(/(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)/);
+          if (match) {
+            return { type: "number", value: Number(match[1]) - Number(match[2]) };
+          }
+        }
+        if (numericColumn(header)) {
+          const normalized = text
+            .replace(/,/g, "")
+            .replace(/亿份|亿元|亿|%|只/g, "")
+            .replace(/\+/g, "");
+          const match = normalized.match(/-?\d+(?:\.\d+)?/);
+          if (match) {
+            return { type: "number", value: Number(match[0]) };
+          }
+        }
+        return { type: "text", value: text };
+      };
+
+      const compareValues = (a, b, direction) => {
+        if (a.type === "empty" && b.type === "empty") return 0;
+        if (a.type === "empty") return 1;
+        if (b.type === "empty") return -1;
+        let result = 0;
+        if (a.type === "number" && b.type === "number") {
+          result = a.value - b.value;
+        } else {
+          result = collator.compare(String(a.value), String(b.value));
+        }
+        return direction === "asc" ? result : -result;
+      };
+
+      document.querySelectorAll("table").forEach((table) => {
+        const headers = Array.from(table.querySelectorAll("thead th"));
+        const tbody = table.querySelector("tbody");
+        if (!headers.length || !tbody) return;
+
+        Array.from(tbody.rows).forEach((row, index) => {
+          row.dataset.originalIndex = String(index);
+        });
+
+        headers.forEach((header, columnIndex) => {
+          header.classList.add("sortable");
+          header.tabIndex = 0;
+          header.title = "点击排序";
+          header.setAttribute("aria-sort", "none");
+
+          const sort = () => {
+            const current = header.dataset.sortDirection;
+            const firstDirection = numericColumn(header) ? "desc" : "asc";
+            const direction = current === "asc" ? "desc" : current === "desc" ? "asc" : firstDirection;
+            const rows = Array.from(tbody.rows);
+
+            headers.forEach((item) => {
+              item.classList.remove("sort-asc", "sort-desc");
+              item.dataset.sortDirection = "";
+              item.setAttribute("aria-sort", "none");
+            });
+
+            header.dataset.sortDirection = direction;
+            header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
+            header.setAttribute("aria-sort", direction === "asc" ? "ascending" : "descending");
+
+            rows.sort((left, right) => {
+              const leftValue = parseValue(left.cells[columnIndex], header);
+              const rightValue = parseValue(right.cells[columnIndex], header);
+              const compared = compareValues(leftValue, rightValue, direction);
+              if (compared !== 0) return compared;
+              return Number(left.dataset.originalIndex) - Number(right.dataset.originalIndex);
+            });
+
+            rows.forEach((row) => tbody.appendChild(row));
+          };
+
+          header.addEventListener("click", sort);
+          header.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              sort();
+            }
+          });
+        });
+      });
+    });
+  </script>
+    
+</head>
+<body>
+  <header>
+    <div class="topline">
+      <div>
+        <h1>A股资金复盘</h1>
+        <div class="subtitle">快照：etf_watchlist_2026-06-05.csv · 生成：2026-06-05 16:45</div>
+      </div>
+      <div class="head-actions">
+        <nav class="site-nav" aria-label="页面导航">
+          <a href="index.html">大盘复盘</a>
+          <a href="industry.html">行业ETF</a>
+          <a href="top-signals.html">顶部信号</a>
+          <a href="social-security.html">社保基金</a>
+        </nav>
+        <div class="date-pill">2026-06-05</div>
+      </div>
+    </div>
+  </header>
+  <main>
+      <section class="summary-grid">
+      <article class="metric neg">
+        <div class="metric-label">权益ETF</div>
+        <div class="metric-value">-46.9亿</div>
+        <div class="metric-note">净赎回</div>
+      </article>
+    
+
+      <article class="metric neg">
+        <div class="metric-label">宽基/成长</div>
+        <div class="metric-value">-75.2亿</div>
+        <div class="metric-note">强净赎回</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">避险现金</div>
+        <div class="metric-value">-1.3亿</div>
+        <div class="metric-note">均衡</div>
+      </article>
+    
+
+      <article class="metric neg">
+        <div class="metric-label">跨境外溢</div>
+        <div class="metric-value">-35.5亿</div>
+        <div class="metric-note">净赎回</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">权益成交</div>
+        <div class="metric-value">615.1亿</div>
+        <div class="metric-note">观察活跃度/体量</div>
+      </article>
+    
+
+      <article class="metric neutral">
+        <div class="metric-label">匹配覆盖</div>
+        <div class="metric-value">42/43</div>
+        <div class="metric-note">观察池ETF</div>
+      </article>
+    </section>
+
+      
+      <section class="data-status">
+        
+      <div class="status-item neutral">
+        <span>快照日期</span>
+        <strong>2026-06-05</strong>
+        <em>生成 2026-06-05T16:45:12</em>
+      </div>
+    
+      <div class="status-item neutral">
+        <span>ETF行情</span>
+        <strong>2026-06-05</strong>
+        <em>更新 2026-06-05 16:12</em>
+      </div>
+    
+      <div class="status-item neutral">
+        <span>成交额</span>
+        <strong>已获取</strong>
+        <em>可用于活跃度判断</em>
+      </div>
+    
+      <div class="status-item neutral">
+        <span>ETF申赎</span>
+        <strong>已获取</strong>
+        <em>份额变化可用于估算</em>
+      </div>
+    
+      <div class="status-item unavailable">
+        <span>大盘资金流</span>
+        <strong>-</strong>
+        <em>非当日，灰色参考</em>
+      </div>
+    
+      <div class="status-item unavailable">
+        <span>观察池覆盖</span>
+        <strong>42/43</strong>
+        <em>1 只未匹配</em>
+      </div>
+    
+      </section>
+    
+
+      
+      <section class="panel">
+        <div class="section-head">
+          <h2>大盘观察</h2>
+          <span>当日 TDX 快照 · 2026-06-05T16:13:21</span>
+        </div>
+        <div class="down-rain-layout">
+          
+      <article class="breadth-line-card calm">
+        <div class="breadth-line-head">
+          <div class="wave-mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <div>
+            <span>全市场下跌压力波</span>
+            <strong>2,137只</strong>
+          </div>
+          <em>压力回落</em>
+        </div>
+        <div class="breadth-line-meta">
+          <span>最近 90 个交易日</span>
+          <span>阈值 3800 / 4400</span>
+          <span>5日均 3,123 / 20日均 3,249，低于20日均</span>
+        </div>
+        <svg class="breadth-line-svg" viewBox="0 0 900 268" role="img" aria-label="最近90个交易日全市场下跌家数折线">
+          <defs>
+            <linearGradient id="breadthArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#16815d" stop-opacity=".24"></stop>
+              <stop offset="100%" stop-color="#16815d" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <rect class="breadth-plot-bg" x="44" y="16" width="840" height="214" rx="10"></rect>
+          
+                <g class="breadth-grid-line danger">
+                  <line x1="44" y1="58.8" x2="884" y2="58.8"></line>
+                  <text x="8" y="62.8">4400</text>
+                </g>
+                
+                <g class="breadth-grid-line warn">
+                  <line x1="44" y1="82.1" x2="884" y2="82.1"></line>
+                  <text x="8" y="86.1">3800</text>
+                </g>
+                
+                <g class="breadth-grid-line base">
+                  <line x1="44" y1="113.3" x2="884" y2="113.3"></line>
+                  <text x="8" y="117.3">3000</text>
+                </g>
+                
+          <path class="breadth-area" d="M44.0,230.0 L44.0,159.0 L53.4,109.5 L62.9,144.6 L72.3,160.9 L81.8,175.9 L91.2,83.5 L100.6,95.7 L110.1,88.5 L119.5,91.4 L128.9,117.4 L138.4,49.1 L147.8,209.3 L157.3,147.2 L166.7,85.3 L176.1,130.8 L185.6,200.4 L195.0,108.3 L204.4,103.9 L213.9,102.3 L223.3,81.1 L232.8,175.9 L242.2,167.4 L251.6,118.4 L261.1,149.6 L270.5,63.5 L280.0,43.1 L289.4,88.4 L298.8,179.3 L308.3,185.2 L317.7,75.9 L327.1,197.0 L336.6,102.3 L346.0,78.6 L355.5,81.2 L364.9,133.0 L374.3,53.4 L383.8,158.9 L393.2,37.3 L402.7,43.9 L412.1,28.8 L421.5,217.2 L431.0,208.3 L440.4,55.3 L449.8,188.3 L459.3,134.2 L468.7,59.9 L478.2,195.6 L487.6,59.8 L497.0,45.5 L506.5,174.6 L515.9,218.3 L525.3,62.9 L534.8,175.6 L544.2,114.9 L553.7,168.0 L563.1,92.3 L572.5,188.3 L582.0,113.8 L591.4,156.2 L600.9,96.4 L610.3,135.3 L619.7,71.4 L629.2,99.6 L638.6,148.1 L648.0,86.7 L657.5,175.3 L666.9,133.7 L676.4,172.2 L685.8,158.8 L695.2,162.6 L704.7,142.6 L714.1,72.5 L723.6,146.8 L733.0,59.3 L742.4,90.6 L751.9,113.2 L761.3,160.5 L770.7,82.0 L780.2,44.3 L789.6,170.7 L799.1,104.5 L808.5,71.2 L817.9,55.3 L827.4,136.8 L836.8,78.9 L846.2,163.8 L855.7,79.2 L865.1,85.0 L874.6,67.7 L884.0,146.9 L884.0,230.0 Z"></path>
+          <path class="breadth-path" d="M44.0,159.0 L53.4,109.5 L62.9,144.6 L72.3,160.9 L81.8,175.9 L91.2,83.5 L100.6,95.7 L110.1,88.5 L119.5,91.4 L128.9,117.4 L138.4,49.1 L147.8,209.3 L157.3,147.2 L166.7,85.3 L176.1,130.8 L185.6,200.4 L195.0,108.3 L204.4,103.9 L213.9,102.3 L223.3,81.1 L232.8,175.9 L242.2,167.4 L251.6,118.4 L261.1,149.6 L270.5,63.5 L280.0,43.1 L289.4,88.4 L298.8,179.3 L308.3,185.2 L317.7,75.9 L327.1,197.0 L336.6,102.3 L346.0,78.6 L355.5,81.2 L364.9,133.0 L374.3,53.4 L383.8,158.9 L393.2,37.3 L402.7,43.9 L412.1,28.8 L421.5,217.2 L431.0,208.3 L440.4,55.3 L449.8,188.3 L459.3,134.2 L468.7,59.9 L478.2,195.6 L487.6,59.8 L497.0,45.5 L506.5,174.6 L515.9,218.3 L525.3,62.9 L534.8,175.6 L544.2,114.9 L553.7,168.0 L563.1,92.3 L572.5,188.3 L582.0,113.8 L591.4,156.2 L600.9,96.4 L610.3,135.3 L619.7,71.4 L629.2,99.6 L638.6,148.1 L648.0,86.7 L657.5,175.3 L666.9,133.7 L676.4,172.2 L685.8,158.8 L695.2,162.6 L704.7,142.6 L714.1,72.5 L723.6,146.8 L733.0,59.3 L742.4,90.6 L751.9,113.2 L761.3,160.5 L770.7,82.0 L780.2,44.3 L789.6,170.7 L799.1,104.5 L808.5,71.2 L817.9,55.3 L827.4,136.8 L836.8,78.9 L846.2,163.8 L855.7,79.2 L865.1,85.0 L874.6,67.7 L884.0,146.9"></path>
+          <path class="breadth-ma-path" d="M44.0,159.0 L53.4,134.2 L62.9,137.7 L72.3,143.5 L81.8,150.0 L91.2,134.9 L100.6,132.1 L110.1,120.9 L119.5,107.0 L128.9,95.3 L138.4,88.4 L147.8,111.2 L157.3,122.9 L166.7,121.7 L176.1,124.3 L185.6,154.6 L195.0,134.4 L204.4,125.7 L213.9,129.1 L223.3,119.2 L232.8,114.3 L242.2,126.1 L251.6,129.0 L261.1,138.5 L270.5,135.0 L280.0,108.4 L289.4,92.6 L298.8,104.8 L308.3,111.9 L317.7,114.4 L327.1,145.1 L336.6,147.9 L346.0,127.8 L355.5,107.0 L364.9,118.4 L374.3,89.7 L383.8,101.0 L393.2,92.8 L402.7,85.3 L412.1,64.5 L421.5,97.2 L431.0,107.1 L440.4,110.7 L449.8,139.6 L459.3,160.7 L468.7,129.2 L478.2,126.7 L487.6,127.6 L497.0,99.0 L506.5,107.1 L515.9,138.8 L525.3,112.2 L534.8,135.4 L544.2,149.3 L553.7,147.9 L563.1,122.7 L572.5,147.8 L582.0,135.5 L591.4,143.7 L600.9,129.4 L610.3,138.0 L619.7,114.6 L629.2,111.8 L638.6,110.2 L648.0,108.2 L657.5,116.2 L666.9,128.7 L676.4,143.2 L685.8,145.3 L695.2,160.5 L704.7,154.0 L714.1,141.7 L723.6,136.6 L733.0,116.8 L742.4,102.4 L751.9,96.5 L761.3,114.1 L770.7,101.1 L780.2,98.1 L789.6,114.1 L799.1,112.4 L808.5,94.5 L817.9,89.2 L827.4,107.7 L836.8,89.3 L846.2,101.2 L855.7,102.8 L865.1,108.7 L874.6,94.9 L884.0,108.5"></path>
+          
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="44.0" cy="159.0" r="9"></circle>
+              <circle class="point-dot" cx="44.0" cy="159.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,109.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-19 下跌 1,825</text>
+                <text x="9" y="30">TDX · 2026-01-19</text>
+              </g>
+              <title>2026-01-19 下跌 1,825 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="53.4" cy="109.5" r="9"></circle>
+              <circle class="point-dot" cx="53.4" cy="109.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,59.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-20 下跌 3,098</text>
+                <text x="9" y="30">TDX · 2026-01-20</text>
+              </g>
+              <title>2026-01-20 下跌 3,098 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="62.9" cy="144.6" r="9"></circle>
+              <circle class="point-dot" cx="62.9" cy="144.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,94.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-21 下跌 2,194</text>
+                <text x="9" y="30">TDX · 2026-01-21</text>
+              </g>
+              <title>2026-01-21 下跌 2,194 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="72.3" cy="160.9" r="9"></circle>
+              <circle class="point-dot" cx="72.3" cy="160.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,110.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-22 下跌 1,775</text>
+                <text x="9" y="30">TDX · 2026-01-22</text>
+              </g>
+              <title>2026-01-22 下跌 1,775 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="81.8" cy="175.9" r="9"></circle>
+              <circle class="point-dot" cx="81.8" cy="175.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,125.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-23 下跌 1,390</text>
+                <text x="9" y="30">TDX · 2026-01-23</text>
+              </g>
+              <title>2026-01-23 下跌 1,390 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="91.2" cy="83.5" r="9"></circle>
+              <circle class="point-dot" cx="91.2" cy="83.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,33.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-26 下跌 3,766</text>
+                <text x="9" y="30">TDX · 2026-01-26</text>
+              </g>
+              <title>2026-01-26 下跌 3,766 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="100.6" cy="95.7" r="9"></circle>
+              <circle class="point-dot" cx="100.6" cy="95.7" r="3.8"></circle>
+              <g class="point-tip" transform="translate(44.0,45.7)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-27 下跌 3,451</text>
+                <text x="9" y="30">TDX · 2026-01-27</text>
+              </g>
+              <title>2026-01-27 下跌 3,451 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="110.1" cy="88.5" r="9"></circle>
+              <circle class="point-dot" cx="110.1" cy="88.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(51.1,38.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-28 下跌 3,636</text>
+                <text x="9" y="30">TDX · 2026-01-28</text>
+              </g>
+              <title>2026-01-28 下跌 3,636 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="119.5" cy="91.4" r="9"></circle>
+              <circle class="point-dot" cx="119.5" cy="91.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(60.5,41.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-29 下跌 3,562</text>
+                <text x="9" y="30">TDX · 2026-01-29</text>
+              </g>
+              <title>2026-01-29 下跌 3,562 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="128.9" cy="117.4" r="9"></circle>
+              <circle class="point-dot" cx="128.9" cy="117.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(69.9,67.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">01-30 下跌 2,894</text>
+                <text x="9" y="30">TDX · 2026-01-30</text>
+              </g>
+              <title>2026-01-30 下跌 2,894 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="138.4" cy="49.1" r="9"></circle>
+              <circle class="point-dot" cx="138.4" cy="49.1" r="3.8"></circle>
+              <g class="point-tip" transform="translate(79.4,63.1)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-02 下跌 4,649</text>
+                <text x="9" y="30">TDX · 2026-02-02</text>
+              </g>
+              <title>2026-02-02 下跌 4,649 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="147.8" cy="209.3" r="9"></circle>
+              <circle class="point-dot" cx="147.8" cy="209.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(88.8,159.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-03 下跌 531</text>
+                <text x="9" y="30">TDX · 2026-02-03</text>
+              </g>
+              <title>2026-02-03 下跌 531 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="157.3" cy="147.2" r="9"></circle>
+              <circle class="point-dot" cx="157.3" cy="147.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(98.3,97.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-04 下跌 2,129</text>
+                <text x="9" y="30">TDX · 2026-02-04</text>
+              </g>
+              <title>2026-02-04 下跌 2,129 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="166.7" cy="85.3" r="9"></circle>
+              <circle class="point-dot" cx="166.7" cy="85.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(107.7,35.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-05 下跌 3,719</text>
+                <text x="9" y="30">TDX · 2026-02-05</text>
+              </g>
+              <title>2026-02-05 下跌 3,719 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="176.1" cy="130.8" r="9"></circle>
+              <circle class="point-dot" cx="176.1" cy="130.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(117.1,80.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-06 下跌 2,550</text>
+                <text x="9" y="30">TDX · 2026-02-06</text>
+              </g>
+              <title>2026-02-06 下跌 2,550 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="185.6" cy="200.4" r="9"></circle>
+              <circle class="point-dot" cx="185.6" cy="200.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(126.6,150.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-09 下跌 761</text>
+                <text x="9" y="30">TDX · 2026-02-09</text>
+              </g>
+              <title>2026-02-09 下跌 761 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="195.0" cy="108.3" r="9"></circle>
+              <circle class="point-dot" cx="195.0" cy="108.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(136.0,58.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-10 下跌 3,127</text>
+                <text x="9" y="30">TDX · 2026-02-10</text>
+              </g>
+              <title>2026-02-10 下跌 3,127 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="204.4" cy="103.9" r="9"></circle>
+              <circle class="point-dot" cx="204.4" cy="103.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(145.4,53.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-11 下跌 3,242</text>
+                <text x="9" y="30">TDX · 2026-02-11</text>
+              </g>
+              <title>2026-02-11 下跌 3,242 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="213.9" cy="102.3" r="9"></circle>
+              <circle class="point-dot" cx="213.9" cy="102.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(154.9,52.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-12 下跌 3,281</text>
+                <text x="9" y="30">TDX · 2026-02-12</text>
+              </g>
+              <title>2026-02-12 下跌 3,281 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="223.3" cy="81.1" r="9"></circle>
+              <circle class="point-dot" cx="223.3" cy="81.1" r="3.8"></circle>
+              <g class="point-tip" transform="translate(164.3,31.1)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-13 下跌 3,827</text>
+                <text x="9" y="30">TDX · 2026-02-13</text>
+              </g>
+              <title>2026-02-13 下跌 3,827 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="232.8" cy="175.9" r="9"></circle>
+              <circle class="point-dot" cx="232.8" cy="175.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(173.8,125.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-24 下跌 1,391</text>
+                <text x="9" y="30">TDX · 2026-02-24</text>
+              </g>
+              <title>2026-02-24 下跌 1,391 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="242.2" cy="167.4" r="9"></circle>
+              <circle class="point-dot" cx="242.2" cy="167.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(183.2,117.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-25 下跌 1,608</text>
+                <text x="9" y="30">TDX · 2026-02-25</text>
+              </g>
+              <title>2026-02-25 下跌 1,608 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="251.6" cy="118.4" r="9"></circle>
+              <circle class="point-dot" cx="251.6" cy="118.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(192.6,68.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-26 下跌 2,869</text>
+                <text x="9" y="30">TDX · 2026-02-26</text>
+              </g>
+              <title>2026-02-26 下跌 2,869 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="261.1" cy="149.6" r="9"></circle>
+              <circle class="point-dot" cx="261.1" cy="149.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(202.1,99.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">02-27 下跌 2,066</text>
+                <text x="9" y="30">TDX · 2026-02-27</text>
+              </g>
+              <title>2026-02-27 下跌 2,066 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="270.5" cy="63.5" r="9"></circle>
+              <circle class="point-dot" cx="270.5" cy="63.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(211.5,77.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-02 下跌 4,280</text>
+                <text x="9" y="30">TDX · 2026-03-02</text>
+              </g>
+              <title>2026-03-02 下跌 4,280 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="280.0" cy="43.1" r="9"></circle>
+              <circle class="point-dot" cx="280.0" cy="43.1" r="3.8"></circle>
+              <g class="point-tip" transform="translate(221.0,57.1)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-03 下跌 4,804</text>
+                <text x="9" y="30">TDX · 2026-03-03</text>
+              </g>
+              <title>2026-03-03 下跌 4,804 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="289.4" cy="88.4" r="9"></circle>
+              <circle class="point-dot" cx="289.4" cy="88.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(230.4,38.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-04 下跌 3,638</text>
+                <text x="9" y="30">TDX · 2026-03-04</text>
+              </g>
+              <title>2026-03-04 下跌 3,638 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="298.8" cy="179.3" r="9"></circle>
+              <circle class="point-dot" cx="298.8" cy="179.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(239.8,129.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-05 下跌 1,304</text>
+                <text x="9" y="30">TDX · 2026-03-05</text>
+              </g>
+              <title>2026-03-05 下跌 1,304 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="308.3" cy="185.2" r="9"></circle>
+              <circle class="point-dot" cx="308.3" cy="185.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(249.3,135.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-06 下跌 1,152</text>
+                <text x="9" y="30">TDX · 2026-03-06</text>
+              </g>
+              <title>2026-03-06 下跌 1,152 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="317.7" cy="75.9" r="9"></circle>
+              <circle class="point-dot" cx="317.7" cy="75.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(258.7,25.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-09 下跌 3,961</text>
+                <text x="9" y="30">TDX · 2026-03-09</text>
+              </g>
+              <title>2026-03-09 下跌 3,961 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="327.1" cy="197.0" r="9"></circle>
+              <circle class="point-dot" cx="327.1" cy="197.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(268.1,147.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-10 下跌 849</text>
+                <text x="9" y="30">TDX · 2026-03-10</text>
+              </g>
+              <title>2026-03-10 下跌 849 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="336.6" cy="102.3" r="9"></circle>
+              <circle class="point-dot" cx="336.6" cy="102.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(277.6,52.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-11 下跌 3,283</text>
+                <text x="9" y="30">TDX · 2026-03-11</text>
+              </g>
+              <title>2026-03-11 下跌 3,283 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="346.0" cy="78.6" r="9"></circle>
+              <circle class="point-dot" cx="346.0" cy="78.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(287.0,28.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-12 下跌 3,890</text>
+                <text x="9" y="30">TDX · 2026-03-12</text>
+              </g>
+              <title>2026-03-12 下跌 3,890 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="355.5" cy="81.2" r="9"></circle>
+              <circle class="point-dot" cx="355.5" cy="81.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(296.5,31.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-13 下跌 3,825</text>
+                <text x="9" y="30">TDX · 2026-03-13</text>
+              </g>
+              <title>2026-03-13 下跌 3,825 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="364.9" cy="133.0" r="9"></circle>
+              <circle class="point-dot" cx="364.9" cy="133.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(305.9,83.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-16 下跌 2,492</text>
+                <text x="9" y="30">TDX · 2026-03-16</text>
+              </g>
+              <title>2026-03-16 下跌 2,492 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="374.3" cy="53.4" r="9"></circle>
+              <circle class="point-dot" cx="374.3" cy="53.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(315.3,67.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-17 下跌 4,539</text>
+                <text x="9" y="30">TDX · 2026-03-17</text>
+              </g>
+              <title>2026-03-17 下跌 4,539 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="383.8" cy="158.9" r="9"></circle>
+              <circle class="point-dot" cx="383.8" cy="158.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(324.8,108.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-18 下跌 1,828</text>
+                <text x="9" y="30">TDX · 2026-03-18</text>
+              </g>
+              <title>2026-03-18 下跌 1,828 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="393.2" cy="37.3" r="9"></circle>
+              <circle class="point-dot" cx="393.2" cy="37.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(334.2,51.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-19 下跌 4,952</text>
+                <text x="9" y="30">TDX · 2026-03-19</text>
+              </g>
+              <title>2026-03-19 下跌 4,952 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="402.7" cy="43.9" r="9"></circle>
+              <circle class="point-dot" cx="402.7" cy="43.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(343.7,57.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-20 下跌 4,784</text>
+                <text x="9" y="30">TDX · 2026-03-20</text>
+              </g>
+              <title>2026-03-20 下跌 4,784 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="412.1" cy="28.8" r="9"></circle>
+              <circle class="point-dot" cx="412.1" cy="28.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(353.1,42.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-23 下跌 5,170</text>
+                <text x="9" y="30">TDX · 2026-03-23</text>
+              </g>
+              <title>2026-03-23 下跌 5,170 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="421.5" cy="217.2" r="9"></circle>
+              <circle class="point-dot" cx="421.5" cy="217.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(362.5,167.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-24 下跌 329</text>
+                <text x="9" y="30">TDX · 2026-03-24</text>
+              </g>
+              <title>2026-03-24 下跌 329 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="431.0" cy="208.3" r="9"></circle>
+              <circle class="point-dot" cx="431.0" cy="208.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(372.0,158.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-25 下跌 558</text>
+                <text x="9" y="30">TDX · 2026-03-25</text>
+              </g>
+              <title>2026-03-25 下跌 558 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="440.4" cy="55.3" r="9"></circle>
+              <circle class="point-dot" cx="440.4" cy="55.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(381.4,69.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-26 下跌 4,489</text>
+                <text x="9" y="30">TDX · 2026-03-26</text>
+              </g>
+              <title>2026-03-26 下跌 4,489 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="449.8" cy="188.3" r="9"></circle>
+              <circle class="point-dot" cx="449.8" cy="188.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(390.8,138.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-27 下跌 1,072</text>
+                <text x="9" y="30">TDX · 2026-03-27</text>
+              </g>
+              <title>2026-03-27 下跌 1,072 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="459.3" cy="134.2" r="9"></circle>
+              <circle class="point-dot" cx="459.3" cy="134.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(400.3,84.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-30 下跌 2,461</text>
+                <text x="9" y="30">TDX · 2026-03-30</text>
+              </g>
+              <title>2026-03-30 下跌 2,461 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="468.7" cy="59.9" r="9"></circle>
+              <circle class="point-dot" cx="468.7" cy="59.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(409.7,73.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">03-31 下跌 4,373</text>
+                <text x="9" y="30">TDX · 2026-03-31</text>
+              </g>
+              <title>2026-03-31 下跌 4,373 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="478.2" cy="195.6" r="9"></circle>
+              <circle class="point-dot" cx="478.2" cy="195.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(419.2,145.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-01 下跌 883</text>
+                <text x="9" y="30">TDX · 2026-04-01</text>
+              </g>
+              <title>2026-04-01 下跌 883 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="487.6" cy="59.8" r="9"></circle>
+              <circle class="point-dot" cx="487.6" cy="59.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(428.6,73.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-02 下跌 4,375</text>
+                <text x="9" y="30">TDX · 2026-04-02</text>
+              </g>
+              <title>2026-04-02 下跌 4,375 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="497.0" cy="45.5" r="9"></circle>
+              <circle class="point-dot" cx="497.0" cy="45.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(438.0,59.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-03 下跌 4,741</text>
+                <text x="9" y="30">TDX · 2026-04-03</text>
+              </g>
+              <title>2026-04-03 下跌 4,741 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="506.5" cy="174.6" r="9"></circle>
+              <circle class="point-dot" cx="506.5" cy="174.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(447.5,124.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-07 下跌 1,424</text>
+                <text x="9" y="30">TDX · 2026-04-07</text>
+              </g>
+              <title>2026-04-07 下跌 1,424 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="515.9" cy="218.3" r="9"></circle>
+              <circle class="point-dot" cx="515.9" cy="218.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(456.9,168.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-08 下跌 301</text>
+                <text x="9" y="30">TDX · 2026-04-08</text>
+              </g>
+              <title>2026-04-08 下跌 301 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="525.3" cy="62.9" r="9"></circle>
+              <circle class="point-dot" cx="525.3" cy="62.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(466.3,76.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-09 下跌 4,295</text>
+                <text x="9" y="30">TDX · 2026-04-09</text>
+              </g>
+              <title>2026-04-09 下跌 4,295 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="534.8" cy="175.6" r="9"></circle>
+              <circle class="point-dot" cx="534.8" cy="175.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(475.8,125.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-10 下跌 1,397</text>
+                <text x="9" y="30">TDX · 2026-04-10</text>
+              </g>
+              <title>2026-04-10 下跌 1,397 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="544.2" cy="114.9" r="9"></circle>
+              <circle class="point-dot" cx="544.2" cy="114.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(485.2,64.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-13 下跌 2,958</text>
+                <text x="9" y="30">TDX · 2026-04-13</text>
+              </g>
+              <title>2026-04-13 下跌 2,958 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="553.7" cy="168.0" r="9"></circle>
+              <circle class="point-dot" cx="553.7" cy="168.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(494.7,118.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-14 下跌 1,594</text>
+                <text x="9" y="30">TDX · 2026-04-14</text>
+              </g>
+              <title>2026-04-14 下跌 1,594 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="563.1" cy="92.3" r="9"></circle>
+              <circle class="point-dot" cx="563.1" cy="92.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(504.1,42.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-15 下跌 3,539</text>
+                <text x="9" y="30">TDX · 2026-04-15</text>
+              </g>
+              <title>2026-04-15 下跌 3,539 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="572.5" cy="188.3" r="9"></circle>
+              <circle class="point-dot" cx="572.5" cy="188.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(513.5,138.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-16 下跌 1,071</text>
+                <text x="9" y="30">TDX · 2026-04-16</text>
+              </g>
+              <title>2026-04-16 下跌 1,071 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="582.0" cy="113.8" r="9"></circle>
+              <circle class="point-dot" cx="582.0" cy="113.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(523.0,63.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-17 下跌 2,987</text>
+                <text x="9" y="30">TDX · 2026-04-17</text>
+              </g>
+              <title>2026-04-17 下跌 2,987 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="591.4" cy="156.2" r="9"></circle>
+              <circle class="point-dot" cx="591.4" cy="156.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(532.4,106.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-20 下跌 1,897</text>
+                <text x="9" y="30">TDX · 2026-04-20</text>
+              </g>
+              <title>2026-04-20 下跌 1,897 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="600.9" cy="96.4" r="9"></circle>
+              <circle class="point-dot" cx="600.9" cy="96.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(541.9,46.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-21 下跌 3,433</text>
+                <text x="9" y="30">TDX · 2026-04-21</text>
+              </g>
+              <title>2026-04-21 下跌 3,433 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="610.3" cy="135.3" r="9"></circle>
+              <circle class="point-dot" cx="610.3" cy="135.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(551.3,85.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-22 下跌 2,434</text>
+                <text x="9" y="30">TDX · 2026-04-22</text>
+              </g>
+              <title>2026-04-22 下跌 2,434 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="619.7" cy="71.4" r="9"></circle>
+              <circle class="point-dot" cx="619.7" cy="71.4" r="3.8"></circle>
+              <g class="point-tip" transform="translate(560.7,21.4)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-23 下跌 4,077</text>
+                <text x="9" y="30">TDX · 2026-04-23</text>
+              </g>
+              <title>2026-04-23 下跌 4,077 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="629.2" cy="99.6" r="9"></circle>
+              <circle class="point-dot" cx="629.2" cy="99.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(570.2,49.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-24 下跌 3,351</text>
+                <text x="9" y="30">TDX · 2026-04-24</text>
+              </g>
+              <title>2026-04-24 下跌 3,351 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="638.6" cy="148.1" r="9"></circle>
+              <circle class="point-dot" cx="638.6" cy="148.1" r="3.8"></circle>
+              <g class="point-tip" transform="translate(579.6,98.1)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-27 下跌 2,106</text>
+                <text x="9" y="30">TDX · 2026-04-27</text>
+              </g>
+              <title>2026-04-27 下跌 2,106 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="648.0" cy="86.7" r="9"></circle>
+              <circle class="point-dot" cx="648.0" cy="86.7" r="3.8"></circle>
+              <g class="point-tip" transform="translate(589.0,36.7)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-28 下跌 3,683</text>
+                <text x="9" y="30">TDX · 2026-04-28</text>
+              </g>
+              <title>2026-04-28 下跌 3,683 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="657.5" cy="175.3" r="9"></circle>
+              <circle class="point-dot" cx="657.5" cy="175.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(598.5,125.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-29 下跌 1,407</text>
+                <text x="9" y="30">TDX · 2026-04-29</text>
+              </g>
+              <title>2026-04-29 下跌 1,407 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="666.9" cy="133.7" r="9"></circle>
+              <circle class="point-dot" cx="666.9" cy="133.7" r="3.8"></circle>
+              <g class="point-tip" transform="translate(607.9,83.7)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">04-30 下跌 2,476</text>
+                <text x="9" y="30">TDX · 2026-04-30</text>
+              </g>
+              <title>2026-04-30 下跌 2,476 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="676.4" cy="172.2" r="9"></circle>
+              <circle class="point-dot" cx="676.4" cy="172.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(617.4,122.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-06 下跌 1,485</text>
+                <text x="9" y="30">TDX · 2026-05-06</text>
+              </g>
+              <title>2026-05-06 下跌 1,485 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="685.8" cy="158.8" r="9"></circle>
+              <circle class="point-dot" cx="685.8" cy="158.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(626.8,108.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-07 下跌 1,831</text>
+                <text x="9" y="30">TDX · 2026-05-07</text>
+              </g>
+              <title>2026-05-07 下跌 1,831 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="695.2" cy="162.6" r="9"></circle>
+              <circle class="point-dot" cx="695.2" cy="162.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(636.2,112.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-08 下跌 1,733</text>
+                <text x="9" y="30">TDX · 2026-05-08</text>
+              </g>
+              <title>2026-05-08 下跌 1,733 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="704.7" cy="142.6" r="9"></circle>
+              <circle class="point-dot" cx="704.7" cy="142.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(645.7,92.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-11 下跌 2,245</text>
+                <text x="9" y="30">TDX · 2026-05-11</text>
+              </g>
+              <title>2026-05-11 下跌 2,245 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="714.1" cy="72.5" r="9"></circle>
+              <circle class="point-dot" cx="714.1" cy="72.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(655.1,22.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-12 下跌 4,048</text>
+                <text x="9" y="30">手工 · 2026-05-12</text>
+              </g>
+              <title>2026-05-12 下跌 4,048 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="723.6" cy="146.8" r="9"></circle>
+              <circle class="point-dot" cx="723.6" cy="146.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(664.6,96.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-13 下跌 2,139</text>
+                <text x="9" y="30">TDX · 2026-05-13</text>
+              </g>
+              <title>2026-05-13 下跌 2,139 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="733.0" cy="59.3" r="9"></circle>
+              <circle class="point-dot" cx="733.0" cy="59.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(674.0,73.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-14 下跌 4,387</text>
+                <text x="9" y="30">手工 · 2026-05-14</text>
+              </g>
+              <title>2026-05-14 下跌 4,387 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="742.4" cy="90.6" r="9"></circle>
+              <circle class="point-dot" cx="742.4" cy="90.6" r="3.8"></circle>
+              <g class="point-tip" transform="translate(683.4,40.6)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-15 下跌 3,583</text>
+                <text x="9" y="30">手工 · 2026-05-15</text>
+              </g>
+              <title>2026-05-15 下跌 3,583 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="751.9" cy="113.2" r="9"></circle>
+              <circle class="point-dot" cx="751.9" cy="113.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(692.9,63.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-18 下跌 3,003</text>
+                <text x="9" y="30">手工 · 2026-05-18</text>
+              </g>
+              <title>2026-05-18 下跌 3,003 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="761.3" cy="160.5" r="9"></circle>
+              <circle class="point-dot" cx="761.3" cy="160.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(702.3,110.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-19 下跌 1,785</text>
+                <text x="9" y="30">TDX · 2026-05-19</text>
+              </g>
+              <title>2026-05-19 下跌 1,785 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="770.7" cy="82.0" r="9"></circle>
+              <circle class="point-dot" cx="770.7" cy="82.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(711.7,32.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-20 下跌 3,803</text>
+                <text x="9" y="30">手工 · 2026-05-20</text>
+              </g>
+              <title>2026-05-20 下跌 3,803 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="780.2" cy="44.3" r="9"></circle>
+              <circle class="point-dot" cx="780.2" cy="44.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(721.2,58.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-21 下跌 4,773</text>
+                <text x="9" y="30">手工 · 2026-05-21</text>
+              </g>
+              <title>2026-05-21 下跌 4,773 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="789.6" cy="170.7" r="9"></circle>
+              <circle class="point-dot" cx="789.6" cy="170.7" r="3.8"></circle>
+              <g class="point-tip" transform="translate(730.6,120.7)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-22 下跌 1,525</text>
+                <text x="9" y="30">TDX · 2026-05-22</text>
+              </g>
+              <title>2026-05-22 下跌 1,525 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="799.1" cy="104.5" r="9"></circle>
+              <circle class="point-dot" cx="799.1" cy="104.5" r="3.8"></circle>
+              <g class="point-tip" transform="translate(740.1,54.5)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-25 下跌 3,225</text>
+                <text x="9" y="30">手工 · 2026-05-25</text>
+              </g>
+              <title>2026-05-25 下跌 3,225 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="808.5" cy="71.2" r="9"></circle>
+              <circle class="point-dot" cx="808.5" cy="71.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(749.5,21.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-26 下跌 4,082</text>
+                <text x="9" y="30">手工 · 2026-05-26</text>
+              </g>
+              <title>2026-05-26 下跌 4,082 只</title>
+            </g>
+            
+            <g class="breadth-point extreme">
+              <circle class="point-hit" cx="817.9" cy="55.3" r="9"></circle>
+              <circle class="point-dot" cx="817.9" cy="55.3" r="3.8"></circle>
+              <g class="point-tip" transform="translate(758.9,69.3)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-27 下跌 4,489</text>
+                <text x="9" y="30">手工 · 2026-05-27</text>
+              </g>
+              <title>2026-05-27 下跌 4,489 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="827.4" cy="136.8" r="9"></circle>
+              <circle class="point-dot" cx="827.4" cy="136.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,86.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-28 下跌 2,396</text>
+                <text x="9" y="30">TDX · 2026-05-28</text>
+              </g>
+              <title>2026-05-28 下跌 2,396 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="836.8" cy="78.9" r="9"></circle>
+              <circle class="point-dot" cx="836.8" cy="78.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,28.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">05-29 下跌 3,884</text>
+                <text x="9" y="30">手工 · 2026-05-29</text>
+              </g>
+              <title>2026-05-29 下跌 3,884 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="846.2" cy="163.8" r="9"></circle>
+              <circle class="point-dot" cx="846.2" cy="163.8" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,113.8)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">06-01 下跌 1,702</text>
+                <text x="9" y="30">TDX · 2026-06-01</text>
+              </g>
+              <title>2026-06-01 下跌 1,702 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="855.7" cy="79.2" r="9"></circle>
+              <circle class="point-dot" cx="855.7" cy="79.2" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,29.2)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">06-02 下跌 3,876</text>
+                <text x="9" y="30">手工 · 2026-06-02</text>
+              </g>
+              <title>2026-06-02 下跌 3,876 只</title>
+            </g>
+            
+            <g class="breadth-point warn">
+              <circle class="point-hit" cx="865.1" cy="85.0" r="9"></circle>
+              <circle class="point-dot" cx="865.1" cy="85.0" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,35.0)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">06-03 下跌 3,727</text>
+                <text x="9" y="30">手工 · 2026-06-03</text>
+              </g>
+              <title>2026-06-03 下跌 3,727 只</title>
+            </g>
+            
+            <g class="breadth-point severe">
+              <circle class="point-hit" cx="874.6" cy="67.7" r="9"></circle>
+              <circle class="point-dot" cx="874.6" cy="67.7" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,17.7)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">06-04 下跌 4,172</text>
+                <text x="9" y="30">TDX · 2026-06-04</text>
+              </g>
+              <title>2026-06-04 下跌 4,172 只</title>
+            </g>
+            
+            <g class="breadth-point calm">
+              <circle class="point-hit" cx="884.0" cy="146.9" r="9"></circle>
+              <circle class="point-dot" cx="884.0" cy="146.9" r="3.8"></circle>
+              <g class="point-tip" transform="translate(766.0,96.9)">
+                <rect width="118" height="38" rx="6"></rect>
+                <text x="9" y="15">06-05 下跌 2,137</text>
+                <text x="9" y="30">TDX · 2026-06-05</text>
+              </g>
+              <title>2026-06-05 下跌 2,137 只</title>
+            </g>
+            
+        </svg>
+        <div class="breadth-legend">
+          <span><i class="raw"></i>下跌家数</span>
+          <span><i class="ma"></i>5日均线</span>
+          <span>低点 301</span>
+          <span>高点 5,170</span>
+        </div>
+      </article>
+    
+          <div>
+            <div class="tdx-metric-grid">
+      <article class="tdx-metric pos">
+        <span>上涨家数</span>
+        <strong>3,321</strong>
+        <em>沪深合计</em>
+      </article>
+    
+      <article class="tdx-metric warn">
+        <span>下跌家数</span>
+        <strong>2,137</strong>
+        <em>全市场雨压核心</em>
+      </article>
+    
+      <article class="tdx-metric warn">
+        <span>下跌占比</span>
+        <strong>39.15%</strong>
+        <em>跌多涨少程度</em>
+      </article>
+    
+      <article class="tdx-metric neutral">
+        <span>成交额</span>
+        <strong>31010.7亿</strong>
+        <em>沪深合计</em>
+      </article>
+    
+      <article class="tdx-metric neg">
+        <span>成长-300</span>
+        <strong>-1.82%</strong>
+        <em>创业/科创相对沪深300</em>
+      </article>
+    
+      <article class="tdx-metric neutral">
+        <span>异动覆盖</span>
+        <strong>4,565</strong>
+        <em>28,196条事件</em>
+      </article>
+    </div>
+            <div class="tdx-observation">涨跌广度处于中间区域，结合ETF申赎继续观察。</div>
+          </div>
+        </div>
+        <div class="tdx-index-grid">
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>上证指数</strong>
+          <span class="neg">-0.74%</span>
+        </div>
+        <div class="tdx-index-close">4027.74</div>
+        <div class="tdx-index-meta">
+          <span>涨 1,284 / 跌 1,008</span>
+          <span>成交 13638.9亿</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>深证成指</strong>
+          <span class="neg">-2.21%</span>
+        </div>
+        <div class="tdx-index-close">15314.70</div>
+        <div class="tdx-index-meta">
+          <span>涨 1,742 / 跌 1,107</span>
+          <span>成交 17053.0亿</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>创业板指</strong>
+          <span class="neg">-3.20%</span>
+        </div>
+        <div class="tdx-index-close">3957.94</div>
+        <div class="tdx-index-meta">
+          <span>涨 869 / 跌 508</span>
+          <span>成交 8210.3亿</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>北证50</strong>
+          <span class="pos">5.59%</span>
+        </div>
+        <div class="tdx-index-close">1299.07</div>
+        <div class="tdx-index-meta">
+          <span>涨 295 / 跌 22</span>
+          <span>成交 318.8亿</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>科创50</strong>
+          <span class="neg">-4.01%</span>
+        </div>
+        <div class="tdx-index-close">1668.33</div>
+        <div class="tdx-index-meta">
+          <span>涨 296 / 跌 310</span>
+          <span>成交 1368.5亿</span>
+        </div>
+      </article>
+    
+      <article class="tdx-index-card">
+        <div class="tdx-index-top">
+          <strong>沪深300</strong>
+          <span class="neg">-1.79%</span>
+        </div>
+        <div class="tdx-index-close">4816.92</div>
+        <div class="tdx-index-meta">
+          <span>涨 137 / 跌 155</span>
+          <span>成交 8398.6亿</span>
+        </div>
+      </article>
+    </div>
+        <div class="tdx-leader-grid">
+          
+      <div class="tdx-leader-block">
+        <h3>成交拥挤</h3>
+        
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">中际旭创</span>
+              <span class="tdx-leader-code">300308</span>
+              <strong class="neg">583.2亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">京东方Ａ</span>
+              <span class="tdx-leader-code">000725</span>
+              <strong class="pos">356.8亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">新易盛</span>
+              <span class="tdx-leader-code">300502</span>
+              <strong class="neg">341.7亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">兆易创新</span>
+              <span class="tdx-leader-code">603986</span>
+              <strong class="neg">275.7亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">亨通光电</span>
+              <span class="tdx-leader-code">600487</span>
+              <strong class="neg">247.4亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">天孚通信</span>
+              <span class="tdx-leader-code">300394</span>
+              <strong class="neg">224.7亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">工业富联</span>
+              <span class="tdx-leader-code">601138</span>
+              <strong class="neg">197.9亿</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">东山精密</span>
+              <span class="tdx-leader-code">002384</span>
+              <strong class="neg">194.7亿</strong>
+            </div>
+            
+      </div>
+    
+          
+      <div class="tdx-leader-block">
+        <h3>涨幅极端</h3>
+        
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">N新睿</span>
+              <span class="tdx-leader-code">920211</span>
+              <strong class="pos">800.67%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">丰光精密</span>
+              <span class="tdx-leader-code">920510</span>
+              <strong class="pos">29.96%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">创远信科</span>
+              <span class="tdx-leader-code">920961</span>
+              <strong class="pos">29.96%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">天力复合</span>
+              <span class="tdx-leader-code">920576</span>
+              <strong class="pos">22.98%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">东方碳素</span>
+              <span class="tdx-leader-code">920175</span>
+              <strong class="pos">20.52%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">冠龙节能</span>
+              <span class="tdx-leader-code">301151</span>
+              <strong class="pos">20.03%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">东土科技</span>
+              <span class="tdx-leader-code">300353</span>
+              <strong class="pos">20.02%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">华瑞股份</span>
+              <span class="tdx-leader-code">300626</span>
+              <strong class="pos">20.01%</strong>
+            </div>
+            
+      </div>
+    
+          
+      <div class="tdx-leader-block">
+        <h3>跌幅极端</h3>
+        
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">悦康药业</span>
+              <span class="tdx-leader-code">688658</span>
+              <strong class="neg">-15.77%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">固德威</span>
+              <span class="tdx-leader-code">688390</span>
+              <strong class="neg">-13.03%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">唯特偶</span>
+              <span class="tdx-leader-code">301319</span>
+              <strong class="neg">-12.94%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">星环科技</span>
+              <span class="tdx-leader-code">688031</span>
+              <strong class="neg">-11.74%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">汇金科技</span>
+              <span class="tdx-leader-code">300561</span>
+              <strong class="neg">-10.98%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">山科智能</span>
+              <span class="tdx-leader-code">300897</span>
+              <strong class="neg">-10.72%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">*ST清越</span>
+              <span class="tdx-leader-code">688496</span>
+              <strong class="neg">-10.61%</strong>
+            </div>
+            
+            <div class="tdx-leader-row">
+              <span class="tdx-leader-name">银之杰</span>
+              <span class="tdx-leader-code">300085</span>
+              <strong class="neg">-10.10%</strong>
+            </div>
+            
+      </div>
+    
+        </div>
+        <div class="tdx-unusual">
+          <strong>盘中异动覆盖</strong>
+          <div><span>主力买入<strong>788</strong></span><span>主力卖出<strong>556</strong></span><span>盘中强势<strong>1,388</strong></span><span>盘中弱势<strong>592</strong></span><span>急速拉升<strong>1,011</strong></span><span>急速下跌<strong>522</strong></span><span>高位回落<strong>638</strong></span><span>封涨停板<strong>233</strong></span><span>封跌停板<strong>445</strong></span></div>
+        </div>
+        <div class="tdx-source">通达信公开行情服务器 / tdx-mcp</div>
+      </section>
+    
+
+      
+      <section class="money-alerts">
+        
+      <article class="alert-card neg">
+        <div class="alert-top">
+          <span>短期提醒</span>
+          <em>3/3</em>
+        </div>
+        <div class="alert-state">警惕上涨乏力</div>
+        <p>宽基/成长ETF份额在净流出。若指数还在上涨，更要防止缩量上冲和冲高回落。</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>权益</span>
+          <strong>-40.7亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>宽基/成长</span>
+          <strong>-34.1亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>避险</span>
+          <strong>-23.5亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>跨境</span>
+          <strong>-37.9亿</strong>
+        </div>
+        </div>
+      </article>
+    
+        
+      <article class="alert-card neg">
+        <div class="alert-top">
+          <span>中期接力</span>
+          <em>5/5</em>
+        </div>
+        <div class="alert-state">接力撤退</div>
+        <p>5日维度宽基/成长ETF份额净流出，说明资金接力不足，上涨更容易乏力。</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>权益</span>
+          <strong>-1682.8亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>宽基/成长</span>
+          <strong>-1594.9亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>避险</span>
+          <strong>-23.0亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>跨境</span>
+          <strong>-80.8亿</strong>
+        </div>
+        </div>
+      </article>
+    
+        
+      <article class="alert-card neg">
+        <div class="alert-top">
+          <span>长期提醒</span>
+          <em>6/20</em>
+        </div>
+        <div class="alert-state">警惕上涨乏力</div>
+        <p>宽基/成长ETF份额在净流出。若指数还在上涨，更要防止缩量上冲和冲高回落。</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>权益</span>
+          <strong>-1544.5亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>宽基/成长</span>
+          <strong>-1463.9亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>避险</span>
+          <strong>-23.5亿</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>跨境</span>
+          <strong>-80.8亿</strong>
+        </div>
+        </div>
+      </article>
+    
+      </section>
+    
+
+      
+      <section class="panel">
+        <div class="section-head">
+          <h2>股指期货交割</h2>
+          <span>当日数据 · 合约参数 2026-06-05 · 生成 2026-06-05T16:45:20</span>
+        </div>
+        <section class="money-alerts futures-cards">
+      <article class="alert-card warn">
+        <div class="alert-top">
+          <span>IF 沪深300</span>
+          <em>17天</em>
+        </div>
+        <div class="alert-state">小幅贴水</div>
+        <p>IF2606 · 交割 2026-06-22 · 基差 -40.1点 / -0.83%</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>期货</span>
+          <strong>4776.8</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>现货</span>
+          <strong>4816.9</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>年化</span>
+          <strong>-17.88%</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>持仓</span>
+          <strong>122,663手</strong>
+        </div>
+        </div>
+      </article>
+    
+      <article class="alert-card warn">
+        <div class="alert-top">
+          <span>IH 上证50</span>
+          <em>17天</em>
+        </div>
+        <div class="alert-state">小幅贴水</div>
+        <p>IH2606 · 交割 2026-06-22 · 基差 -21.9点 / -0.76%</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>期货</span>
+          <strong>2844.0</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>现货</span>
+          <strong>2865.9</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>年化</span>
+          <strong>-16.38%</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>持仓</span>
+          <strong>57,634手</strong>
+        </div>
+        </div>
+      </article>
+    
+      <article class="alert-card warn">
+        <div class="alert-top">
+          <span>IC 中证500</span>
+          <em>17天</em>
+        </div>
+        <div class="alert-state">小幅贴水</div>
+        <p>IC2606 · 交割 2026-06-22 · 基差 -60.5点 / -0.73%</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>期货</span>
+          <strong>8190.6</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>现货</span>
+          <strong>8251.1</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>年化</span>
+          <strong>-15.75%</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>持仓</span>
+          <strong>140,622手</strong>
+        </div>
+        </div>
+      </article>
+    
+      <article class="alert-card warn">
+        <div class="alert-top">
+          <span>IM 中证1000</span>
+          <em>17天</em>
+        </div>
+        <div class="alert-state">小幅贴水</div>
+        <p>IM2606 · 交割 2026-06-22 · 基差 -49.2点 / -0.59%</p>
+        <div class="alert-metrics">
+        <div class="alert-metric">
+          <span>期货</span>
+          <strong>8291.8</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>现货</span>
+          <strong>8341.0</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>年化</span>
+          <strong>-12.66%</strong>
+        </div>
+        
+        <div class="alert-metric">
+          <span>持仓</span>
+          <strong>200,773手</strong>
+        </div>
+        </div>
+      </article>
+    </section>
+        
+      <div class="table-scroll">
+        <table class="futures-table">
+          <colgroup>
+            <col style="width:64px">
+            <col style="width:88px">
+            <col style="width:92px">
+            <col style="width:112px">
+            <col style="width:74px">
+            <col style="width:96px">
+            <col style="width:96px">
+            <col style="width:96px">
+            <col style="width:90px">
+            <col style="width:96px">
+            <col style="width:96px">
+            <col style="width:96px">
+            <col style="width:82px">
+          </colgroup>
+          <thead>
+            <tr>
+              <th>品种</th>
+              <th>合约</th>
+              <th>标的</th>
+              <th>交割日</th>
+              <th class="num">剩余天</th>
+              <th class="num">期货价</th>
+              <th class="num">现货价</th>
+              <th class="num">基差</th>
+              <th class="num">基差率</th>
+              <th class="num">年化</th>
+              <th class="num">成交量</th>
+              <th class="num">持仓量</th>
+              <th>时间</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>IF</td>
+              <td class="code">IF2606</td>
+              <td>沪深300</td>
+              <td>2026-06-22</td>
+              <td class="num">17</td>
+              <td class="num">4776.8</td>
+              <td class="num">4816.9</td>
+              <td class="warn num">-40.1点</td>
+              <td class="warn num">-0.83%</td>
+              <td class="warn num">-17.88%</td>
+              <td class="num">86,654手</td>
+              <td class="num">122,663手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IF</td>
+              <td class="code">IF2607</td>
+              <td>沪深300</td>
+              <td>2026-07-17</td>
+              <td class="num">42</td>
+              <td class="num">4734.2</td>
+              <td class="num">4816.9</td>
+              <td class="neg num">-82.7点</td>
+              <td class="neg num">-1.72%</td>
+              <td class="neg num">-14.92%</td>
+              <td class="num">6,446手</td>
+              <td class="num">12,823手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IF</td>
+              <td class="code">IF2609</td>
+              <td>沪深300</td>
+              <td>2026-09-18</td>
+              <td class="num">105</td>
+              <td class="num">4680.0</td>
+              <td class="num">4816.9</td>
+              <td class="neg num">-136.9点</td>
+              <td class="neg num">-2.84%</td>
+              <td class="neg num">-9.88%</td>
+              <td class="num">36,617手</td>
+              <td class="num">103,282手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IF</td>
+              <td class="code">IF2612</td>
+              <td>沪深300</td>
+              <td>2026-12-18</td>
+              <td class="num">196</td>
+              <td class="num">4620.6</td>
+              <td class="num">4816.9</td>
+              <td class="neg num">-196.3点</td>
+              <td class="neg num">-4.08%</td>
+              <td class="neg num">-7.59%</td>
+              <td class="num">11,853手</td>
+              <td class="num">34,250手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IH</td>
+              <td class="code">IH2606</td>
+              <td>上证50</td>
+              <td>2026-06-22</td>
+              <td class="num">17</td>
+              <td class="num">2844.0</td>
+              <td class="num">2865.9</td>
+              <td class="warn num">-21.9点</td>
+              <td class="warn num">-0.76%</td>
+              <td class="warn num">-16.38%</td>
+              <td class="num">40,601手</td>
+              <td class="num">57,634手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IH</td>
+              <td class="code">IH2607</td>
+              <td>上证50</td>
+              <td>2026-07-17</td>
+              <td class="num">42</td>
+              <td class="num">2814.6</td>
+              <td class="num">2865.9</td>
+              <td class="neg num">-51.3点</td>
+              <td class="neg num">-1.79%</td>
+              <td class="neg num">-15.55%</td>
+              <td class="num">2,746手</td>
+              <td class="num">6,253手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IH</td>
+              <td class="code">IH2609</td>
+              <td>上证50</td>
+              <td>2026-09-18</td>
+              <td class="num">105</td>
+              <td class="num">2798.0</td>
+              <td class="num">2865.9</td>
+              <td class="neg num">-67.9点</td>
+              <td class="neg num">-2.37%</td>
+              <td class="neg num">-8.23%</td>
+              <td class="num">15,086手</td>
+              <td class="num">44,456手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IH</td>
+              <td class="code">IH2612</td>
+              <td>上证50</td>
+              <td>2026-12-18</td>
+              <td class="num">196</td>
+              <td class="num">2779.0</td>
+              <td class="num">2865.9</td>
+              <td class="neg num">-86.9点</td>
+              <td class="neg num">-3.03%</td>
+              <td class="neg num">-5.64%</td>
+              <td class="num">3,898手</td>
+              <td class="num">11,951手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IC</td>
+              <td class="code">IC2606</td>
+              <td>中证500</td>
+              <td>2026-06-22</td>
+              <td class="num">17</td>
+              <td class="num">8190.6</td>
+              <td class="num">8251.1</td>
+              <td class="warn num">-60.5点</td>
+              <td class="warn num">-0.73%</td>
+              <td class="warn num">-15.75%</td>
+              <td class="num">114,107手</td>
+              <td class="num">140,622手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IC</td>
+              <td class="code">IC2607</td>
+              <td>中证500</td>
+              <td>2026-07-17</td>
+              <td class="num">42</td>
+              <td class="num">8127.2</td>
+              <td class="num">8251.1</td>
+              <td class="neg num">-123.9点</td>
+              <td class="neg num">-1.50%</td>
+              <td class="neg num">-13.05%</td>
+              <td class="num">7,051手</td>
+              <td class="num">12,623手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IC</td>
+              <td class="code">IC2609</td>
+              <td>中证500</td>
+              <td>2026-09-18</td>
+              <td class="num">105</td>
+              <td class="num">8000.8</td>
+              <td class="num">8251.1</td>
+              <td class="neg num">-250.3点</td>
+              <td class="neg num">-3.03%</td>
+              <td class="neg num">-10.55%</td>
+              <td class="num">51,751手</td>
+              <td class="num">113,592手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IC</td>
+              <td class="code">IC2612</td>
+              <td>中证500</td>
+              <td>2026-12-18</td>
+              <td class="num">196</td>
+              <td class="num">7828.8</td>
+              <td class="num">8251.1</td>
+              <td class="neg num">-422.3点</td>
+              <td class="neg num">-5.12%</td>
+              <td class="neg num">-9.53%</td>
+              <td class="num">13,987手</td>
+              <td class="num">39,683手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IM</td>
+              <td class="code">IM2606</td>
+              <td>中证1000</td>
+              <td>2026-06-22</td>
+              <td class="num">17</td>
+              <td class="num">8291.8</td>
+              <td class="num">8341.0</td>
+              <td class="warn num">-49.2点</td>
+              <td class="warn num">-0.59%</td>
+              <td class="warn num">-12.66%</td>
+              <td class="num">181,451手</td>
+              <td class="num">200,773手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IM</td>
+              <td class="code">IM2607</td>
+              <td>中证1000</td>
+              <td>2026-07-17</td>
+              <td class="num">42</td>
+              <td class="num">8214.0</td>
+              <td class="num">8341.0</td>
+              <td class="neg num">-127.0点</td>
+              <td class="neg num">-1.52%</td>
+              <td class="neg num">-13.23%</td>
+              <td class="num">10,182手</td>
+              <td class="num">21,017手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IM</td>
+              <td class="code">IM2609</td>
+              <td>中证1000</td>
+              <td>2026-09-18</td>
+              <td class="num">105</td>
+              <td class="num">8055.6</td>
+              <td class="num">8341.0</td>
+              <td class="neg num">-285.4点</td>
+              <td class="neg num">-3.42%</td>
+              <td class="neg num">-11.89%</td>
+              <td class="num">69,348手</td>
+              <td class="num">149,159手</td>
+              <td>15:00:00</td>
+            </tr>
+            
+            <tr>
+              <td>IM</td>
+              <td class="code">IM2612</td>
+              <td>中证1000</td>
+              <td>2026-12-18</td>
+              <td class="num">196</td>
+              <td class="num">7831.0</td>
+              <td class="num">8341.0</td>
+              <td class="neg num">-510.0点</td>
+              <td class="neg num">-6.11%</td>
+              <td class="neg num">-11.39%</td>
+              <td class="num">22,736手</td>
+              <td class="num">72,076手</td>
+              <td>15:00:00</td>
+            </tr>
+            </tbody>
+        </table>
+      </div>
+    
+      </section>
+    
+
+      
+      <section class="panel">
+        <div class="section-head">
+          <h2>近一年核心宽基ETF归一化走势</h2>
+          <span>2025-06-05 至 2026-06-05 · 起点=100</span>
+        </div>
+        
+      <div class="chart-wrap">
+        <svg viewBox="0 0 1000 310" role="img" aria-label="近一年核心宽基ETF归一化走势">
+          <rect x="0" y="0" width="1000" height="310" rx="8" class="chart-bg" />
+          <line x1="58" y1="266.0" x2="978" y2="266.0" class="grid-line" /><text x="48" y="270.0" class="axis-label" text-anchor="end">82</text><line x1="58" y1="205.0" x2="978" y2="205.0" class="grid-line" /><text x="48" y="209.0" class="axis-label" text-anchor="end">115</text><line x1="58" y1="144.0" x2="978" y2="144.0" class="grid-line" /><text x="48" y="148.0" class="axis-label" text-anchor="end">149</text><line x1="58" y1="83.0" x2="978" y2="83.0" class="grid-line" /><text x="48" y="87.0" class="axis-label" text-anchor="end">182</text><line x1="58" y1="22.0" x2="978" y2="22.0" class="grid-line" /><text x="48" y="26.0" class="axis-label" text-anchor="end">216</text><line x1="58.0" y1="22" x2="58.0" y2="266" class="grid-line vertical" /><text x="58.0" y="296" class="axis-label" text-anchor="middle">2025-06-05</text><line x1="516.7" y1="22" x2="516.7" y2="266" class="grid-line vertical" /><text x="516.7" y="296" class="axis-label" text-anchor="middle">2025-12-04</text><line x1="978.0" y1="22" x2="978.0" y2="266" class="grid-line vertical" /><text x="978.0" y="296" class="axis-label" text-anchor="middle">2026-06-05</text>
+          <line x1="58" y1="266" x2="978" y2="266" class="axis-line" />
+          <line x1="58" y1="22" x2="58" y2="266" class="axis-line" />
+          <polyline points="58.0,232.7 60.5,232.6 68.1,232.6 70.6,233.5 73.1,232.2 75.6,232.3 78.2,233.3 85.7,232.8 88.2,232.8 90.8,233.0 93.3,234.1 95.8,233.1 103.4,232.2 105.9,230.2 108.4,227.6 110.9,228.0 113.5,230.0 121.0,229.2 123.5,229.0 126.1,228.6 128.6,228.4 131.1,227.3 138.7,227.9 141.2,226.7 143.7,226.9 146.2,225.9 148.7,225.0 156.3,225.2 158.8,226.1 161.3,226.4 163.9,225.8 166.4,224.2 173.9,223.8 176.5,222.2 179.0,221.7 181.5,220.9 184.0,222.1 191.6,221.2 194.1,220.9 196.6,220.3 199.2,223.2 201.7,224.7 209.2,223.8 211.8,222.3 214.3,221.9 216.8,221.7 219.3,222.4 226.9,222.3 229.4,221.0 231.9,220.5 234.4,219.5 237.0,218.8 244.5,218.4 247.0,220.7 249.6,218.2 252.1,217.2 254.6,212.2 262.2,208.3 264.7,209.9 267.2,213.2 269.7,210.3 272.2,209.1 279.8,209.1 282.3,208.1 284.8,210.8 287.4,214.3 289.9,211.8 297.5,212.1 300.0,212.6 302.5,211.8 305.0,208.5 307.5,209.7 315.1,210.1 317.6,211.1 320.1,210.7 322.7,213.4 325.2,213.6 332.7,213.0 335.3,213.0 337.8,211.8 340.3,210.8 342.8,211.4 350.4,209.3 352.9,208.2 375.6,205.9 378.1,209.1 385.7,209.9 388.2,209.9 390.7,207.4 393.2,206.0 395.8,209.3 403.3,209.2 405.8,207.0 408.4,206.8 410.9,205.5 421.0,202.3 423.5,203.6 426.0,202.7 428.5,203.8 431.0,206.0 438.6,205.9 441.1,206.2 443.6,206.6 446.2,204.0 448.7,204.3 456.2,203.3 458.8,204.7 461.3,203.5 463.8,202.0 466.3,204.5 473.9,206.0 476.4,206.6 478.9,205.6 481.5,206.2 484.0,209.9 491.5,210.3 494.1,209.3 496.6,209.0 499.1,209.1 501.6,209.1 509.2,207.5 511.7,208.5 514.2,209.4 516.7,208.9 519.3,207.0 526.8,205.7 529.3,207.2 531.9,207.8 534.4,208.6 536.9,207.7 544.5,207.8 547.0,209.7 549.5,212.7 552.0,212.3 554.5,211.4 562.1,210.5 564.6,210.1 567.2,210.0 569.7,209.5 572.2,208.6 579.8,209.3 582.3,209.4 584.8,209.6 597.4,205.0 599.9,201.0 602.4,202.0 605.0,203.5 607.5,202.7 615.0,202.1 617.6,202.4 620.1,204.2 622.6,204.7 625.1,206.0 632.7,206.4 635.2,206.6 637.7,207.0 640.2,207.9 642.8,209.5 650.3,208.0 652.8,207.9 655.4,207.4 657.9,203.6 660.4,206.8 668.0,211.2 670.5,209.4 673.0,206.8 675.5,207.5 678.1,208.9 685.6,205.9 688.1,205.3 690.7,205.3 693.2,205.9 695.7,209.0 723.4,208.7 725.9,207.7 728.5,208.9 731.0,208.4 738.5,208.3 741.1,210.2 743.6,213.2 746.1,212.2 748.6,212.0 756.2,213.8 758.7,212.6 761.2,212.4 763.8,213.4 766.3,214.2 773.8,214.7 776.4,213.9 778.9,214.2 781.4,217.0 783.9,219.4 791.5,225.2 794.0,223.1 796.5,221.1 799.0,223.3 801.6,222.5 809.1,222.8 811.6,223.0 814.2,219.7 816.7,221.4 819.2,223.0 829.3,223.1 831.8,218.0 834.3,219.3 836.8,218.4 844.4,218.4 846.9,216.7 849.5,216.0 852.0,215.6 854.5,217.7 862.1,216.1 864.6,216.1 867.1,216.2 869.6,216.5 872.1,215.3 879.7,215.7 882.2,214.9 884.7,213.8 887.3,212.4 902.4,209.9 904.9,209.7 907.4,211.6 915.0,208.9 917.5,208.7 920.0,208.4 922.5,211.6 925.1,214.2 932.6,216.0 935.2,214.8 937.7,214.6 940.2,216.9 942.7,216.8 950.3,213.9 952.8,213.5 955.3,216.0 957.8,217.5 960.4,216.7 967.9,218.6 970.4,217.0 973.0,216.8 975.5,218.9 978.0,220.5" fill="none" stroke="#c9362c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="220.5" r="3.5" fill="#c9362c" /><polyline points="58.0,232.7 60.5,232.6 68.1,232.2 70.6,233.3 73.1,231.8 75.6,231.7 78.2,232.9 85.7,232.5 88.2,232.5 90.8,236.4 93.3,237.8 95.8,237.6 103.4,237.0 105.9,234.9 108.4,232.0 110.9,232.6 113.5,233.7 121.0,232.8 123.5,232.5 126.1,232.4 128.6,231.3 131.1,230.5 138.7,231.4 141.2,229.8 143.7,230.0 146.2,229.0 148.7,228.4 156.3,228.4 158.8,228.4 161.3,228.9 163.9,227.4 166.4,226.0 173.9,224.8 176.5,222.8 179.0,222.9 181.5,221.8 184.0,222.8 191.6,222.3 194.1,221.3 196.6,221.4 199.2,224.9 201.7,225.9 209.2,225.1 211.8,223.7 214.3,223.2 216.8,223.2 219.3,223.7 226.9,222.8 229.4,221.6 231.9,220.0 234.4,220.3 237.0,218.6 244.5,217.1 247.0,218.1 249.6,215.4 252.1,214.8 254.6,210.2 262.2,206.3 264.7,207.4 267.2,210.4 269.7,206.5 272.2,204.6 279.8,203.9 282.3,205.1 284.8,207.0 287.4,211.2 289.9,206.8 297.5,206.7 300.0,207.9 302.5,207.5 305.0,201.9 307.5,203.7 315.1,203.3 317.6,203.8 320.1,202.3 322.7,204.9 325.2,204.5 332.7,203.8 335.3,203.7 337.8,201.8 340.3,200.3 342.8,202.3 350.4,198.8 352.9,198.2 375.6,194.8 378.1,199.2 385.7,200.5 388.2,202.6 390.7,199.8 393.2,199.2 395.8,203.6 403.3,202.8 405.8,199.7 408.4,200.3 410.9,199.5 421.0,194.4 423.5,195.5 426.0,192.7 428.5,194.5 431.0,197.6 438.6,197.2 441.1,198.8 443.6,198.5 446.2,195.3 448.7,195.8 456.2,195.2 458.8,197.2 461.3,197.1 463.8,195.0 466.3,198.2 473.9,199.7 476.4,200.9 478.9,200.2 481.5,201.2 484.0,206.3 491.5,206.6 494.1,204.8 496.6,203.5 499.1,203.7 501.6,203.1 509.2,200.7 511.7,201.7 514.2,202.6 516.7,202.1 519.3,200.2 526.8,198.7 529.3,199.7 531.9,200.0 534.4,201.6 536.9,200.4 544.5,201.6 547.0,203.8 549.5,200.2 552.0,201.6 554.5,200.7 562.1,198.7 564.6,198.3 567.2,197.5 569.7,197.1 572.2,196.3 579.8,197.2 582.3,196.8 584.8,197.7 597.4,193.5 599.9,190.1 602.4,191.0 605.0,192.7 607.5,191.7 615.0,190.4 617.6,191.2 620.1,192.5 622.6,192.1 625.1,192.9 632.7,198.4 635.2,199.0 637.7,198.7 640.2,198.9 642.8,199.9 650.3,199.6 652.8,199.7 655.4,199.0 657.9,197.0 660.4,199.6 668.0,204.7 670.5,201.7 673.0,199.8 675.5,201.1 678.1,202.4 685.6,198.9 688.1,198.6 690.7,199.1 693.2,198.9 695.7,201.4 723.4,199.4 725.9,197.8 728.5,198.5 731.0,199.0 738.5,198.3 741.1,201.1 743.6,204.2 746.1,202.2 748.6,201.6 756.2,203.3 758.7,200.9 761.2,199.6 763.8,200.4 766.3,201.2 773.8,201.0 776.4,202.6 778.9,201.8 781.4,204.7 783.9,205.8 791.5,212.4 794.0,210.2 796.5,207.2 799.0,209.8 801.6,208.9 809.1,209.2 811.6,210.9 814.2,207.7 816.7,209.7 819.2,211.3 829.3,211.7 831.8,204.6 834.3,205.9 836.8,202.8 844.4,202.3 846.9,199.6 849.5,200.4 852.0,198.0 854.5,198.3 862.1,197.1 864.6,196.6 867.1,195.1 869.6,195.5 872.1,196.4 879.7,196.4 882.2,196.9 884.7,194.6 887.3,194.5 902.4,191.5 904.9,190.5 907.4,191.6 915.0,188.0 917.5,188.1 920.0,185.7 922.5,189.1 925.1,192.0 932.6,193.2 935.2,192.4 937.7,192.3 940.2,195.2 942.7,192.7 950.3,189.3 952.8,187.7 955.3,189.5 957.8,189.5 960.4,189.9 967.9,192.5 970.4,189.4 973.0,188.0 975.5,189.8 978.0,193.6" fill="none" stroke="#2563a9" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="193.6" r="3.5" fill="#2563a9" /><polyline points="622.6,232.7 625.1,233.4 632.7,232.9 635.2,233.7 637.7,232.9 640.2,232.7 642.8,231.9 650.3,232.2 652.8,231.9 655.4,231.1 657.9,230.1 660.4,232.9 668.0,238.2 670.5,234.4 673.0,233.1 675.5,235.3 678.1,236.3 685.6,232.9 688.1,232.7 690.7,232.9 693.2,232.2 695.7,234.7 723.4,232.3 725.9,230.4 728.5,230.9 731.0,230.8 738.5,230.4 741.1,234.0 743.6,236.4 746.1,234.5 748.6,234.0 756.2,235.9 758.7,233.3 761.2,232.3 763.8,233.3 766.3,234.4 773.8,234.8 776.4,237.0 778.9,235.9 781.4,239.1 783.9,240.2 791.5,245.7 794.0,243.7 796.5,241.3 799.0,243.5 801.6,242.2 809.1,242.2 811.6,244.0 814.2,241.3 816.7,243.3 819.2,245.0 829.3,244.8 831.8,238.1 834.3,239.1 836.8,236.7 844.4,236.2 846.9,234.0 849.5,234.5 852.0,232.3 854.5,232.6 862.1,231.1 864.6,231.2 867.1,229.4 869.6,230.5 872.1,231.1 879.7,230.8 882.2,231.9 884.7,229.3 887.3,228.9 902.4,225.7 904.9,224.2 907.4,225.0 915.0,221.7 917.5,222.1 920.0,219.8 922.5,223.5 925.1,226.4 932.6,226.8 935.2,225.9 937.7,225.4 940.2,228.6 942.7,226.1 950.3,223.4 952.8,222.3 955.3,224.2 957.8,224.1 960.4,226.0 967.9,228.5 970.4,225.9 973.0,224.6 975.5,226.0 978.0,228.7" fill="none" stroke="#7c3aed" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="228.7" r="3.5" fill="#7c3aed" /><polyline points="58.0,232.7 60.5,232.7 68.1,231.4 70.6,233.0 73.1,231.8 75.6,231.4 78.2,233.0 85.7,232.3 88.2,232.7 90.8,233.0 93.3,234.8 95.8,236.0 103.4,235.0 105.9,232.1 108.4,228.7 110.9,229.5 113.5,228.8 121.0,227.1 123.5,226.5 126.1,227.6 128.6,226.9 131.1,227.1 138.7,227.5 141.2,225.0 143.7,225.8 146.2,224.8 148.7,223.1 156.3,223.5 158.8,223.5 161.3,223.6 163.9,221.4 166.4,220.8 173.9,218.9 176.5,216.8 179.0,217.5 181.5,214.6 184.0,214.5 191.6,213.7 194.1,212.4 196.6,213.7 199.2,216.6 201.7,216.9 209.2,215.4 211.8,214.2 214.3,212.5 216.8,213.1 219.3,213.5 226.9,211.4 229.4,210.4 231.9,207.7 234.4,209.8 237.0,205.3 244.5,202.5 247.0,202.9 249.6,200.1 252.1,201.3 254.6,197.2 262.2,193.4 264.7,193.1 267.2,196.0 269.7,191.3 272.2,190.1 279.8,188.1 282.3,192.8 284.8,196.5 287.4,201.5 289.9,194.2 297.5,192.3 300.0,194.4 302.5,194.5 305.0,187.5 307.5,187.0 315.1,187.5 317.6,185.7 320.1,183.4 322.7,185.4 325.2,186.4 332.7,184.6 335.3,185.9 337.8,181.0 340.3,180.7 342.8,184.0 350.4,180.1 352.9,178.3 375.6,174.2 378.1,178.7 385.7,179.9 388.2,185.5 390.7,182.2 393.2,184.0 395.8,191.0 403.3,189.5 405.8,185.8 408.4,187.5 410.9,186.8 421.0,179.6 423.5,180.7 426.0,175.9 428.5,179.0 431.0,180.9 438.6,180.8 441.1,184.7 443.6,184.2 446.2,180.4 448.7,180.8 456.2,180.5 458.8,182.2 461.3,183.4 463.8,180.0 466.3,184.0 473.9,184.0 476.4,186.3 478.9,187.4 481.5,189.2 484.0,197.0 491.5,195.5 494.1,192.9 496.6,192.5 499.1,193.0 501.6,190.3 509.2,188.2 511.7,190.1 514.2,191.3 516.7,190.6 519.3,187.8 526.8,185.8 529.3,187.5 531.9,186.3 534.4,188.3 536.9,185.6 544.5,187.2 547.0,190.6 549.5,186.4 552.0,187.6 554.5,185.6 562.1,183.0 564.6,182.8 567.2,179.8 569.7,177.8 572.2,176.4 579.8,177.4 582.3,176.3 584.8,176.1 597.4,169.7 599.9,164.4 602.4,163.2 605.0,162.4 607.5,156.4 615.0,150.1 617.6,153.6 620.1,151.7 622.6,152.5 625.1,153.9 632.7,152.3 635.2,153.0 637.7,149.6 640.2,148.5 642.8,140.6 650.3,145.5 652.8,143.8 655.4,141.5 657.9,144.6 660.4,149.4 668.0,161.7 670.5,151.7 673.0,151.0 675.5,156.4 678.1,156.5 685.6,150.8 688.1,151.4 690.7,150.3 693.2,147.1 695.7,151.5 723.4,148.5 725.9,144.3 728.5,143.4 731.0,140.1 738.5,140.2 741.1,151.4 743.6,153.2 746.1,151.5 748.6,150.0 756.2,152.0 758.7,148.1 761.2,148.5 763.8,149.8 766.3,153.4 773.8,155.1 776.4,160.7 778.9,158.3 781.4,164.9 783.9,169.1 791.5,178.5 794.0,174.1 796.5,168.6 799.0,172.6 801.6,169.4 809.1,168.9 811.6,173.1 814.2,169.2 816.7,173.5 819.2,175.6 829.3,174.8 831.8,162.4 834.3,164.3 836.8,162.1 844.4,162.3 846.9,158.2 849.5,159.7 852.0,155.2 854.5,154.1 862.1,152.0 864.6,152.8 867.1,148.9 869.6,151.4 872.1,153.1 879.7,151.6 882.2,154.6 884.7,149.9 887.3,149.7 902.4,142.5 904.9,139.0 907.4,139.1 915.0,134.6 917.5,136.1 920.0,131.5 922.5,139.0 925.1,144.0 932.6,143.4 935.2,141.1 937.7,139.7 940.2,147.4 942.7,142.5 950.3,138.5 952.8,139.6 955.3,143.9 957.8,142.8 960.4,149.3 967.9,151.6 970.4,150.4 973.0,148.9 975.5,149.1 978.0,152.5" fill="none" stroke="#d97706" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="152.5" r="3.5" fill="#d97706" /><polyline points="58.0,232.7 60.5,233.1 68.1,231.3 70.6,232.9 73.1,232.1 75.6,231.8 78.2,234.1 85.7,233.1 88.2,233.3 90.8,233.5 93.3,235.7 95.8,237.2 103.4,234.9 105.9,231.6 108.4,228.8 110.9,229.7 113.5,229.0 121.0,226.6 123.5,226.1 126.1,227.7 128.6,226.9 131.1,227.7 138.7,227.5 141.2,224.8 143.7,225.4 146.2,225.0 148.7,223.1 156.3,223.3 158.8,223.9 161.3,223.1 163.9,220.9 166.4,220.4 173.9,218.8 176.5,217.6 179.0,218.4 181.5,215.7 184.0,215.9 191.6,215.3 194.1,213.6 196.6,215.4 199.2,216.8 201.7,217.0 209.2,214.6 211.8,213.4 214.3,211.3 216.8,211.2 219.3,211.9 226.9,208.9 229.4,208.2 231.9,205.2 234.4,207.5 237.0,203.2 244.5,200.1 247.0,200.0 249.6,197.6 252.1,199.5 254.6,195.8 262.2,193.0 264.7,193.0 267.2,196.8 269.7,193.8 272.2,194.1 279.8,191.7 282.3,197.5 284.8,200.8 287.4,205.8 289.9,199.7 297.5,197.9 300.0,200.4 302.5,200.3 305.0,194.6 307.5,194.5 315.1,194.7 317.6,192.4 320.1,190.4 322.7,193.2 325.2,194.1 332.7,192.2 335.3,194.9 337.8,191.1 340.3,191.9 342.8,194.9 350.4,192.2 352.9,189.9 375.6,188.0 378.1,191.0 385.7,191.6 388.2,195.6 390.7,192.6 393.2,194.9 395.8,201.2 403.3,199.8 405.8,196.8 408.4,197.6 410.9,197.4 421.0,192.3 423.5,192.7 426.0,189.7 428.5,191.9 431.0,191.8 438.6,190.9 441.1,193.9 443.6,192.8 446.2,190.3 448.7,190.5 456.2,190.2 458.8,190.7 461.3,192.0 463.8,188.9 466.3,191.9 473.9,191.4 476.4,193.2 478.9,195.1 481.5,196.5 484.0,204.6 491.5,202.2 494.1,199.4 496.6,199.4 499.1,199.2 501.6,196.9 509.2,195.4 511.7,197.3 514.2,199.3 516.7,199.0 519.3,196.1 526.8,194.2 529.3,195.4 531.9,194.6 534.4,196.8 536.9,195.4 544.5,196.9 547.0,200.6 549.5,197.8 552.0,198.2 554.5,196.4 562.1,194.4 564.6,194.6 567.2,191.2 569.7,189.3 572.2,188.5 579.8,188.9 582.3,188.6 584.8,188.7 597.4,183.5 599.9,180.2 602.4,179.6 605.0,177.6 607.5,172.2 615.0,164.8 617.6,169.8 620.1,169.2 622.6,169.2 625.1,169.9 632.7,172.2 635.2,174.2 637.7,172.2 640.2,170.3 642.8,165.0 650.3,169.3 652.8,168.3 655.4,167.7 657.9,169.6 660.4,171.7 668.0,181.7 670.5,173.7 673.0,173.3 675.5,177.5 678.1,178.3 685.6,172.4 688.1,172.4 690.7,172.3 693.2,169.9 695.7,173.6 723.4,170.9 725.9,167.3 728.5,165.5 731.0,162.9 738.5,165.7 741.1,174.9 743.6,177.1 746.1,175.0 748.6,172.5 756.2,173.5 758.7,169.3 761.2,169.1 763.8,169.7 766.3,173.2 773.8,173.6 776.4,179.0 778.9,176.9 781.4,182.0 783.9,185.9 791.5,196.9 794.0,191.3 796.5,187.1 799.0,190.3 801.6,186.7 809.1,186.5 811.6,190.8 814.2,186.7 816.7,190.5 819.2,193.0 829.3,191.2 831.8,180.6 834.3,182.0 836.8,179.8 844.4,178.9 846.9,175.2 849.5,176.5 852.0,172.7 854.5,170.3 862.1,169.2 864.6,169.3 867.1,165.1 869.6,168.5 872.1,170.6 879.7,169.7 882.2,172.7 884.7,169.1 887.3,168.0 902.4,162.8 904.9,158.4 907.4,157.4 915.0,153.8 917.5,154.9 920.0,150.7 922.5,155.7 925.1,158.7 932.6,157.6 935.2,154.8 937.7,154.6 940.2,162.8 942.7,158.2 950.3,155.0 952.8,157.9 955.3,162.5 957.8,159.9 960.4,166.4 967.9,168.2 970.4,167.5 973.0,166.0 975.5,166.3 978.0,168.3" fill="none" stroke="#16815d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="168.3" r="3.5" fill="#16815d" /><polyline points="58.0,232.7 60.5,233.3 68.1,231.7 70.6,233.7 73.1,231.4 75.6,231.2 78.2,233.0 85.7,231.5 88.2,232.3 90.8,231.7 93.3,234.3 95.8,235.9 103.4,235.0 105.9,230.8 108.4,225.0 110.9,226.5 113.5,225.7 121.0,222.9 123.5,223.5 126.1,225.5 128.6,222.1 131.1,222.9 138.7,224.9 141.2,220.5 143.7,220.2 146.2,219.6 148.7,218.2 156.3,218.9 158.8,215.8 161.3,216.3 163.9,212.6 166.4,212.2 173.9,210.1 176.5,208.9 179.0,209.0 181.5,205.6 184.0,206.3 191.6,204.1 194.1,200.4 196.6,203.8 199.2,207.8 201.7,207.6 209.2,206.7 211.8,206.1 214.3,204.6 216.8,206.1 219.3,206.8 226.9,202.8 229.4,200.3 231.9,192.4 234.4,194.8 237.0,189.1 244.5,182.6 247.0,183.2 249.6,182.0 252.1,183.5 254.6,175.4 262.2,168.7 264.7,170.6 267.2,172.3 269.7,162.5 272.2,157.2 279.8,151.6 282.3,158.7 284.8,156.7 287.4,167.4 289.9,150.1 297.5,153.3 300.0,159.0 302.5,156.3 305.0,142.8 307.5,145.5 315.1,141.7 317.6,139.8 320.1,134.4 322.7,139.1 325.2,139.5 332.7,137.7 335.3,136.7 337.8,130.7 340.3,126.1 342.8,133.5 350.4,126.0 352.9,125.6 375.6,124.0 378.1,136.5 385.7,140.2 388.2,151.0 390.7,144.8 393.2,143.8 395.8,152.7 403.3,147.7 405.8,139.5 408.4,141.6 410.9,141.7 421.0,126.3 423.5,126.7 426.0,118.2 428.5,123.6 431.0,130.2 438.6,129.3 441.1,135.0 443.6,132.3 446.2,127.0 448.7,128.5 456.2,130.9 458.8,134.9 461.3,135.4 463.8,128.7 466.3,136.7 473.9,137.5 476.4,140.5 478.9,140.0 481.5,142.7 484.0,153.7 491.5,153.3 494.1,148.6 496.6,142.6 499.1,144.0 501.6,141.9 509.2,138.5 511.7,140.4 514.2,143.4 516.7,140.5 519.3,137.1 526.8,129.7 529.3,128.2 531.9,127.8 534.4,132.0 536.9,129.5 544.5,134.3 547.0,139.7 549.5,130.4 552.0,136.8 554.5,135.5 562.1,129.4 564.6,128.5 567.2,126.0 569.7,125.1 572.2,124.8 579.8,126.7 582.3,124.5 584.8,128.4 597.4,119.9 599.9,117.9 602.4,117.2 605.0,119.3 607.5,116.9 615.0,111.8 617.6,117.6 620.1,115.3 622.6,113.5 625.1,114.0 632.7,116.5 635.2,121.5 637.7,119.9 640.2,116.8 642.8,114.8 650.3,117.7 652.8,115.7 655.4,117.5 657.9,118.9 660.4,115.0 668.0,122.5 670.5,117.0 673.0,118.4 675.5,123.7 678.1,124.5 685.6,116.3 688.1,117.2 690.7,120.6 693.2,116.4 695.7,121.3 723.4,118.6 725.9,114.2 728.5,114.9 731.0,118.1 738.5,119.8 741.1,126.7 743.6,131.3 746.1,126.6 748.6,124.9 756.2,127.0 758.7,118.5 761.2,115.0 763.8,117.4 766.3,118.2 773.8,113.8 776.4,120.6 778.9,114.7 781.4,117.9 783.9,114.5 791.5,124.6 794.0,123.8 796.5,117.5 799.0,121.5 801.6,118.8 809.1,121.4 811.6,128.7 814.2,124.3 816.7,130.4 819.2,132.4 829.3,131.5 831.8,114.1 834.3,116.4 836.8,105.9 844.4,103.1 846.9,95.7 849.5,99.2 852.0,89.1 854.5,85.0 862.1,84.8 864.6,84.0 867.1,77.1 869.6,79.7 872.1,84.6 879.7,86.6 882.2,91.1 884.7,82.8 887.3,83.2 902.4,74.5 904.9,69.3 907.4,72.8 915.0,60.1 917.5,60.7 920.0,51.0 922.5,58.8 925.1,58.0 932.6,62.3 935.2,62.3 937.7,61.4 940.2,69.2 942.7,60.2 950.3,52.3 952.8,50.4 955.3,50.3 957.8,43.0 960.4,50.6 967.9,58.6 970.4,49.0 973.0,42.3 975.5,46.4 978.0,57.4" fill="none" stroke="#0891b2" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="57.4" r="3.5" fill="#0891b2" /><polyline points="58.0,232.7 60.5,233.4 68.1,232.4 70.6,236.0 73.1,236.2 75.6,236.9 78.2,237.7 85.7,237.9 88.2,239.5 90.8,238.4 93.3,239.5 95.8,240.5 103.4,239.5 105.9,236.5 108.4,233.2 110.9,234.5 113.5,234.5 121.0,231.9 123.5,233.2 126.1,235.5 128.6,235.3 131.1,235.5 138.7,236.5 141.2,233.9 143.7,235.3 146.2,235.8 148.7,233.4 156.3,233.6 158.8,233.2 161.3,233.1 163.9,231.7 166.4,231.2 173.9,231.0 176.5,229.6 179.0,228.8 181.5,226.7 184.0,222.7 191.6,222.5 194.1,220.0 196.6,222.2 199.2,224.1 201.7,225.8 209.2,223.6 211.8,222.7 214.3,222.0 216.8,222.2 219.3,225.0 226.9,223.8 229.4,220.1 231.9,218.6 234.4,217.0 237.0,214.3 244.5,209.9 247.0,212.2 249.6,205.6 252.1,205.6 254.6,185.8 262.2,180.1 264.7,183.5 267.2,183.3 269.7,166.8 272.2,170.4 279.8,167.1 282.3,173.5 284.8,178.5 287.4,192.8 289.9,185.2 297.5,184.9 300.0,188.5 302.5,186.1 305.0,173.7 307.5,171.4 315.1,170.9 317.6,168.0 320.1,165.5 322.7,163.8 325.2,167.1 332.7,158.8 335.3,159.5 337.8,150.0 340.3,146.9 342.8,151.0 350.4,147.8 352.9,143.1 375.6,134.8 378.1,150.3 385.7,147.2 388.2,158.5 390.7,155.0 393.2,157.4 395.8,166.8 403.3,166.1 405.8,159.2 408.4,159.3 410.9,159.8 421.0,145.2 423.5,147.4 426.0,144.0 428.5,149.1 431.0,157.3 438.6,160.4 441.1,163.0 443.6,162.1 446.2,153.6 448.7,157.4 456.2,159.0 458.8,162.6 461.3,164.0 463.8,160.5 466.3,167.1 473.9,168.7 476.4,167.8 478.9,170.2 481.5,173.1 484.0,180.9 491.5,179.4 494.1,177.8 496.6,175.6 499.1,176.1 501.6,173.7 509.2,171.8 511.7,174.7 514.2,176.8 516.7,173.5 519.3,173.5 526.8,169.0 529.3,170.0 531.9,169.9 534.4,173.8 536.9,169.3 544.5,174.4 547.0,179.2 549.5,173.1 552.0,176.6 554.5,175.9 562.1,171.6 564.6,170.7 567.2,168.5 569.7,168.7 572.2,169.2 579.8,169.5 582.3,166.8 584.8,169.5 597.4,158.8 599.9,154.3 602.4,151.7 605.0,149.8 607.5,145.9 615.0,139.0 617.6,146.7 620.1,141.5 622.6,142.6 625.1,139.1 632.7,140.3 635.2,144.8 637.7,135.2 640.2,134.1 642.8,131.9 650.3,135.3 652.8,131.0 655.4,131.9 657.9,139.8 660.4,140.0 668.0,150.3 670.5,146.9 673.0,149.8 675.5,153.8 678.1,155.4 685.6,149.1 688.1,146.6 690.7,149.5 693.2,145.0 695.7,146.9 723.4,147.8 725.9,146.2 728.5,144.1 731.0,143.8 738.5,147.6 741.1,161.4 743.6,162.3 746.1,158.3 748.6,156.7 756.2,161.2 758.7,156.0 761.2,159.2 763.8,162.8 766.3,163.8 773.8,162.4 776.4,167.6 778.9,164.7 781.4,170.6 783.9,174.5 791.5,184.7 794.0,179.5 796.5,175.0 799.0,179.9 801.6,177.6 809.1,179.5 811.6,185.6 814.2,177.8 816.7,184.5 819.2,185.6 829.3,182.5 831.8,168.1 834.3,169.9 836.8,166.1 844.4,164.2 846.9,158.8 849.5,158.3 852.0,155.5 854.5,155.4 862.1,150.5 864.6,154.5 867.1,150.2 869.6,153.8 872.1,149.8 879.7,139.5 882.2,143.4 884.7,142.2 887.3,128.6 902.4,113.0 904.9,108.7 907.4,116.0 915.0,101.5 917.5,100.6 920.0,92.1 922.5,100.8 925.1,105.6 932.6,102.9 935.2,91.1 937.7,80.7 940.2,93.0 942.7,88.3 950.3,69.2 952.8,74.4 955.3,84.2 957.8,78.8 960.4,95.8 967.9,111.3 970.4,106.7 973.0,99.4 975.5,97.8 978.0,109.8" fill="none" stroke="#be123c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" /><circle cx="978.0" cy="109.8" r="3.5" fill="#be123c" />
+        </svg>
+      </div>
+    
+        <div class="legend">
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#c9362c"></span>
+              <span>上证50ETF华夏</span>
+              <strong class="pos">+6.8%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#2563a9"></span>
+              <span>沪深300ETF华泰柏瑞</span>
+              <strong class="pos">+21.6%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#7c3aed"></span>
+              <span>中证A500ETF华泰柏瑞</span>
+              <strong class="pos">+2.2%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#d97706"></span>
+              <span>中证500ETF南方</span>
+              <strong class="pos">+44.2%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#16815d"></span>
+              <span>中证1000ETF南方</span>
+              <strong class="pos">+35.5%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#0891b2"></span>
+              <span>创业板ETF易方达</span>
+              <strong class="pos">+96.6%</strong>
+            </div>
+            
+            <div class="legend-item">
+              <span class="legend-swatch" style="background:#be123c"></span>
+              <span>科创50ETF华夏</span>
+              <strong class="pos">+67.7%</strong>
+            </div>
+            </div>
+      </section>
+    
+
+      <section class="split">
+        <article class="panel wide">
+          <div class="section-head">
+            <h2>分类资金热力</h2>
+            <span>按估算申赎排序</span>
+          </div>
+          <div class="heat-list">
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>宽基核心</strong>
+                <span>5只 · 0/5 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:100.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-62.3亿</span>
+                <span>成交 119.7亿 · 均涨跌 -1.25%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>跨境外溢</strong>
+                <span>5只 · 1/4 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:57.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-35.5亿</span>
+                <span>成交 68.8亿 · 均涨跌 -0.95%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>科技主线</strong>
+                <span>5只 · 0/5 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill pos" style="width:29.1%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>18.1亿</span>
+                <span>成交 107.5亿 · 均涨跌 -3.51%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>成长弹性</strong>
+                <span>3只 · 0/3 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neg" style="width:17.7%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-11.1亿</span>
+                <span>成交 130.2亿 · 均涨跌 -3.55%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>避险现金</strong>
+                <span>3只 · 1/2 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-1.3亿</span>
+                <span>成交 210.9亿 · 均涨跌 -0.28%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>新宽基</strong>
+                <span>5只 · 0/5 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-1.8亿</span>
+                <span>成交 161.6亿 · 均涨跌 -1.63%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>红利低波</strong>
+                <span>3只 · 1/1 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:15.6%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>9.7亿</span>
+                <span>成交 17.6亿 · 均涨跌 -0.03%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>周期制造</strong>
+                <span>6只 · 1/5 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:7.7%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-4.8亿</span>
+                <span>成交 37.9亿 · 均涨跌 -1.38%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>金融地产</strong>
+                <span>3只 · 1/2 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:7.9%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>5.0亿</span>
+                <span>成交 26.2亿 · 均涨跌 0.00%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>消费医药</strong>
+                <span>4只 · 1/3 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>0.3亿</span>
+                <span>成交 14.3亿 · 均涨跌 -0.03%</span>
+              </div>
+            </div>
+            </div>
+        </article>
+        <aside class="panel">
+          <div class="section-head">
+            <h2>今日信号</h2>
+            <span>894.9亿总成交</span>
+          </div>
+          <ul class="signals">
+        <li class="neg">
+          <strong>权益ETF</strong>
+          <span>净赎回，估算 -46.9亿。</span>
+        </li>
+        
+
+        <li class="neg">
+          <strong>宽基/成长</strong>
+          <span>强净赎回，估算 -75.2亿。</span>
+        </li>
+        
+
+        <li class="pos">
+          <strong>最强分类</strong>
+          <span>金融地产 均涨跌 0.00%，成交 26.2亿。</span>
+        </li>
+        </ul>
+        </aside>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>重点ETF</h2>
+          <span>按份额变化、成交额、价格异动和优先级综合筛选</span>
+        </div>
+        
+      <table class="etf-table">
+        <colgroup>
+          <col class="col-code">
+          <col class="col-name">
+          <col class="col-category">
+          <col class="col-flow">
+          <col class="col-share">
+          <col class="col-activity">
+          <col class="col-change">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>代码</th>
+            <th>ETF</th>
+            <th>分类</th>
+            <th>估算申赎</th>
+            <th>份额变化</th>
+            <th>成交</th>
+            <th>涨跌</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr class="">
+              <td class="code">510500</td>
+              <td class="etf-main">
+                <div class="name">中证500ETF南方</div>
+                <div class="sub">中证500 · 份额收缩</div>
+              </td>
+              <td class="category-cell">宽基核心</td>
+              <td class="neg num">-30.5亿</td>
+              <td class="neutral num">-3.66亿份</td>
+              <td class="neutral num">36.2亿</td>
+              <td class="neg num">-1.29%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">513180</td>
+              <td class="etf-main">
+                <div class="name">恒生科技ETF华夏</div>
+                <div class="sub">港股科技 · 份额收缩</div>
+              </td>
+              <td class="category-cell">跨境外溢</td>
+              <td class="neg num">-23.6亿</td>
+              <td class="neutral num">-38.03亿份</td>
+              <td class="neutral num">30.4亿</td>
+              <td class="neg num">-1.58%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">511880</td>
+              <td class="etf-main">
+                <div class="name">银华日利ETF</div>
+                <div class="sub">货币 · 成交活跃</div>
+              </td>
+              <td class="category-cell">避险现金</td>
+              <td class="neutral num">0.6亿</td>
+              <td class="neutral num">0.01亿份</td>
+              <td class="neutral num">172.9亿</td>
+              <td class="pos num">0.01%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">159995</td>
+              <td class="etf-main">
+                <div class="name">芯片ETF华夏</div>
+                <div class="sub">芯片 · 份额扩张</div>
+              </td>
+              <td class="category-cell">科技主线</td>
+              <td class="pos num">15.6亿</td>
+              <td class="neutral num">6.48亿份</td>
+              <td class="neutral num">13.8亿</td>
+              <td class="neg num">-5.02%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">588000</td>
+              <td class="etf-main">
+                <div class="name">科创50ETF华夏</div>
+                <div class="sub">科创50 · 成交活跃</div>
+              </td>
+              <td class="category-cell">成长弹性</td>
+              <td class="neutral num">-9.9亿</td>
+              <td class="neutral num">-5.61亿份</td>
+              <td class="neutral num">54.3亿</td>
+              <td class="neg num">-3.77%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">515880</td>
+              <td class="etf-main">
+                <div class="name">通信ETF国泰</div>
+                <div class="sub">通信 · 成交活跃</div>
+              </td>
+              <td class="category-cell">科技主线</td>
+              <td class="neutral num">8.8亿</td>
+              <td class="neutral num">5.30亿份</td>
+              <td class="neutral num">67.1亿</td>
+              <td class="neg num">-2.63%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">159915</td>
+              <td class="etf-main">
+                <div class="name">创业板ETF易方达</div>
+                <div class="sub">创业板 · 成交活跃</div>
+              </td>
+              <td class="category-cell">成长弹性</td>
+              <td class="neutral num">3.9亿</td>
+              <td class="neutral num">0.97亿份</td>
+              <td class="neutral num">59.3亿</td>
+              <td class="neg num">-3.00%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">513330</td>
+              <td class="etf-main">
+                <div class="name">恒生互联网ETF华夏</div>
+                <div class="sub">港股互联网 · 份额收缩</div>
+              </td>
+              <td class="category-cell">跨境外溢</td>
+              <td class="neg num">-11.1亿</td>
+              <td class="neutral num">-27.68亿份</td>
+              <td class="neutral num">20.0亿</td>
+              <td class="neg num">-0.74%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">510050</td>
+              <td class="etf-main">
+                <div class="name">上证50ETF华夏</div>
+                <div class="sub">上证50 · 份额收缩</div>
+              </td>
+              <td class="category-cell">宽基核心</td>
+              <td class="neg num">-10.1亿</td>
+              <td class="neutral num">-3.42亿份</td>
+              <td class="neutral num">20.2亿</td>
+              <td class="neg num">-0.81%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">512100</td>
+              <td class="etf-main">
+                <div class="name">中证1000ETF南方</div>
+                <div class="sub">中证1000 · 成交活跃</div>
+              </td>
+              <td class="category-cell">宽基核心</td>
+              <td class="neutral num">-9.3亿</td>
+              <td class="neutral num">-2.78亿份</td>
+              <td class="neutral num">25.2亿</td>
+              <td class="neg num">-0.80%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">159338</td>
+              <td class="etf-main">
+                <div class="name">中证A500ETF国泰</div>
+                <div class="sub">A500 · 成交活跃</div>
+              </td>
+              <td class="category-cell">新宽基</td>
+              <td class="neutral num">-5.6亿</td>
+              <td class="neutral num">-4.38亿份</td>
+              <td class="neutral num">44.8亿</td>
+              <td class="neg num">-1.54%</td>
+            </tr>
+            
+            <tr class="">
+              <td class="code">159919</td>
+              <td class="etf-main">
+                <div class="name">沪深300ETF嘉实</div>
+                <div class="sub">沪深300 · 规模核心</div>
+              </td>
+              <td class="category-cell">宽基核心</td>
+              <td class="neutral num">-8.0亿</td>
+              <td class="neutral num">-1.58亿份</td>
+              <td class="neutral num">7.8亿</td>
+              <td class="neg num">-1.69%</td>
+            </tr>
+            </tbody>
+      </table>
+    
+      </section>
+
+      <section class="split">
+        <article class="panel"><div class="rank-title">净申购靠前</div>
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159995 芯片ETF华夏</span>
+                <strong class="pos">15.6亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:100.0%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>515880 通信ETF国泰</span>
+                <strong class="neutral">8.8亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:56.5%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>515180 红利ETF易方达</span>
+                <strong class="neutral">7.3亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:46.7%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159361 A500ETF易方达</span>
+                <strong class="neutral">5.9亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:38.1%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512880 证券ETF国泰</span>
+                <strong class="neutral">4.7亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:30.2%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159915 创业板ETF易方达</span>
+                <strong class="neutral">3.9亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:24.8%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512890 红利低波ETF华泰柏瑞</span>
+                <strong class="neutral">3.5亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:22.4%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>515790 光伏ETF华泰柏瑞</span>
+                <strong class="neutral">3.1亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:19.8%"></div></div>
+            </div>
+            </article>
+        <article class="panel"><div class="rank-title">净赎回靠前</div>
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>510500 中证500ETF南方</span>
+                <strong class="neg">-30.5亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neg" style="width:100.0%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>513180 恒生科技ETF华夏</span>
+                <strong class="neg">-23.6亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neg" style="width:77.4%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>513330 恒生互联网ETF华夏</span>
+                <strong class="neg">-11.1亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neg" style="width:36.5%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>510050 上证50ETF华夏</span>
+                <strong class="neg">-10.1亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neg" style="width:32.9%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>588000 科创50ETF华夏</span>
+                <strong class="neutral">-9.9亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:32.4%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159870 化工ETF鹏华</span>
+                <strong class="neutral">-9.8亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:32.1%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>512100 中证1000ETF南方</span>
+                <strong class="neutral">-9.3亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:30.6%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159919 沪深300ETF嘉实</span>
+                <strong class="neutral">-8.0亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:26.2%"></div></div>
+            </div>
+            </article>
+      </section>
+    </main>
+  <footer>口径：估算申赎 = 份额变化 x 最新价。成交额用于观察活跃度，不等于真实净流入。</footer>
+</body>
+</html>

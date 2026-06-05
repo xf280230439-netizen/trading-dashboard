@@ -1,0 +1,2369 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>国家社保基金动向 · 2026-03-31</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1d2430;
+      --muted: #687386;
+      --line: #dfe4ea;
+      --pos: #c9362c;
+      --pos-bg: #f8dfdc;
+      --neg: #16815d;
+      --neg-bg: #dff1eb;
+      --warn: #9a6412;
+      --warn-bg: #f7ead3;
+      --blue: #2563a9;
+      --blue-bg: #dce9f8;
+      --unavailable: #8a94a3;
+      --unavailable-bg: #eef1f4;
+      --shadow: 0 8px 22px rgba(31, 42, 68, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.45;
+      overflow-x: hidden;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(246, 247, 249, 0.96);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 28px;
+    }
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-end;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    h1, h2 { margin: 0; letter-spacing: 0; }
+    h1 { font-size: 28px; line-height: 1.1; }
+    h2 { font-size: 17px; }
+    .date-pill {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .head-actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .site-nav {
+      display: flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+    .site-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      padding: 6px 9px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .site-nav a:hover {
+      color: var(--text);
+      background: var(--blue-bg);
+    }
+    .subtitle { color: var(--muted); margin-top: 6px; font-size: 13px; }
+    main {
+      max-width: 1360px;
+      min-width: 0;
+      margin: 0 auto;
+      padding: 22px 28px 36px;
+      display: grid;
+      gap: 18px;
+    }
+    main > * { min-width: 0; max-width: 100%; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .metric, .panel, .empty-state {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .metric { padding: 14px; min-height: 104px; border-left: 4px solid var(--blue); }
+    .metric.pos { border-left-color: var(--pos); }
+    .metric.neg { border-left-color: var(--neg); }
+    .metric.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+      box-shadow: none;
+    }
+    .metric-label { color: var(--muted); font-size: 13px; }
+    .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
+    .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .data-status {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .status-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px 12px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+    .status-item.unavailable {
+      background: var(--unavailable-bg);
+      box-shadow: none;
+      color: var(--unavailable);
+    }
+    .status-item span,
+    .status-item em {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-style: normal;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .status-item strong {
+      display: block;
+      margin: 4px 0 3px;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.8fr);
+      gap: 18px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .money-alerts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .futures-cards {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+    .alert-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .alert-card.pos { border-left-color: var(--pos); background: linear-gradient(90deg, var(--pos-bg), #fff 34%); }
+    .alert-card.neg { border-left-color: var(--neg); background: linear-gradient(90deg, var(--neg-bg), #fff 34%); }
+    .alert-card.warn { border-left-color: var(--warn); background: linear-gradient(90deg, var(--warn-bg), #fff 34%); }
+    .alert-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .alert-top em { font-style: normal; font-variant-numeric: tabular-nums; }
+    .alert-state {
+      font-size: 28px;
+      font-weight: 850;
+      margin-top: 8px;
+      line-height: 1.1;
+    }
+    .alert-card.pos .alert-state { color: var(--pos); }
+    .alert-card.neg .alert-state { color: var(--neg); }
+    .alert-card.warn .alert-state { color: var(--warn); }
+    .alert-card p {
+      margin: 8px 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .alert-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .alert-metric {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.72);
+      border-radius: 6px;
+      padding: 8px;
+      min-width: 0;
+    }
+    .alert-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .alert-metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+    }
+    .panel { padding: 18px; min-width: 0; overflow: hidden; }
+    .panel.wide { min-width: 0; }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .section-head span { min-width: 0; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+    .heat-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .heat-row {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fbfcfd;
+    }
+    .heat-head, .heat-foot, .rank-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+    .heat-head span, .heat-foot, .sub { color: var(--muted); font-size: 12px; }
+    .bar-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 9px 0 7px;
+    }
+    .bar-track.compact { height: 7px; margin-top: 6px; }
+    .bar-fill { height: 100%; background: var(--blue); }
+    .bar-fill.pos { background: var(--pos); }
+    .bar-fill.neg { background: var(--neg); }
+    .bar-fill.warn { background: var(--warn); }
+    .signals { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .signals li {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 6px;
+      padding: 10px;
+      display: grid;
+      gap: 4px;
+      background: var(--blue-bg);
+    }
+    .signals li.pos { border-left-color: var(--pos); background: var(--pos-bg); }
+    .signals li.neg { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signals li.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signals span { color: var(--muted); font-size: 13px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .table-scroll { width: 100%; overflow-x: auto; }
+    .table-scroll table { min-width: 860px; }
+    th, td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; font-size: 13px; vertical-align: middle; }
+    th { color: var(--muted); font-weight: 700; background: #f9fafb; }
+    th.sortable {
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      padding-right: 22px;
+    }
+    th.sortable::after {
+      content: "↕";
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #aeb8c5;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    th.sortable.sort-asc::after {
+      content: "↑";
+      color: var(--blue);
+    }
+    th.sortable.sort-desc::after {
+      content: "↓";
+      color: var(--blue);
+    }
+    th.sortable:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: -2px;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .etf-table .col-code { width: 82px; }
+    .etf-table .col-name { width: auto; }
+    .etf-table .col-category { width: 96px; }
+    .etf-table .col-flow,
+    .etf-table .col-share,
+    .etf-table .col-activity,
+    .etf-table .col-change { width: 112px; }
+    .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-weight: 700; width: 74px; }
+    .etf-main {
+      display: grid;
+      grid-template-rows: 18px 16px;
+      gap: 2px;
+      min-width: 0;
+      align-content: center;
+    }
+    .name {
+      font-size: 13px;
+      line-height: 18px;
+      font-weight: 750;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .category-cell { color: var(--text); }
+    .unavailable,
+    .unavailable .metric-value,
+    .unavailable .metric-note,
+    .unavailable .metric-label { color: var(--unavailable); }
+    .unavailable-row {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .pos { color: var(--pos); }
+    .neg { color: var(--neg); }
+    .neutral { color: var(--blue); }
+    td.unavailable, .rank-row .unavailable { color: var(--unavailable); }
+    .rank-title { font-weight: 800; margin-bottom: 12px; }
+    .rank-row { padding: 8px 0; border-bottom: 1px solid var(--line); }
+    .rank-meta span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .chart-wrap {
+      width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+    }
+    svg { display: block; width: 100%; height: auto; }
+    .chart-bg { fill: #fbfcfd; }
+    .grid-line { stroke: #dfe4ea; stroke-width: 1; }
+    .grid-line.vertical { stroke-dasharray: 4 5; }
+    .axis-line { stroke: #aeb8c5; stroke-width: 1.2; }
+    .axis-label { fill: var(--muted); font-size: 12px; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      background: #fbfcfd;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+    }
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .trend-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 10px;
+      min-width: 0;
+    }
+    .trend-card.unavailable {
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .trend-head,
+    .trend-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .trend-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .trend-head span {
+      font-size: 13px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .trend-meta {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+    .trend-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .mini-svg {
+      display: block;
+      width: 100%;
+      height: 118px;
+      margin-top: 6px;
+    }
+    .mini-zero {
+      stroke: #cfd7e1;
+      stroke-width: 1;
+      stroke-dasharray: 4 5;
+    }
+    .mini-empty {
+      min-height: 118px;
+      display: grid;
+      place-items: center;
+    }
+    .top-signal-hero {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.7fr) minmax(0, 2fr);
+      gap: 16px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .pressure-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .pressure-card.normal { border-left-color: var(--pos); }
+    .pressure-card.warn { border-left-color: var(--warn); }
+    .pressure-card.danger { border-left-color: var(--neg); }
+    .pressure-value {
+      font-size: 52px;
+      line-height: 1;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .pressure-card.normal .pressure-value { color: var(--pos); }
+    .pressure-card.warn .pressure-value { color: var(--warn); }
+    .pressure-card.danger .pressure-value { color: var(--neg); }
+    .pressure-track {
+      height: 9px;
+      background: #edf1f5;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 14px;
+    }
+    .pressure-fill { height: 100%; background: var(--blue); }
+    .pressure-card.normal .pressure-fill { background: var(--pos); }
+    .pressure-card.warn .pressure-fill { background: var(--warn); }
+    .pressure-card.danger .pressure-fill { background: var(--neg); }
+    .pressure-copy {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 10px;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+      min-width: 0;
+      max-width: 100%;
+    }
+    .signal-card.normal { border-left-color: var(--pos); }
+    .signal-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .signal-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .signal-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .signal-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+    .signal-top strong { min-width: 0; font-size: 13px; overflow-wrap: anywhere; }
+    .signal-group {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 5px;
+    }
+    .signal-number {
+      font-size: 25px;
+      font-weight: 850;
+      margin-top: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+    .signal-card.normal .signal-number { color: var(--pos); }
+    .signal-card.warn .signal-number { color: var(--warn); }
+    .signal-card.danger .signal-number { color: var(--neg); }
+    .signal-note {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+      min-height: 34px;
+      overflow-wrap: anywhere;
+    }
+    .status-pill {
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .signal-source {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .wechat-index-card {
+      min-width: 0;
+      max-width: 100%;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 14px;
+    }
+    .wechat-index-card.warn { border-left-color: var(--warn); background: var(--warn-bg); }
+    .wechat-index-card.danger { border-left-color: var(--neg); background: var(--neg-bg); }
+    .wechat-index-card.unavailable {
+      border-left-color: var(--unavailable);
+      background: var(--unavailable-bg);
+      color: var(--unavailable);
+    }
+    .wechat-index-top, .wechat-index-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-width: 0;
+    }
+    .wechat-index-top > div, .wechat-index-meta span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .wechat-index-kicker {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+    .wechat-index-card h3 { margin: 0; font-size: 18px; }
+    .wechat-index-number {
+      margin-top: 16px;
+      font-size: 30px;
+      line-height: 1;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .wechat-index-meta {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .wechat-index-card .chart-wrap { margin-top: 14px; }
+    .wechat-index-track {
+      height: 10px;
+      margin-top: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #d8dee7;
+    }
+    .wechat-index-track span {
+      display: block;
+      width: 36%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--unavailable);
+      opacity: .45;
+    }
+    .tdx-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .tdx-metric {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-metric.pos { border-left-color: var(--pos); }
+    .tdx-metric.neg { border-left-color: var(--neg); }
+    .tdx-metric.warn { border-left-color: var(--warn); }
+    .tdx-metric span, .tdx-metric em {
+      display: block;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-style: normal;
+      overflow-wrap: anywhere;
+    }
+    .tdx-metric strong {
+      display: block;
+      margin: 5px 0 3px;
+      color: var(--text);
+      font-size: 18px;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-observation {
+      margin-top: 12px;
+      border-left: 4px solid var(--warn);
+      background: var(--warn-bg);
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 13px;
+    }
+    .tdx-index-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tdx-index-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .tdx-index-top, .tdx-index-meta, .tdx-leader-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 7px;
+      min-width: 0;
+    }
+    .tdx-index-top strong { min-width: 0; color: var(--text); font-size: 13px; overflow-wrap: anywhere; }
+    .tdx-index-top span { flex: 0 0 auto; font-size: 12px; font-weight: 800; }
+    .tdx-index-close {
+      margin-top: 7px;
+      color: var(--text);
+      font-size: 21px;
+      font-weight: 850;
+      font-variant-numeric: tabular-nums;
+    }
+    .tdx-index-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-leader-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .tdx-leader-block { min-width: 0; }
+    .tdx-leader-block h3 { margin: 0 0 8px; font-size: 14px; }
+    .tdx-leader-row {
+      border-top: 1px solid var(--line);
+      padding: 7px 0;
+      font-size: 12px;
+    }
+    .tdx-leader-name {
+      min-width: 0;
+      flex: 1 1 auto;
+      color: var(--text);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .tdx-leader-code { flex: 0 0 auto; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tdx-leader-row strong { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
+    .tdx-unusual {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      font-size: 13px;
+    }
+    .tdx-unusual > div { display: flex; flex-wrap: wrap; gap: 7px; }
+    .tdx-unusual span {
+      display: inline-flex;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fbfcfd;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .tdx-unusual span strong { color: var(--text); }
+    .tdx-source { margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .down-rain-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+    .down-rain-layout .tdx-metric-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .down-rain-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .07) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #eef6f2 100%);
+      background-size: 34px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .down-rain-card.severe, .down-rain-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e3f1ec 100%);
+      background-size: 34px 100%, 100% 100%;
+    }
+    .down-rain-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .storm-mark {
+      position: relative;
+      width: 34px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .storm-mark span {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--neg);
+      transform: rotate(22deg);
+      opacity: .75;
+    }
+    .storm-mark span:nth-child(1) { left: 8px; height: 24px; opacity: .45; }
+    .storm-mark span:nth-child(2) { left: 16px; height: 34px; opacity: .85; }
+    .storm-mark span:nth-child(3) { left: 25px; height: 28px; opacity: .58; }
+    .down-rain-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .down-rain-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .storm-scale {
+      height: 8px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe8e4;
+    }
+    .storm-scale span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--warn), var(--neg));
+    }
+    .storm-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .down-rain-chart {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(16, minmax(18px, 1fr));
+      gap: 7px;
+      align-items: end;
+      height: 230px;
+      margin-top: 14px;
+      padding: 18px 4px 0;
+      border-top: 1px solid rgba(104, 115, 134, .20);
+    }
+    .storm-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      border-top: 1px dashed rgba(104, 115, 134, .36);
+      pointer-events: none;
+    }
+    .storm-line.high { bottom: calc(80% + 22px); }
+    .storm-line.mid { bottom: calc(69% + 22px); }
+    .storm-line span {
+      position: absolute;
+      right: 0;
+      top: -18px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+    .down-day {
+      position: relative;
+      display: grid;
+      grid-template-rows: 20px 1fr 16px;
+      gap: 4px;
+      min-width: 0;
+      height: 100%;
+      align-items: end;
+      justify-items: center;
+      color: var(--muted);
+    }
+    .rain-value {
+      align-self: start;
+      font-size: 10px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    .rain-needle {
+      position: relative;
+      width: 100%;
+      height: var(--h);
+      min-height: 22px;
+      align-self: end;
+    }
+    .rain-needle span {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 7px;
+      height: 100%;
+      border-radius: 999px 999px 4px 4px;
+      background: var(--blue);
+      transform: translateX(-50%);
+      box-shadow: 0 0 0 1px rgba(255,255,255,.45) inset;
+    }
+    .rain-needle::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      width: 15px;
+      height: 15px;
+      border-radius: 10px 10px 10px 2px;
+      background: var(--blue);
+      transform: translateX(-50%) rotate(45deg);
+      box-shadow: 0 4px 10px rgba(22, 129, 93, .18);
+    }
+    .down-day.warn .rain-needle span,
+    .down-day.warn .rain-needle::before { background: var(--warn); }
+    .down-day.severe .rain-needle span,
+    .down-day.severe .rain-needle::before,
+    .down-day.extreme .rain-needle span,
+    .down-day.extreme .rain-needle::before { background: var(--neg); }
+    .down-day.extreme .rain-needle span {
+      width: 10px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,.55) inset, 0 0 16px rgba(22,129,93,.25);
+    }
+    .rain-date {
+      font-size: 10px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .breadth-line-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      border-radius: 8px;
+      background:
+        linear-gradient(90deg, rgba(37, 99, 169, .05) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #f2f7f5 100%);
+      background-size: 36px 100%, 100% 100%;
+      padding: 14px;
+    }
+    .breadth-line-card.severe, .breadth-line-card.extreme {
+      border-left-color: var(--neg);
+      background:
+        linear-gradient(90deg, rgba(22, 129, 93, .10) 1px, transparent 1px),
+        linear-gradient(180deg, #fbfcfd 0%, #e8f3ef 100%);
+      background-size: 36px 100%, 100% 100%;
+    }
+    .breadth-line-head {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+    }
+    .wave-mark {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f7faf9;
+      overflow: hidden;
+    }
+    .wave-mark span {
+      position: absolute;
+      left: 5px;
+      right: 5px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--blue);
+      transform-origin: center;
+    }
+    .wave-mark span:nth-child(1) { top: 9px; transform: rotate(-12deg); opacity: .55; }
+    .wave-mark span:nth-child(2) { top: 16px; transform: rotate(10deg); background: var(--neg); opacity: .9; }
+    .wave-mark span:nth-child(3) { top: 23px; transform: rotate(-8deg); background: var(--warn); opacity: .75; }
+    .wave-mark span:nth-child(4) { top: 30px; transform: rotate(12deg); opacity: .45; }
+    .breadth-line-head span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-head strong {
+      display: block;
+      color: var(--text);
+      font-size: 32px;
+      line-height: 1;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-line-head em {
+      align-self: start;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 3px 8px;
+      color: var(--neg);
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .breadth-line-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .breadth-line-meta span {
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-line-svg {
+      display: block;
+      width: 100%;
+      height: 286px;
+      margin-top: 10px;
+      overflow: visible;
+    }
+    .breadth-plot-bg { fill: rgba(255, 255, 255, .70); }
+    .breadth-grid-line line {
+      stroke: rgba(104, 115, 134, .28);
+      stroke-dasharray: 6 7;
+      stroke-width: 1;
+    }
+    .breadth-grid-line.warn line { stroke: rgba(217, 119, 6, .48); }
+    .breadth-grid-line.danger line { stroke: rgba(22, 129, 93, .55); }
+    .breadth-grid-line text {
+      fill: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .breadth-area { fill: url(#breadthArea); }
+    .breadth-path {
+      fill: none;
+      stroke: var(--neg);
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .breadth-ma-path {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 5 6;
+    }
+    .point-hit { fill: transparent; pointer-events: all; }
+    .point-dot {
+      fill: var(--blue);
+      stroke: #fff;
+      stroke-width: 1.5;
+      opacity: .75;
+    }
+    .breadth-point.warn .point-dot { fill: var(--warn); }
+    .breadth-point.severe .point-dot,
+    .breadth-point.extreme .point-dot { fill: var(--neg); }
+    .breadth-point.extreme .point-dot { r: 5; }
+    .point-tip {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .12s ease;
+    }
+    .breadth-point:hover .point-tip,
+    .breadth-point:focus .point-tip { opacity: 1; }
+    .point-tip rect {
+      fill: #ffffff;
+      stroke: var(--line);
+      filter: drop-shadow(0 8px 18px rgba(15, 23, 42, .13));
+    }
+    .point-tip text {
+      fill: var(--text);
+      font-size: 11px;
+      font-weight: 750;
+      font-variant-numeric: tabular-nums;
+    }
+    .point-tip text + text {
+      fill: var(--muted);
+      font-weight: 650;
+    }
+    .breadth-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .breadth-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .breadth-legend i {
+      width: 18px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--neg);
+    }
+    .breadth-legend i.ma {
+      background: var(--blue);
+      background-image: repeating-linear-gradient(90deg, transparent 0 5px, #fff 5px 8px);
+    }
+    .integration-link {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--text);
+      text-decoration: none;
+      background: #fbfcfd;
+    }
+    .integration-link:hover { border-color: var(--blue); background: var(--blue-bg); }
+    .integration-link strong { display: block; font-size: 15px; }
+    .integration-link span { display: block; color: var(--muted); font-size: 12px; margin-top: 5px; }
+    .social-disclosure {
+      border-left: 5px solid var(--blue);
+    }
+    .social-disclosure.warn {
+      border-left-color: var(--warn);
+      background: var(--warn-bg);
+    }
+    .social-disclosure p {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 5px 0 0;
+    }
+    .social-action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .social-chart-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .social-bar-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px;
+    }
+    .social-bar-card h3 {
+      margin: 0 0 12px;
+      font-size: 14px;
+    }
+    .social-bar-list {
+      display: grid;
+      gap: 10px;
+    }
+    .social-bar-row {
+      min-width: 0;
+    }
+    .social-bar-head,
+    .social-bar-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .social-bar-head strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .social-bar-head span {
+      flex: 0 0 auto;
+      font-size: 12px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+    .social-bar-track {
+      height: 8px;
+      margin-top: 5px;
+      border-radius: 999px;
+      background: #e8edf3;
+      overflow: hidden;
+    }
+    .social-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--blue);
+    }
+    .social-bar-fill.new { background: var(--blue); }
+    .social-bar-fill.increase { background: var(--pos); }
+    .social-bar-fill.decrease { background: var(--neg); }
+    .social-bar-meta {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .action-block {
+      min-width: 0;
+    }
+    .action-block h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+    .action-pill {
+      display: inline-block;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 11px;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+    .empty, .empty-state { color: var(--muted); padding: 18px; }
+    .empty-state h2 { color: var(--text); margin-bottom: 8px; }
+    code {
+      background: #e9edf2;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 2px 5px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      padding: 0 28px 28px;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+    @media (max-width: 1100px) {
+      .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .data-status { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .trend-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .social-action-grid { grid-template-columns: 1fr; }
+      .social-chart-grid { grid-template-columns: 1fr; }
+      .down-rain-layout { grid-template-columns: 1fr; }
+      .tdx-metric-grid, .tdx-index-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .tdx-leader-grid { grid-template-columns: 1fr; }
+      .money-alerts { grid-template-columns: 1fr; }
+      .futures-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .split { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      header { padding: 14px 16px; }
+      .topline { align-items: flex-start; flex-direction: column; }
+      .head-actions { width: 100%; max-width: 100%; flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; padding-bottom: 2px; }
+      .site-nav, .date-pill { flex: 0 0 auto; }
+      main { padding: 16px; }
+      .summary-grid, .data-status, .heat-list { grid-template-columns: 1fr; }
+      .trend-grid { grid-template-columns: 1fr; }
+      .top-signal-hero, .signal-grid, .integration-grid, .wechat-index-grid { grid-template-columns: 1fr; }
+      .tdx-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .tdx-index-grid { grid-template-columns: 1fr; }
+      .down-rain-chart { height: 200px; gap: 5px; }
+      .breadth-line-svg { height: 238px; }
+      .breadth-line-meta { display: grid; grid-template-columns: 1fr; gap: 3px; }
+      .storm-meta { display: grid; grid-template-columns: 1fr; gap: 2px; }
+      .futures-cards { grid-template-columns: 1fr; }
+      .alert-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-value { font-size: 22px; }
+      table { min-width: 760px; }
+      .panel { overflow-x: auto; }
+      .section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; align-items: flex-start; }
+      .status-pill { flex: 0 0 auto; }
+    }
+  </style>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const collator = new Intl.Collator("zh-Hans-CN", { numeric: true, sensitivity: "base" });
+
+      const cleanText = (cell) => (cell?.innerText || "").replace(/\s+/g, " ").trim();
+
+      const numericColumn = (header) => {
+        const text = header.textContent.trim();
+        return header.classList.contains("num") || /代码|ETF数|涨跌|涨\/跌|申赎|净额|成交|规模|份额|价格|市值/.test(text);
+      };
+
+      const parseValue = (cell, header) => {
+        const text = cleanText(cell);
+        const headerText = header.textContent.trim();
+        if (!text || text === "-") {
+          return { type: "empty", value: 0 };
+        }
+        if (/日期|时间|更新/.test(headerText)) {
+          const dateValue = Date.parse(text.replace(/\+08:00$/, ""));
+          if (!Number.isNaN(dateValue)) {
+            return { type: "number", value: dateValue };
+          }
+        }
+        if (headerText.includes("涨/跌")) {
+          const match = text.match(/(-?\d+(?:\.\d+)?)\s*\/\s*(-?\d+(?:\.\d+)?)/);
+          if (match) {
+            return { type: "number", value: Number(match[1]) - Number(match[2]) };
+          }
+        }
+        if (numericColumn(header)) {
+          const normalized = text
+            .replace(/,/g, "")
+            .replace(/亿份|亿元|亿|%|只/g, "")
+            .replace(/\+/g, "");
+          const match = normalized.match(/-?\d+(?:\.\d+)?/);
+          if (match) {
+            return { type: "number", value: Number(match[0]) };
+          }
+        }
+        return { type: "text", value: text };
+      };
+
+      const compareValues = (a, b, direction) => {
+        if (a.type === "empty" && b.type === "empty") return 0;
+        if (a.type === "empty") return 1;
+        if (b.type === "empty") return -1;
+        let result = 0;
+        if (a.type === "number" && b.type === "number") {
+          result = a.value - b.value;
+        } else {
+          result = collator.compare(String(a.value), String(b.value));
+        }
+        return direction === "asc" ? result : -result;
+      };
+
+      document.querySelectorAll("table").forEach((table) => {
+        const headers = Array.from(table.querySelectorAll("thead th"));
+        const tbody = table.querySelector("tbody");
+        if (!headers.length || !tbody) return;
+
+        Array.from(tbody.rows).forEach((row, index) => {
+          row.dataset.originalIndex = String(index);
+        });
+
+        headers.forEach((header, columnIndex) => {
+          header.classList.add("sortable");
+          header.tabIndex = 0;
+          header.title = "点击排序";
+          header.setAttribute("aria-sort", "none");
+
+          const sort = () => {
+            const current = header.dataset.sortDirection;
+            const firstDirection = numericColumn(header) ? "desc" : "asc";
+            const direction = current === "asc" ? "desc" : current === "desc" ? "asc" : firstDirection;
+            const rows = Array.from(tbody.rows);
+
+            headers.forEach((item) => {
+              item.classList.remove("sort-asc", "sort-desc");
+              item.dataset.sortDirection = "";
+              item.setAttribute("aria-sort", "none");
+            });
+
+            header.dataset.sortDirection = direction;
+            header.classList.add(direction === "asc" ? "sort-asc" : "sort-desc");
+            header.setAttribute("aria-sort", direction === "asc" ? "ascending" : "descending");
+
+            rows.sort((left, right) => {
+              const leftValue = parseValue(left.cells[columnIndex], header);
+              const rightValue = parseValue(right.cells[columnIndex], header);
+              const compared = compareValues(leftValue, rightValue, direction);
+              if (compared !== 0) return compared;
+              return Number(left.dataset.originalIndex) - Number(right.dataset.originalIndex);
+            });
+
+            rows.forEach((row) => tbody.appendChild(row));
+          };
+
+          header.addEventListener("click", sort);
+          header.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              sort();
+            }
+          });
+        });
+      });
+    });
+  </script>
+    
+</head>
+<body>
+  <header>
+    <div class="topline">
+      <div>
+        <h1>国家社保基金动向</h1>
+        <div class="subtitle">季度披露监测 · 生成 2026-06-05T16:09:42</div>
+      </div>
+      <div class="head-actions">
+        <nav class="site-nav" aria-label="页面导航">
+          <a href="index.html">大盘复盘</a>
+          <a href="industry.html">行业ETF</a>
+          <a href="top-signals.html">顶部信号</a>
+          <a href="social-security.html">社保基金</a>
+        </nav>
+        <div class="date-pill">2026-03-31</div>
+      </div>
+    </div>
+  </header>
+  <main>
+      <section class="summary-grid">
+        
+      <article class="metric neutral">
+        <div class="metric-label">最新报告期</div>
+        <div class="metric-value">2026-03-31</div>
+        <div class="metric-note">最近公告 2026-04-30</div>
+      </article>
+    
+        
+      <article class="metric neutral">
+        <div class="metric-label">披露持仓市值</div>
+        <div class="metric-value">2153.42亿</div>
+        <div class="metric-note">前十大流通股东可见部分</div>
+      </article>
+    
+        
+      <article class="metric neutral">
+        <div class="metric-label">披露个股数</div>
+        <div class="metric-value">667只</div>
+        <div class="metric-note">去重后的披露个股</div>
+      </article>
+    
+        
+      <article class="metric neutral">
+        <div class="metric-label">社保组合数</div>
+        <div class="metric-value">67个</div>
+        <div class="metric-note">全国社保基金组合</div>
+      </article>
+    
+        
+      <article class="metric neutral">
+        <div class="metric-label">新进 / 增持</div>
+        <div class="metric-value">217 / 189</div>
+        <div class="metric-note">较上一报告期</div>
+      </article>
+    
+        
+      <article class="metric warn">
+        <div class="metric-label">披露滞后</div>
+        <div class="metric-value">66天</div>
+        <div class="metric-note">季度披露，不是实时仓位</div>
+      </article>
+    
+      </section>
+
+      <section class="panel social-disclosure warn">
+        <div class="section-head">
+          <h2>披露口径</h2>
+          <span>上期 2025-12-31 · 本期 2026-03-31</span>
+        </div>
+        <p>上市公司前十大流通股东披露口径，不代表社保基金完整A股仓位，也不是实时资金流。</p>
+        <p>“退出前十”表示不再出现在前十大流通股东披露中，不等于已经清仓。季报密集披露期内，页面每周刷新一次。</p>
+      </section>
+
+      <section class="split">
+        <article class="panel">
+          <div class="section-head">
+            <h2>季度披露市值趋势</h2>
+            <span>4期公开披露</span>
+          </div>
+          
+      <div class="chart-wrap">
+        <svg viewBox="0 0 1000 190" role="img" aria-label="趋势折线">
+          <rect x="0" y="0" width="1000" height="190" class="chart-bg" />
+          <line x1="52" y1="156.0" x2="982" y2="156.0" class="grid-line" /><text x="43" y="160.0" text-anchor="end" class="axis-label">1635.5</text><line x1="52" y1="121.5" x2="982" y2="121.5" class="grid-line" /><text x="43" y="125.5" text-anchor="end" class="axis-label">1782.9</text><line x1="52" y1="87.0" x2="982" y2="87.0" class="grid-line" /><text x="43" y="91.0" text-anchor="end" class="axis-label">1930.2</text><line x1="52" y1="52.5" x2="982" y2="52.5" class="grid-line" /><text x="43" y="56.5" text-anchor="end" class="axis-label">2077.5</text><line x1="52" y1="18.0" x2="982" y2="18.0" class="grid-line" /><text x="43" y="22.0" text-anchor="end" class="axis-label">2224.9</text><text x="52.0" y="180" text-anchor="middle" class="axis-label">06-30</text><text x="672.0" y="180" text-anchor="middle" class="axis-label">12-31</text><text x="982.0" y="180" text-anchor="middle" class="axis-label">03-31</text>
+          <polyline points="52.0,139.3 362.0,35.3 672.0,54.0 982.0,34.7" fill="none" stroke="#2563a9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="982.0" cy="34.7" r="4" fill="#2563a9" />
+        </svg>
+      </div>
+    
+        </article>
+        <article class="panel">
+          <div class="section-head">
+            <h2>季度快照</h2>
+            <span>前十大流通股东口径</span>
+          </div>
+          
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>报告期</th><th class="num">组合数</th><th class="num">披露个股</th><th class="num">披露市值</th><th>最新公告</th></tr></thead>
+          <tbody>
+              <tr>
+                <td>2026-03-31</td>
+                <td class="num">67</td>
+                <td class="num">667</td>
+                <td class="num">2153.42亿</td>
+                <td>2026-04-30</td>
+              </tr>
+            
+              <tr>
+                <td>2025-12-31</td>
+                <td class="num">65</td>
+                <td class="num">616</td>
+                <td class="num">2071.33亿</td>
+                <td>2026-04-30</td>
+              </tr>
+            
+              <tr>
+                <td>2025-09-30</td>
+                <td class="num">67</td>
+                <td class="num">670</td>
+                <td class="num">2150.91亿</td>
+                <td>2025-10-31</td>
+              </tr>
+            
+              <tr>
+                <td>2025-06-30</td>
+                <td class="num">65</td>
+                <td class="num">636</td>
+                <td class="num">1706.98亿</td>
+                <td>2025-08-30</td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    
+        </article>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>最新调仓动向</h2>
+          <span>较 2025-12-31</span>
+        </div>
+        <div class="social-chart-grid">
+          
+      <article class="social-bar-card">
+        <h3>新进披露 TOP8</h3>
+        <div class="social-bar-list">
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>汇川技术</strong>
+                  <span>3,060.0万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:46.8%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>300124</span>
+                  <span>披露市值 20.50亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>广发证券</strong>
+                  <span>6,543.2万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:100.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>000776</span>
+                  <span>披露市值 11.75亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>招商轮船</strong>
+                  <span>5,908.2万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:90.3%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>601872</span>
+                  <span>披露市值 9.67亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>特变电工</strong>
+                  <span>3,280.0万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:50.1%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600089</span>
+                  <span>披露市值 8.69亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>兖矿能源</strong>
+                  <span>4,186.5万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:64.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600188</span>
+                  <span>披露市值 8.10亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>浙江龙盛</strong>
+                  <span>6,015.3万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:91.9%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600352</span>
+                  <span>披露市值 7.83亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>隆基绿能</strong>
+                  <span>4,043.0万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:61.8%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>601012</span>
+                  <span>披露市值 7.09亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>中国中免</strong>
+                  <span>963.3万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill new" style="width:14.7%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>601888</span>
+                  <span>披露市值 6.78亿</span>
+                </div>
+              </div>
+            </div>
+      </article>
+    
+          
+      <article class="social-bar-card">
+        <h3>增持 TOP8</h3>
+        <div class="social-bar-list">
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>兴业证券</strong>
+                  <span>+6,236.8万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:100.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>601377</span>
+                  <span>披露市值 13.91亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>南山铝业</strong>
+                  <span>+5,888.9万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:94.4%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600219</span>
+                  <span>披露市值 13.68亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>建发股份</strong>
+                  <span>+4,054.8万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:65.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600153</span>
+                  <span>披露市值 11.19亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>分众传媒</strong>
+                  <span>+3,261.4万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:52.3%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002027</span>
+                  <span>披露市值 19.51亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>圣农发展</strong>
+                  <span>+2,904.1万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:46.6%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002299</span>
+                  <span>披露市值 7.00亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>万华化学</strong>
+                  <span>+2,870.0万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:46.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600309</span>
+                  <span>披露市值 42.98亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>中国巨石</strong>
+                  <span>+2,855.3万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:45.8%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600176</span>
+                  <span>披露市值 27.73亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>华峰化学</strong>
+                  <span>+2,606.6万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill increase" style="width:41.8%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002064</span>
+                  <span>披露市值 4.98亿</span>
+                </div>
+              </div>
+            </div>
+      </article>
+    
+          
+      <article class="social-bar-card">
+        <h3>减持 TOP8</h3>
+        <div class="social-bar-list">
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>中国人保</strong>
+                  <span>-4,947.9万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:100.0%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>601319</span>
+                  <span>披露市值 3.49亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>晶澳科技</strong>
+                  <span>-4,448.6万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:89.9%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002459</span>
+                  <span>披露市值 3.97亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>太阳纸业</strong>
+                  <span>-3,450.8万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:69.7%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002078</span>
+                  <span>披露市值 10.15亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>伟星股份</strong>
+                  <span>-2,897.1万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:58.6%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>002003</span>
+                  <span>披露市值 1.73亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>云铝股份</strong>
+                  <span>-2,872.5万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:58.1%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>000807</span>
+                  <span>披露市值 18.16亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>皖维高新</strong>
+                  <span>-2,610.2万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:52.8%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600063</span>
+                  <span>披露市值 1.22亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>华鲁恒升</strong>
+                  <span>-2,550.1万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:51.5%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600426</span>
+                  <span>披露市值 34.29亿</span>
+                </div>
+              </div>
+            
+              <div class="social-bar-row">
+                <div class="social-bar-head">
+                  <strong>厦门象屿</strong>
+                  <span>-2,000.0万股</span>
+                </div>
+                <div class="social-bar-track">
+                  <div class="social-bar-fill decrease" style="width:40.4%"></div>
+                </div>
+                <div class="social-bar-meta">
+                  <span>600057</span>
+                  <span>披露市值 5.16亿</span>
+                </div>
+              </div>
+            </div>
+      </article>
+    
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>调仓明细</h2>
+          <span>披露股数与市值</span>
+        </div>
+        <div class="social-action-grid">
+          
+      <section class="action-block">
+        <h3>新进披露</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>股票</th><th class="num">股数变化</th><th class="num">披露市值</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>汇川技术</strong><div class="sub">300124</div></td>
+                <td class="num">3,060.0万股</td>
+                <td class="num">20.50亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>广发证券</strong><div class="sub">000776</div></td>
+                <td class="num">6,543.2万股</td>
+                <td class="num">11.75亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>招商轮船</strong><div class="sub">601872</div></td>
+                <td class="num">5,908.2万股</td>
+                <td class="num">9.67亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>特变电工</strong><div class="sub">600089</div></td>
+                <td class="num">3,280.0万股</td>
+                <td class="num">8.69亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>兖矿能源</strong><div class="sub">600188</div></td>
+                <td class="num">4,186.5万股</td>
+                <td class="num">8.10亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>浙江龙盛</strong><div class="sub">600352</div></td>
+                <td class="num">6,015.3万股</td>
+                <td class="num">7.83亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>隆基绿能</strong><div class="sub">601012</div></td>
+                <td class="num">4,043.0万股</td>
+                <td class="num">7.09亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>中国中免</strong><div class="sub">601888</div></td>
+                <td class="num">963.3万股</td>
+                <td class="num">6.78亿</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    
+          
+      <section class="action-block">
+        <h3>增持</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>股票</th><th class="num">股数变化</th><th class="num">披露市值</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>兴业证券</strong><div class="sub">601377</div></td>
+                <td class="num">+6,236.8万股</td>
+                <td class="num">13.91亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>南山铝业</strong><div class="sub">600219</div></td>
+                <td class="num">+5,888.9万股</td>
+                <td class="num">13.68亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>建发股份</strong><div class="sub">600153</div></td>
+                <td class="num">+4,054.8万股</td>
+                <td class="num">11.19亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>分众传媒</strong><div class="sub">002027</div></td>
+                <td class="num">+3,261.4万股</td>
+                <td class="num">19.51亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>圣农发展</strong><div class="sub">002299</div></td>
+                <td class="num">+2,904.1万股</td>
+                <td class="num">7.00亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>万华化学</strong><div class="sub">600309</div></td>
+                <td class="num">+2,870.0万股</td>
+                <td class="num">42.98亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>中国巨石</strong><div class="sub">600176</div></td>
+                <td class="num">+2,855.3万股</td>
+                <td class="num">27.73亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>华峰化学</strong><div class="sub">002064</div></td>
+                <td class="num">+2,606.6万股</td>
+                <td class="num">4.98亿</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    
+          
+      <section class="action-block">
+        <h3>减持</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>股票</th><th class="num">股数变化</th><th class="num">披露市值</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>中国人保</strong><div class="sub">601319</div></td>
+                <td class="num">-4,947.9万股</td>
+                <td class="num">3.49亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>晶澳科技</strong><div class="sub">002459</div></td>
+                <td class="num">-4,448.6万股</td>
+                <td class="num">3.97亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>太阳纸业</strong><div class="sub">002078</div></td>
+                <td class="num">-3,450.8万股</td>
+                <td class="num">10.15亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>伟星股份</strong><div class="sub">002003</div></td>
+                <td class="num">-2,897.1万股</td>
+                <td class="num">1.73亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>云铝股份</strong><div class="sub">000807</div></td>
+                <td class="num">-2,872.5万股</td>
+                <td class="num">18.16亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>皖维高新</strong><div class="sub">600063</div></td>
+                <td class="num">-2,610.2万股</td>
+                <td class="num">1.22亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>华鲁恒升</strong><div class="sub">600426</div></td>
+                <td class="num">-2,550.1万股</td>
+                <td class="num">34.29亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>厦门象屿</strong><div class="sub">600057</div></td>
+                <td class="num">-2,000.0万股</td>
+                <td class="num">5.16亿</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>披露市值重仓榜</h2>
+          <span>最新报告期 2026-03-31</span>
+        </div>
+        
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>排名</th><th>股票</th><th class="num">披露市值</th><th class="num">披露股数</th><th class="num">组合数</th><th>较上期</th></tr></thead>
+          <tbody>
+              <tr>
+                <td>1</td>
+                <td><strong>比亚迪</strong><div class="sub">002594</div></td>
+                <td class="num">44.20亿</td>
+                <td class="num">4,200.0万股</td>
+                <td class="num">1</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>2</td>
+                <td><strong>万华化学</strong><div class="sub">600309</div></td>
+                <td class="num">42.98亿</td>
+                <td class="num">5,410.0万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>3</td>
+                <td><strong>三一重工</strong><div class="sub">600031</div></td>
+                <td class="num">40.38亿</td>
+                <td class="num">21,008.5万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>4</td>
+                <td><strong>华鲁恒升</strong><div class="sub">600426</div></td>
+                <td class="num">34.29亿</td>
+                <td class="num">9,471.3万股</td>
+                <td class="num">3</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td>5</td>
+                <td><strong>中国巨石</strong><div class="sub">600176</div></td>
+                <td class="num">27.73亿</td>
+                <td class="num">11,407.2万股</td>
+                <td class="num">3</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>6</td>
+                <td><strong>鹏鼎控股</strong><div class="sub">002938</div></td>
+                <td class="num">25.36亿</td>
+                <td class="num">4,861.2万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>7</td>
+                <td><strong>山东黄金</strong><div class="sub">600547</div></td>
+                <td class="num">22.13亿</td>
+                <td class="num">5,498.0万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>8</td>
+                <td><strong>思源电气</strong><div class="sub">002028</div></td>
+                <td class="num">21.32亿</td>
+                <td class="num">1,055.3万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>9</td>
+                <td><strong>海大集团</strong><div class="sub">002311</div></td>
+                <td class="num">20.93亿</td>
+                <td class="num">4,202.7万股</td>
+                <td class="num">3</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>10</td>
+                <td><strong>汇川技术</strong><div class="sub">300124</div></td>
+                <td class="num">20.50亿</td>
+                <td class="num">3,060.0万股</td>
+                <td class="num">1</td>
+                <td><span class="action-pill pos">新进披露</span></td>
+              </tr>
+            
+              <tr>
+                <td>11</td>
+                <td><strong>招商蛇口</strong><div class="sub">001979</div></td>
+                <td class="num">20.30亿</td>
+                <td class="num">24,132.2万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>12</td>
+                <td><strong>分众传媒</strong><div class="sub">002027</div></td>
+                <td class="num">19.51亿</td>
+                <td class="num">29,781.8万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>13</td>
+                <td><strong>云铝股份</strong><div class="sub">000807</div></td>
+                <td class="num">18.16亿</td>
+                <td class="num">5,857.4万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill neg">减持</span></td>
+              </tr>
+            
+              <tr>
+                <td>14</td>
+                <td><strong>藏格矿业</strong><div class="sub">000408</div></td>
+                <td class="num">16.65亿</td>
+                <td class="num">2,100.0万股</td>
+                <td class="num">1</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            
+              <tr>
+                <td>15</td>
+                <td><strong>沪电股份</strong><div class="sub">002463</div></td>
+                <td class="num">16.28亿</td>
+                <td class="num">2,143.6万股</td>
+                <td class="num">2</td>
+                <td><span class="action-pill pos">增持</span></td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
+    
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>退出前十观察</h2>
+          <span>166只 · 不等于清仓</span>
+        </div>
+        
+      <section class="action-block">
+        <h3>上期披露、本期未进入前十</h3>
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>股票</th><th class="num">股数变化</th><th class="num">披露市值</th><th>状态</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>中国铝业</strong><div class="sub">601600</div></td>
+                <td class="num">9,931.6万股</td>
+                <td class="num">12.14亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>金风科技</strong><div class="sub">002202</div></td>
+                <td class="num">5,641.0万股</td>
+                <td class="num">11.51亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>三安光电</strong><div class="sub">600703</div></td>
+                <td class="num">6,700.0万股</td>
+                <td class="num">9.47亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>顺丰控股</strong><div class="sub">002352</div></td>
+                <td class="num">2,358.6万股</td>
+                <td class="num">9.04亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>赤峰黄金</strong><div class="sub">600988</div></td>
+                <td class="num">2,864.4万股</td>
+                <td class="num">8.95亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>雅化集团</strong><div class="sub">002497</div></td>
+                <td class="num">3,320.3万股</td>
+                <td class="num">8.22亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>天山铝业</strong><div class="sub">002532</div></td>
+                <td class="num">4,613.7万股</td>
+                <td class="num">7.46亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            
+              <tr>
+                <td><strong>中科星图</strong><div class="sub">688568</div></td>
+                <td class="num">1,229.0万股</td>
+                <td class="num">7.25亿</td>
+                <td><span class="action-pill neg">退出前十</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    
+      </section>
+
+      <section class="panel">
+        <div class="section-head">
+          <h2>长期参考</h2>
+          <span>全国社会保障基金理事会 2024 年度报告</span>
+        </div>
+        <div class="integration-grid">
+          <a class="integration-link" href="https://www.ssf.gov.cn/portal/yljjgl/webinfo/2025/09/1761903919491454.htm" target="_blank" rel="noreferrer">
+            <strong>基金权益 29128.02亿</strong>
+            <span>成立以来年均投资收益率 7.39% · 累计投资收益 19009.98亿</span>
+          </a>
+          <a class="integration-link" href="https://data.eastmoney.com/gdfx/HoldingAnalyse.html" target="_blank" rel="noreferrer">
+            <strong>查看东方财富股东分析</strong>
+            <span>本页自动抓取十大流通股东公开披露，并按社保组合聚合。</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  <footer>社保基金持仓来自上市公司前十大流通股东公开披露，只能用于观察长期配置方向，不构成投资建议。</footer>
+</body>
+</html>
