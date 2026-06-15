@@ -1300,6 +1300,84 @@
       .section-head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; align-items: flex-start; }
       .status-pill { flex: 0 0 auto; }
     }
+
+    /* ── 市场情绪温度计 ── */
+    .sentiment-panel { padding: 24px; }
+    .sentiment-grid { display: grid; grid-template-columns: 280px minmax(200px, 1fr) 240px; gap: 24px; align-items: start; }
+    .sentiment-gauge { text-align: center; }
+    .gauge-circle {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--line);
+      margin-bottom: 12px;
+    }
+    .gauge-circle.pos { border-color: var(--pos); }
+    .gauge-circle.warn { border-color: var(--warn); }
+    .gauge-circle.neutral { border-color: var(--blue); }
+    .gauge-circle.neg { border-color: var(--neg); }
+    .gauge-score { font-size: 36px; font-weight: 700; line-height: 1.1; }
+    .gauge-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+    .gauge-bar-track {
+      height: 8px; border-radius: 4px; background: var(--line); margin: 8px 0;
+    }
+    .gauge-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s; }
+    .gauge-range {
+      display: flex; justify-content: space-between; font-size: 11px;
+      color: var(--muted); padding: 0 2px;
+    }
+    .sentiment-signals { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+    .sentiment-signal {
+      font-size: 11px; padding: 2px 8px; border-radius: 10px;
+      background: var(--line); color: var(--text);
+    }
+    .sentiment-table { width: 100%; font-size: 13px; }
+    .sentiment-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 8px; }
+    .sentiment-table td { padding: 4px 8px; border-bottom: 1px solid var(--line); }
+    .sentiment-overseas h3 { font-size: 14px; margin: 0 0 8px; }
+    .overseas-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .overseas-card {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 10px; border-radius: 6px; background: var(--bg);
+      font-size: 13px;
+    }
+    .overseas-name { font-weight: 500; }
+    .overseas-price { color: var(--muted); }
+    .overseas-change { font-weight: 600; min-width: 60px; text-align: right; }
+
+    /* ── 情景预案卡片 ── */
+    .scenario-panel { padding: 24px; }
+    .scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr) 1fr; gap: 16px; align-items: start; }
+    .scenario-card {
+      background: var(--bg); border-radius: 8px; padding: 14px;
+    }
+    .scenario-index {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line);
+    }
+    .scenario-index strong { font-size: 15px; }
+    .scenario-index span { font-weight: 600; font-size: 14px; }
+    .scenario-levels { display: flex; flex-direction: column; gap: 3px; }
+    .level-row {
+      display: flex; justify-content: space-between; padding: 3px 8px;
+      border-radius: 4px; font-size: 13px;
+    }
+    .level-row.current { background: var(--blue-bg); font-weight: 600; }
+    .level-label { color: var(--muted); }
+    .level-value { font-weight: 500; font-family: monospace; }
+    .scenario-plan { display: flex; flex-direction: column; gap: 10px; }
+    .plan-card {
+      padding: 10px 14px; border-radius: 8px; border-left: 4px solid;
+    }
+    .plan-card.pos-bg { background: var(--pos-bg); border-color: var(--pos); }
+    .plan-card.neutral-bg { background: var(--blue-bg); border-color: var(--blue); }
+    .plan-card.neg-bg { background: var(--neg-bg); border-color: var(--neg); }
+    .plan-card h3 { font-size: 13px; margin: 0 0 6px; }
+    .plan-card ul { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.6; }
+    .plan-card li { margin-bottom: 2px; }
+
+    @media (max-width: 900px) {
+      .sentiment-grid { grid-template-columns: 1fr; }
+      .scenario-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
   
   <script>
@@ -1417,7 +1495,7 @@
     <div class="topline">
       <div>
         <h1>国家社保基金动向</h1>
-        <div class="subtitle">季度披露监测 · 生成 2026-06-06T11:26:50</div>
+        <div class="subtitle">季度披露监测 · 生成 2026-06-13T18:17:08</div>
       </div>
       <div class="head-actions">
         <nav class="site-nav" aria-label="页面导航">
@@ -1470,7 +1548,7 @@
         
       <article class="metric warn">
         <div class="metric-label">披露滞后</div>
-        <div class="metric-value">67天</div>
+        <div class="metric-value">74天</div>
         <div class="metric-note">季度披露，不是实时仓位</div>
       </article>
     
