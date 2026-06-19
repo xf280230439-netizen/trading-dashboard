@@ -121,40 +121,34 @@
     .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
     .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
     .data-status {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .status-item {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 11px 12px;
+      border-radius: 6px;
+      padding: 6px 14px;
       box-shadow: var(--shadow);
-      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
     }
     .status-item.unavailable {
       background: var(--unavailable-bg);
       box-shadow: none;
       color: var(--unavailable);
     }
-    .status-item span,
-    .status-item em {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-style: normal;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item span {
+      color: var(--muted); font-size: 11px; white-space: nowrap;
     }
-    .status-item strong {
-      display: block;
-      margin: 4px 0 3px;
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item em {
+      font-style: normal; font-weight: 600; white-space: nowrap;
+    }
+    .status-item small {
+      color: var(--muted); font-size: 10px; white-space: nowrap;
     }
     .split {
       display: grid;
@@ -1301,47 +1295,30 @@
       .status-pill { flex: 0 0 auto; }
     }
 
-    /* ── 市场情绪温度计 ── */
-    .sentiment-panel { padding: 24px; }
-    .sentiment-grid { display: grid; grid-template-columns: 280px minmax(200px, 1fr) 240px; gap: 24px; align-items: start; }
-    .sentiment-gauge { text-align: center; }
-    .gauge-circle {
-      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-      width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--line);
-      margin-bottom: 12px;
+    /* ── 市场情绪条（超紧凑） ── */
+    .sentiment-bar {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 8px; padding: 8px 16px; box-shadow: var(--shadow);
+      margin-bottom: 16px;
     }
-    .gauge-circle.pos { border-color: var(--pos); }
-    .gauge-circle.warn { border-color: var(--warn); }
-    .gauge-circle.neutral { border-color: var(--blue); }
-    .gauge-circle.neg { border-color: var(--neg); }
-    .gauge-score { font-size: 36px; font-weight: 700; line-height: 1.1; }
-    .gauge-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .gauge-bar-track {
-      height: 8px; border-radius: 4px; background: var(--line); margin: 8px 0;
+    .sentiment-inline {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-size: 12px;
     }
+    .sentiment-label { color: var(--muted); font-weight: 500; }
+    .gauge-bar-track.compact { flex: 1; min-width: 100px; height: 8px; border-radius: 4px; background: var(--line); }
     .gauge-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s; }
-    .gauge-range {
-      display: flex; justify-content: space-between; font-size: 11px;
-      color: var(--muted); padding: 0 2px;
-    }
-    .sentiment-signals { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
-    .sentiment-signal {
-      font-size: 11px; padding: 2px 8px; border-radius: 10px;
-      background: var(--line); color: var(--text);
-    }
-    .sentiment-table { width: 100%; font-size: 13px; }
-    .sentiment-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 8px; }
-    .sentiment-table td { padding: 4px 8px; border-bottom: 1px solid var(--line); }
-    .sentiment-overseas h3 { font-size: 14px; margin: 0 0 8px; }
-    .overseas-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .gauge-score-compact { font-size: 22px; font-weight: 700; min-width: 28px; text-align: center; }
+    .gauge-label-compact { font-size: 11px; color: var(--muted); }
+    .gauge-range-compact { display: flex; gap: 2px; font-size: 9px; color: var(--muted); }
+    .sentiment-divider { color: var(--line); }
     .overseas-card {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 10px; border-radius: 6px; background: var(--bg);
-      font-size: 13px;
+      display: flex; gap: 4px; align-items: center;
+      padding: 2px 6px; border-radius: 3px; background: var(--bg); font-size: 11px;
     }
     .overseas-name { font-weight: 500; }
     .overseas-price { color: var(--muted); }
-    .overseas-change { font-weight: 600; min-width: 60px; text-align: right; }
+    .overseas-change { font-weight: 600; }
 
     /* ── 情景预案卡片 ── */
     .scenario-panel { padding: 24px; }
@@ -1375,7 +1352,6 @@
     .plan-card li { margin-bottom: 2px; }
 
     @media (max-width: 900px) {
-      .sentiment-grid { grid-template-columns: 1fr; }
       .scenario-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -1555,116 +1531,116 @@
       <section class="panel">
         <div class="section-head">
           <h2>通达信盘面切片</h2>
-          <span>行情日期 2026-06-12 · 生成 2026-06-13T18:08:13</span>
+          <span>行情日期 2026-06-18 · 生成 2026-06-19T16:13:13</span>
         </div>
         <div class="tdx-metric-grid">
       <article class="tdx-metric pos">
         <span>沪深上涨家数</span>
-        <strong>3982</strong>
+        <strong>2055</strong>
         <em>通达信指数广度</em>
       </article>
     
       <article class="tdx-metric neg">
         <span>沪深下跌家数</span>
-        <strong>1525</strong>
+        <strong>3434</strong>
         <em>通达信指数广度</em>
       </article>
     
-      <article class="tdx-metric pos">
+      <article class="tdx-metric warn">
         <span>上涨占比</span>
-        <strong>72.3%</strong>
+        <strong>37.4%</strong>
         <em>沪深上涨 / 涨跌合计</em>
       </article>
     
       <article class="tdx-metric neutral">
         <span>沪深成交额</span>
-        <strong>32363.0亿</strong>
+        <strong>33321.5亿</strong>
         <em>上证 + 深证成交额</em>
       </article>
     
-      <article class="tdx-metric warn">
+      <article class="tdx-metric pos">
         <span>成长相对沪深300</span>
-        <strong>-0.9%</strong>
+        <strong>+2.7%</strong>
         <em>创业板与科创50均值减沪深300</em>
       </article>
     
       <article class="tdx-metric neutral">
         <span>异动覆盖</span>
-        <strong>4444只</strong>
-        <em>28892 条盘中事件</em>
+        <strong>4414只</strong>
+        <em>27760 条盘中事件</em>
       </article>
     </div>
-        <div class="tdx-observation">上涨扩散较强，观察成交放大后是否出现高位滞涨。</div>
+        <div class="tdx-observation">涨跌广度处于中间区域，结合ETF申赎继续观察。</div>
         <div class="tdx-index-grid">
-      <article class="tdx-index-card pos">
+      <article class="tdx-index-card neg">
         <div class="tdx-index-top">
           <strong>上证指数</strong>
-          <span>+1.12%</span>
+          <span>-0.43%</span>
         </div>
-        <div class="tdx-index-close">4031.51</div>
+        <div class="tdx-index-close">4090.48</div>
         <div class="tdx-index-meta">
-          <span>成交 15374.0亿</span>
-          <span>涨 1700 / 跌 622</span>
+          <span>成交 15604.7亿</span>
+          <span>涨 918 / 跌 1392</span>
         </div>
       </article>
     
       <article class="tdx-index-card pos">
         <div class="tdx-index-top">
           <strong>深证成指</strong>
-          <span>+0.75%</span>
+          <span>+0.94%</span>
         </div>
-        <div class="tdx-index-close">14963.41</div>
+        <div class="tdx-index-close">16030.70</div>
         <div class="tdx-index-meta">
-          <span>成交 16775.5亿</span>
-          <span>涨 2067 / 跌 801</span>
+          <span>成交 17496.3亿</span>
+          <span>涨 1075 / 跌 1789</span>
         </div>
       </article>
     
       <article class="tdx-index-card pos">
         <div class="tdx-index-top">
           <strong>创业板指</strong>
-          <span>+0.50%</span>
+          <span>+2.05%</span>
         </div>
-        <div class="tdx-index-close">3830.35</div>
+        <div class="tdx-index-close">4252.39</div>
         <div class="tdx-index-meta">
-          <span>成交 8110.0亿</span>
-          <span>涨 930 / 跌 447</span>
+          <span>成交 8665.8亿</span>
+          <span>涨 609 / 跌 769</span>
         </div>
       </article>
     
       <article class="tdx-index-card neg">
         <div class="tdx-index-top">
           <strong>北证50</strong>
-          <span>-0.78%</span>
+          <span>-1.18%</span>
         </div>
-        <div class="tdx-index-close">1242.57</div>
+        <div class="tdx-index-close">1265.16</div>
         <div class="tdx-index-meta">
-          <span>成交 213.5亿</span>
-          <span>涨 215 / 跌 102</span>
+          <span>成交 220.5亿</span>
+          <span>涨 62 / 跌 253</span>
         </div>
       </article>
     
       <article class="tdx-index-card pos">
         <div class="tdx-index-top">
           <strong>科创50</strong>
-          <span>+0.05%</span>
+          <span>+3.84%</span>
         </div>
-        <div class="tdx-index-close">1663.22</div>
+        <div class="tdx-index-close">1911.51</div>
         <div class="tdx-index-meta">
-          <span>成交 1758.2亿</span>
-          <span>涨 367 / 跌 236</span>
+          <span>成交 2095.3亿</span>
+          <span>涨 394 / 跌 207</span>
         </div>
       </article>
     
       <article class="tdx-index-card pos">
         <div class="tdx-index-top">
           <strong>沪深300</strong>
-          <span>+1.16%</span>
+          <span>+0.21%</span>
         </div>
-        <div class="tdx-index-close">4777.32</div>
+        <div class="tdx-index-close">4941.60</div>
         <div class="tdx-index-meta">
-          <span>成交 8714.8亿</span>
-          <span>涨 232 / 跌 63</span>
+          <span>成交 10217.1亿</span>
+          <span>涨 80 / 跌 220</span>
         </div>
       </article>
     </div>
@@ -1675,37 +1651,37 @@
               <div class="tdx-leader-row">
                 <span class="tdx-leader-name">中际旭创</span>
                 <span class="tdx-leader-code">300308</span>
-                <strong class="pos">400.0亿</strong>
-              </div>
-            
-              <div class="tdx-leader-row">
-                <span class="tdx-leader-name">新易盛</span>
-                <span class="tdx-leader-code">300502</span>
-                <strong class="neg">337.3亿</strong>
-              </div>
-            
-              <div class="tdx-leader-row">
-                <span class="tdx-leader-name">亨通光电</span>
-                <span class="tdx-leader-code">600487</span>
-                <strong class="neg">215.3亿</strong>
+                <strong class="pos">381.8亿</strong>
               </div>
             
               <div class="tdx-leader-row">
                 <span class="tdx-leader-name">兆易创新</span>
                 <span class="tdx-leader-code">603986</span>
-                <strong class="neg">202.0亿</strong>
+                <strong class="pos">370.2亿</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">佰维存储</span>
-                <span class="tdx-leader-code">688525</span>
-                <strong class="pos">186.1亿</strong>
+                <span class="tdx-leader-name">工业富联</span>
+                <span class="tdx-leader-code">601138</span>
+                <strong class="pos">330.6亿</strong>
               </div>
             
               <div class="tdx-leader-row">
                 <span class="tdx-leader-name">寒武纪</span>
                 <span class="tdx-leader-code">688256</span>
-                <strong class="pos">183.8亿</strong>
+                <strong class="pos">321.5亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">京东方Ａ</span>
+                <span class="tdx-leader-code">000725</span>
+                <strong class="neg">266.5亿</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">新易盛</span>
+                <span class="tdx-leader-code">300502</span>
+                <strong class="pos">247.4亿</strong>
               </div>
             
           </div>
@@ -1713,39 +1689,39 @@
             <h3>涨幅极端值</h3>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">新威凌</span>
-                <span class="tdx-leader-code">920634</span>
-                <strong class="pos">+29.95%</strong>
+                <span class="tdx-leader-name">金戈新材</span>
+                <span class="tdx-leader-code">920083</span>
+                <strong class="pos">+21.67%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">通易航天</span>
-                <span class="tdx-leader-code">920642</span>
-                <strong class="pos">+28.71%</strong>
+                <span class="tdx-leader-name">丹娜生物</span>
+                <span class="tdx-leader-code">920009</span>
+                <strong class="pos">+20.95%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">赛伦生物</span>
-                <span class="tdx-leader-code">688163</span>
+                <span class="tdx-leader-name">东方国信</span>
+                <span class="tdx-leader-code">300166</span>
+                <strong class="pos">+20.03%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">麦捷科技</span>
+                <span class="tdx-leader-code">300319</span>
+                <strong class="pos">+20.02%</strong>
+              </div>
+            
+              <div class="tdx-leader-row">
+                <span class="tdx-leader-name">九州一轨</span>
+                <span class="tdx-leader-code">688485</span>
                 <strong class="pos">+20.01%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">新莱福</span>
-                <span class="tdx-leader-code">301323</span>
-                <strong class="pos">+20.00%</strong>
-              </div>
-            
-              <div class="tdx-leader-row">
-                <span class="tdx-leader-name">赢时胜</span>
-                <span class="tdx-leader-code">300377</span>
-                <strong class="pos">+20.00%</strong>
-              </div>
-            
-              <div class="tdx-leader-row">
-                <span class="tdx-leader-name">逸豪新材</span>
-                <span class="tdx-leader-code">301176</span>
-                <strong class="pos">+19.99%</strong>
+                <span class="tdx-leader-name">晶升股份</span>
+                <span class="tdx-leader-code">688478</span>
+                <strong class="pos">+20.01%</strong>
               </div>
             
           </div>
@@ -1753,46 +1729,46 @@
             <h3>跌幅极端值</h3>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">金戈新材</span>
-                <span class="tdx-leader-code">920083</span>
-                <strong class="neg">-22.73%</strong>
+                <span class="tdx-leader-name">金盾股份</span>
+                <span class="tdx-leader-code">300411</span>
+                <strong class="neg">-19.96%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">华特气体</span>
-                <span class="tdx-leader-code">688268</span>
-                <strong class="neg">-17.62%</strong>
+                <span class="tdx-leader-name">恒锋工具</span>
+                <span class="tdx-leader-code">300488</span>
+                <strong class="neg">-13.15%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">中巨芯</span>
-                <span class="tdx-leader-code">688549</span>
-                <strong class="neg">-17.30%</strong>
+                <span class="tdx-leader-name">家联科技</span>
+                <span class="tdx-leader-code">301193</span>
+                <strong class="neg">-11.72%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">佳创视讯</span>
-                <span class="tdx-leader-code">300264</span>
-                <strong class="neg">-17.05%</strong>
+                <span class="tdx-leader-name">菲沃泰</span>
+                <span class="tdx-leader-code">688371</span>
+                <strong class="neg">-11.38%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">欧莱新材</span>
-                <span class="tdx-leader-code">688530</span>
-                <strong class="neg">-15.48%</strong>
+                <span class="tdx-leader-name">尤洛卡</span>
+                <span class="tdx-leader-code">300099</span>
+                <strong class="neg">-10.76%</strong>
               </div>
             
               <div class="tdx-leader-row">
-                <span class="tdx-leader-name">金宏气体</span>
-                <span class="tdx-leader-code">688106</span>
-                <strong class="neg">-14.89%</strong>
+                <span class="tdx-leader-name">赛伍技术</span>
+                <span class="tdx-leader-code">603212</span>
+                <strong class="neg">-10.03%</strong>
               </div>
             
           </div>
         </div>
         <div class="tdx-unusual">
           <strong>盘中异动覆盖</strong>
-          <div><span><strong>主力买入</strong>935只</span><span><strong>主力卖出</strong>525只</span><span><strong>盘中强势</strong>1252只</span><span><strong>盘中弱势</strong>560只</span><span><strong>急速拉升</strong>1061只</span><span><strong>急速下跌</strong>582只</span><span><strong>高位回落</strong>1004只</span><span><strong>封涨停板</strong>283只</span><span><strong>封跌停板</strong>422只</span></div>
+          <div><span><strong>主力买入</strong>789只</span><span><strong>主力卖出</strong>674只</span><span><strong>盘中强势</strong>789只</span><span><strong>盘中弱势</strong>945只</span><span><strong>急速拉升</strong>1032只</span><span><strong>急速下跌</strong>388只</span><span><strong>高位回落</strong>498只</span><span><strong>封涨停板</strong>260只</span><span><strong>封跌停板</strong>442只</span></div>
         </div>
         <div class="tdx-source">盘后或周末读取时展示最近缓存收盘快照；用于辅助复盘，不参与顶部压力温度。</div>
       </section>

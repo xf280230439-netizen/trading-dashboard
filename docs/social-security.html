@@ -121,40 +121,34 @@
     .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
     .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
     .data-status {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .status-item {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 11px 12px;
+      border-radius: 6px;
+      padding: 6px 14px;
       box-shadow: var(--shadow);
-      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
     }
     .status-item.unavailable {
       background: var(--unavailable-bg);
       box-shadow: none;
       color: var(--unavailable);
     }
-    .status-item span,
-    .status-item em {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-style: normal;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item span {
+      color: var(--muted); font-size: 11px; white-space: nowrap;
     }
-    .status-item strong {
-      display: block;
-      margin: 4px 0 3px;
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item em {
+      font-style: normal; font-weight: 600; white-space: nowrap;
+    }
+    .status-item small {
+      color: var(--muted); font-size: 10px; white-space: nowrap;
     }
     .split {
       display: grid;
@@ -1301,47 +1295,30 @@
       .status-pill { flex: 0 0 auto; }
     }
 
-    /* ── 市场情绪温度计 ── */
-    .sentiment-panel { padding: 24px; }
-    .sentiment-grid { display: grid; grid-template-columns: 280px minmax(200px, 1fr) 240px; gap: 24px; align-items: start; }
-    .sentiment-gauge { text-align: center; }
-    .gauge-circle {
-      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-      width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--line);
-      margin-bottom: 12px;
+    /* ── 市场情绪条（超紧凑） ── */
+    .sentiment-bar {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 8px; padding: 8px 16px; box-shadow: var(--shadow);
+      margin-bottom: 16px;
     }
-    .gauge-circle.pos { border-color: var(--pos); }
-    .gauge-circle.warn { border-color: var(--warn); }
-    .gauge-circle.neutral { border-color: var(--blue); }
-    .gauge-circle.neg { border-color: var(--neg); }
-    .gauge-score { font-size: 36px; font-weight: 700; line-height: 1.1; }
-    .gauge-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .gauge-bar-track {
-      height: 8px; border-radius: 4px; background: var(--line); margin: 8px 0;
+    .sentiment-inline {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-size: 12px;
     }
+    .sentiment-label { color: var(--muted); font-weight: 500; }
+    .gauge-bar-track.compact { flex: 1; min-width: 100px; height: 8px; border-radius: 4px; background: var(--line); }
     .gauge-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s; }
-    .gauge-range {
-      display: flex; justify-content: space-between; font-size: 11px;
-      color: var(--muted); padding: 0 2px;
-    }
-    .sentiment-signals { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
-    .sentiment-signal {
-      font-size: 11px; padding: 2px 8px; border-radius: 10px;
-      background: var(--line); color: var(--text);
-    }
-    .sentiment-table { width: 100%; font-size: 13px; }
-    .sentiment-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 8px; }
-    .sentiment-table td { padding: 4px 8px; border-bottom: 1px solid var(--line); }
-    .sentiment-overseas h3 { font-size: 14px; margin: 0 0 8px; }
-    .overseas-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .gauge-score-compact { font-size: 22px; font-weight: 700; min-width: 28px; text-align: center; }
+    .gauge-label-compact { font-size: 11px; color: var(--muted); }
+    .gauge-range-compact { display: flex; gap: 2px; font-size: 9px; color: var(--muted); }
+    .sentiment-divider { color: var(--line); }
     .overseas-card {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 10px; border-radius: 6px; background: var(--bg);
-      font-size: 13px;
+      display: flex; gap: 4px; align-items: center;
+      padding: 2px 6px; border-radius: 3px; background: var(--bg); font-size: 11px;
     }
     .overseas-name { font-weight: 500; }
     .overseas-price { color: var(--muted); }
-    .overseas-change { font-weight: 600; min-width: 60px; text-align: right; }
+    .overseas-change { font-weight: 600; }
 
     /* ── 情景预案卡片 ── */
     .scenario-panel { padding: 24px; }
@@ -1375,7 +1352,6 @@
     .plan-card li { margin-bottom: 2px; }
 
     @media (max-width: 900px) {
-      .sentiment-grid { grid-template-columns: 1fr; }
       .scenario-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -1495,7 +1471,7 @@
     <div class="topline">
       <div>
         <h1>国家社保基金动向</h1>
-        <div class="subtitle">季度披露监测 · 生成 2026-06-13T18:17:08</div>
+        <div class="subtitle">季度披露监测 · 生成 2026-06-19T16:22:11</div>
       </div>
       <div class="head-actions">
         <nav class="site-nav" aria-label="页面导航">
@@ -1548,7 +1524,7 @@
         
       <article class="metric warn">
         <div class="metric-label">披露滞后</div>
-        <div class="metric-value">74天</div>
+        <div class="metric-value">80天</div>
         <div class="metric-note">季度披露，不是实时仓位</div>
       </article>
     

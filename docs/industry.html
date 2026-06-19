@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>行业ETF跟踪 · 2026-06-12</title>
+  <title>行业ETF跟踪 · 2026-06-18</title>
   <style>
     :root {
       --bg: #f6f7f9;
@@ -121,40 +121,34 @@
     .metric-value { font-size: 25px; font-weight: 800; margin-top: 8px; }
     .metric-note { color: var(--muted); font-size: 12px; margin-top: 4px; }
     .data-status {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
     .status-item {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 11px 12px;
+      border-radius: 6px;
+      padding: 6px 14px;
       box-shadow: var(--shadow);
-      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
     }
     .status-item.unavailable {
       background: var(--unavailable-bg);
       box-shadow: none;
       color: var(--unavailable);
     }
-    .status-item span,
-    .status-item em {
-      display: block;
-      color: var(--muted);
-      font-size: 12px;
-      font-style: normal;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item span {
+      color: var(--muted); font-size: 11px; white-space: nowrap;
     }
-    .status-item strong {
-      display: block;
-      margin: 4px 0 3px;
-      font-size: 16px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .status-item em {
+      font-style: normal; font-weight: 600; white-space: nowrap;
+    }
+    .status-item small {
+      color: var(--muted); font-size: 10px; white-space: nowrap;
     }
     .split {
       display: grid;
@@ -1301,47 +1295,30 @@
       .status-pill { flex: 0 0 auto; }
     }
 
-    /* ── 市场情绪温度计 ── */
-    .sentiment-panel { padding: 24px; }
-    .sentiment-grid { display: grid; grid-template-columns: 280px minmax(200px, 1fr) 240px; gap: 24px; align-items: start; }
-    .sentiment-gauge { text-align: center; }
-    .gauge-circle {
-      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-      width: 120px; height: 120px; border-radius: 50%; border: 6px solid var(--line);
-      margin-bottom: 12px;
+    /* ── 市场情绪条（超紧凑） ── */
+    .sentiment-bar {
+      background: var(--panel); border: 1px solid var(--line);
+      border-radius: 8px; padding: 8px 16px; box-shadow: var(--shadow);
+      margin-bottom: 16px;
     }
-    .gauge-circle.pos { border-color: var(--pos); }
-    .gauge-circle.warn { border-color: var(--warn); }
-    .gauge-circle.neutral { border-color: var(--blue); }
-    .gauge-circle.neg { border-color: var(--neg); }
-    .gauge-score { font-size: 36px; font-weight: 700; line-height: 1.1; }
-    .gauge-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
-    .gauge-bar-track {
-      height: 8px; border-radius: 4px; background: var(--line); margin: 8px 0;
+    .sentiment-inline {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      font-size: 12px;
     }
+    .sentiment-label { color: var(--muted); font-weight: 500; }
+    .gauge-bar-track.compact { flex: 1; min-width: 100px; height: 8px; border-radius: 4px; background: var(--line); }
     .gauge-bar-fill { height: 100%; border-radius: 4px; transition: width 0.6s; }
-    .gauge-range {
-      display: flex; justify-content: space-between; font-size: 11px;
-      color: var(--muted); padding: 0 2px;
-    }
-    .sentiment-signals { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
-    .sentiment-signal {
-      font-size: 11px; padding: 2px 8px; border-radius: 10px;
-      background: var(--line); color: var(--text);
-    }
-    .sentiment-table { width: 100%; font-size: 13px; }
-    .sentiment-table th { text-align: left; color: var(--muted); font-weight: 500; padding: 4px 8px; }
-    .sentiment-table td { padding: 4px 8px; border-bottom: 1px solid var(--line); }
-    .sentiment-overseas h3 { font-size: 14px; margin: 0 0 8px; }
-    .overseas-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .gauge-score-compact { font-size: 22px; font-weight: 700; min-width: 28px; text-align: center; }
+    .gauge-label-compact { font-size: 11px; color: var(--muted); }
+    .gauge-range-compact { display: flex; gap: 2px; font-size: 9px; color: var(--muted); }
+    .sentiment-divider { color: var(--line); }
     .overseas-card {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 10px; border-radius: 6px; background: var(--bg);
-      font-size: 13px;
+      display: flex; gap: 4px; align-items: center;
+      padding: 2px 6px; border-radius: 3px; background: var(--bg); font-size: 11px;
     }
     .overseas-name { font-weight: 500; }
     .overseas-price { color: var(--muted); }
-    .overseas-change { font-weight: 600; min-width: 60px; text-align: right; }
+    .overseas-change { font-weight: 600; }
 
     /* ── 情景预案卡片 ── */
     .scenario-panel { padding: 24px; }
@@ -1375,7 +1352,6 @@
     .plan-card li { margin-bottom: 2px; }
 
     @media (max-width: 900px) {
-      .sentiment-grid { grid-template-columns: 1fr; }
       .scenario-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
@@ -1495,7 +1471,7 @@
     <div class="topline">
       <div>
         <h1>行业ETF跟踪</h1>
-        <div class="subtitle">行情：etf_spot_2026-06-12.csv · 生成：2026-06-13 18:04</div>
+        <div class="subtitle">行情：etf_spot_2026-06-18.csv · 生成：2026-06-19 16:22</div>
       </div>
       <div class="head-actions">
         <nav class="site-nav" aria-label="页面导航">
@@ -1504,76 +1480,76 @@
           <a href="top-signals.html">顶部信号</a>
           <a href="social-security.html">社保基金</a>
         </nav>
-        <div class="date-pill">2026-06-12</div>
+        <div class="date-pill">2026-06-18</div>
       </div>
     </div>
   </header>
   <main>
       <section class="summary-grid">
-      <article class="metric neg">
+      <article class="metric neutral">
         <div class="metric-label">行业ETF净申赎</div>
-        <div class="metric-value">-17.5亿</div>
+        <div class="metric-value">6.8亿</div>
         <div class="metric-note">按份额变化估算</div>
       </article>
     
 
       <article class="metric neutral">
         <div class="metric-label">行业ETF成交</div>
-        <div class="metric-value">857.8亿</div>
-        <div class="metric-note">626只 · 14类</div>
+        <div class="metric-value">914.4亿</div>
+        <div class="metric-note">633只 · 14类</div>
       </article>
     
 
       <article class="metric neutral">
         <div class="metric-label">行业ETF规模</div>
-        <div class="metric-value">12039.9亿</div>
+        <div class="metric-value">12740.2亿</div>
         <div class="metric-note">观察池合计</div>
       </article>
     
 
       <article class="metric pos">
         <div class="metric-label">最强行业</div>
-        <div class="metric-value">卫星航天航空</div>
-        <div class="metric-note">3.32%</div>
+        <div class="metric-value">半导体芯片</div>
+        <div class="metric-note">3.79%</div>
       </article>
     
 
       <article class="metric neutral">
         <div class="metric-label">最活跃行业</div>
         <div class="metric-value">半导体芯片</div>
-        <div class="metric-note">238.5亿</div>
+        <div class="metric-note">292.3亿</div>
       </article>
     
 
       <article class="metric warn">
         <div class="metric-label">申赎分歧</div>
         <div class="metric-value">最大流入 / 最大流出</div>
-        <div class="metric-note">AI算力通信 59.4亿 / 周期资源 -33.4亿</div>
+        <div class="metric-note">周期资源 39.5亿 / AI算力通信 -16.8亿</div>
       </article>
     </section>
 
       <section class="data-status">
       <div class="status-item neutral">
         <span>行情日期</span>
-        <strong>2026-06-12</strong>
-        <em>文件 etf_spot_2026-06-12.csv</em>
+        <strong>2026-06-18</strong>
+        <em>文件 etf_spot_2026-06-18.csv</em>
       </div>
     
       <div class="status-item neutral">
         <span>更新时间</span>
-        <strong>2026-06-12 16:12</strong>
+        <strong>2026-06-18 16:12</strong>
         <em>东方财富ETF行情</em>
       </div>
     
       <div class="status-item neutral">
         <span>行业覆盖</span>
-        <strong>626/1507</strong>
+        <strong>633/1514</strong>
         <em>全量ETF中筛出的行业ETF</em>
       </div>
     
       <div class="status-item neutral">
         <span>申赎基线</span>
-        <strong>etf_spot_2026-06-11.csv</strong>
+        <strong>etf_spot_2026-06-15.csv</strong>
         <em>用于计算份额变化</em>
       </div>
     
@@ -1588,303 +1564,127 @@
       <section class="panel">
         <div class="section-head">
           <h2>行业回测折线</h2>
-          <span>2026-03-09 至 2026-06-05 · 代表ETF强弱，起点=100</span>
+          <span>2026-03-23 至 2026-06-18 · 代表ETF强弱，起点=100</span>
         </div>
         <div class="trend-grid">
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>半导体芯片</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
             <article class="trend-card pos">
               <div class="trend-head">
                 <strong>AI算力通信</strong>
-                <span class="pos">+10.2%</span>
+                <span class="pos">+20.6%</span>
               </div>
               
       <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="82.1" x2="312" y2="82.1" class="mini-zero" />
-        <polyline points="8.0,82.1 13.2,75.7 18.3,76.7 23.5,79.2 28.6,81.6 33.8,79.9 38.9,87.4 44.1,79.2 49.2,80.3 54.4,79.8 59.5,88.1 64.7,85.6 69.8,79.2 75.0,83.7 80.1,84.4 85.3,84.1 90.4,87.9 95.6,81.6 100.7,86.8 105.9,84.2 111.1,83.4 116.2,68.4 121.4,68.5 126.5,63.9 131.7,63.6 136.8,58.7 142.0,61.8 147.1,53.9 152.3,46.1 157.4,43.9 162.6,45.6 167.7,34.8 172.9,38.0 178.0,45.6 183.2,44.1 188.3,48.9 193.5,47.2 198.6,46.7 203.8,40.2 208.9,31.9 214.1,31.7 219.3,58.8 224.4,21.9 229.6,48.0 234.7,51.6 239.9,55.8 245.0,55.0 250.2,55.2 255.3,55.3 260.5,64.4 265.6,56.6 270.8,48.7 275.9,49.2 281.1,51.3 286.2,44.0 291.4,49.3 296.5,54.8 301.7,45.7 306.8,61.9 312.0,63.5" fill="none" stroke="#c9362c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="63.5" r="3.2" fill="#c9362c" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">110.2</text>
+        <line x1="8" y1="88.1" x2="312" y2="88.1" class="mini-zero" />
+        <polyline points="8.0,88.1 13.2,85.6 18.3,79.2 23.5,83.7 28.6,84.4 33.8,84.1 38.9,88.0 44.1,81.6 49.2,86.8 54.4,84.2 59.5,83.5 64.7,68.4 69.8,68.5 75.0,64.0 80.1,63.6 85.3,58.7 90.4,61.8 95.6,53.8 100.7,46.1 105.9,43.9 111.1,45.6 116.2,34.8 121.4,38.1 126.5,45.6 131.7,44.2 136.8,48.9 142.0,47.3 147.1,46.7 152.3,40.2 157.4,31.9 162.6,31.6 167.7,24.3 172.9,21.9 178.0,47.1 183.2,50.7 188.3,55.0 193.5,54.2 198.6,54.4 203.8,54.5 208.9,63.6 214.1,55.7 219.3,47.9 224.4,48.3 229.6,50.4 234.7,43.1 239.9,48.5 245.0,54.0 250.2,44.9 255.3,61.4 260.5,63.0 265.6,69.6 270.8,77.0 275.9,68.1 281.1,74.2 286.2,78.4 291.4,79.5 296.5,66.9 301.7,63.7 306.8,59.6 312.0,51.6" fill="none" stroke="#2563a9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="312.0" cy="51.6" r="3.2" fill="#2563a9" />
+        <text x="8" y="114" class="axis-label">03-23</text>
+        <text x="312" y="114" class="axis-label" text-anchor="end">06-18</text>
+        <text x="312" y="13" class="axis-label" text-anchor="end">120.6</text>
       </svg>
     
               <div class="trend-meta">
-                <span>5日活跃 94.4亿</span>
+                <span>5日活跃 96.2亿</span>
                 <span>5只代表ETF</span>
               </div>
             </article>
             
-            <article class="trend-card pos">
-              <div class="trend-head">
-                <strong>半导体芯片</strong>
-                <span class="pos">+29.8%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="68.1" x2="312" y2="68.1" class="mini-zero" />
-        <polyline points="8.0,68.1 13.2,65.3 18.3,66.7 23.5,68.3 28.6,69.4 33.8,67.3 38.9,70.6 44.1,68.3 49.2,71.1 54.4,72.4 59.5,77.5 64.7,75.6 69.8,72.9 75.0,75.3 80.1,73.8 85.3,84.3 90.4,87.8 95.6,85.1 100.7,88.1 105.9,88.1 111.1,86.8 116.2,80.3 121.4,80.0 126.5,78.3 131.7,78.4 136.8,75.5 142.0,76.5 147.1,75.2 152.3,74.7 157.4,73.1 162.6,74.3 167.7,71.3 172.9,73.0 178.0,71.2 183.2,65.2 188.3,66.5 193.5,66.5 198.6,60.8 203.8,55.4 208.9,52.8 214.1,56.0 219.3,48.0 224.4,46.0 229.6,41.3 234.7,44.1 239.9,42.6 245.0,41.2 250.2,35.2 255.3,27.5 260.5,35.1 265.6,32.1 270.8,21.9 275.9,24.6 281.1,29.5 286.2,27.3 291.4,36.3 296.5,44.5 301.7,42.2 306.8,37.5 312.0,33.6" fill="none" stroke="#2563a9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="33.6" r="3.2" fill="#2563a9" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">129.8</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 147.7亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>周期资源</strong>
-                <span class="neg">-4.7%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="28.0" x2="312" y2="28.0" class="mini-zero" />
-        <polyline points="8.0,28.0 13.2,29.9 18.3,26.1 23.5,21.9 28.6,31.3 33.8,43.7 38.9,52.5 44.1,55.8 49.2,73.0 54.4,77.0 59.5,88.1 64.7,79.9 69.8,73.0 75.0,75.5 80.1,68.5 85.3,64.8 90.4,73.6 95.6,68.2 100.7,73.0 105.9,78.6 111.1,69.9 116.2,57.1 121.4,59.6 126.5,59.3 131.7,58.0 136.8,53.0 142.0,56.3 147.1,48.2 152.3,50.9 157.4,50.5 162.6,47.9 167.7,46.7 172.9,52.3 178.0,48.9 183.2,49.1 188.3,51.0 193.5,37.8 198.6,40.9 203.8,28.1 208.9,35.7 214.1,38.0 219.3,36.7 224.4,38.9 229.6,35.0 234.7,47.5 239.9,56.6 245.0,59.6 250.2,63.0 255.3,61.9 260.5,71.5 265.6,63.2 270.8,61.3 275.9,54.7 281.1,62.3 286.2,63.4 291.4,64.6 296.5,57.7 301.7,50.1 306.8,45.1 312.0,52.3" fill="none" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="52.3" r="3.2" fill="#7c3aed" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">95.3</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 46.4亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>证券券商</strong>
-                <span class="neg">-11.5%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="26.6" x2="312" y2="26.6" class="mini-zero" />
-        <polyline points="8.0,26.6 13.1,23.3 18.1,21.9 23.2,23.5 28.3,27.7 33.3,30.4 38.4,24.1 43.5,25.2 48.5,32.7 53.6,41.6 58.7,62.9 63.7,58.2 68.8,52.2 73.9,64.3 78.9,61.4 84.0,64.1 89.1,67.4 94.1,59.8 99.2,68.7 104.3,72.7 109.3,74.0 114.4,54.6 119.5,65.5 124.5,49.5 129.6,46.3 134.7,43.3 139.7,46.7 144.8,43.4 149.9,45.8 154.9,45.9 160.0,49.9 165.1,45.8 170.1,50.3 175.2,55.0 180.3,54.1 185.3,48.5 190.4,44.8 195.5,43.6 200.5,37.2 205.6,38.8 210.7,42.6 215.7,35.4 220.8,33.7 225.9,37.9 230.9,49.0 236.0,60.0 241.1,61.3 246.1,57.0 251.2,60.6 256.3,59.1 261.3,66.5 266.4,62.7 271.5,57.8 276.5,63.8 281.6,74.5 286.7,68.4 291.7,67.3 296.8,66.6 301.9,67.2 306.9,73.0 312.0,88.1" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="88.1" r="3.2" fill="#d97706" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">88.5</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 31.4亿</span>
-                <span>1只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card pos">
-              <div class="trend-head">
-                <strong>新能源电力</strong>
-                <span class="pos">+1.1%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="55.8" x2="312" y2="55.8" class="mini-zero" />
-        <polyline points="8.0,55.8 13.1,53.7 18.1,43.7 23.2,42.4 28.3,47.5 33.3,51.0 38.4,60.6 43.5,59.5 48.5,65.8 53.6,61.3 58.7,68.8 63.7,64.2 68.8,56.7 73.9,59.6 78.9,56.3 84.0,62.7 89.1,74.3 94.1,73.6 99.2,80.4 104.3,88.1 109.3,87.7 114.4,74.1 119.5,75.1 124.5,65.0 129.6,61.5 134.7,55.0 139.7,58.9 144.8,51.3 149.9,51.2 154.9,47.7 160.0,46.0 165.1,42.7 170.1,45.2 175.2,45.6 180.3,46.9 185.3,53.1 190.4,39.4 195.5,43.5 200.5,30.0 205.6,27.8 210.7,33.4 215.7,27.0 220.8,29.2 225.9,21.9 230.9,34.5 236.0,37.6 241.1,34.9 246.1,28.8 251.2,27.7 256.3,40.2 261.3,33.4 266.4,33.2 271.5,35.6 276.5,33.0 281.6,29.8 286.7,36.3 291.7,37.4 296.8,36.5 301.9,37.4 306.9,43.9 312.0,51.2" fill="none" stroke="#16815d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="51.2" r="3.2" fill="#16815d" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">101.1</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 38.2亿</span>
-                <span>2只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>卫星航天航空</strong>
-                <span class="neg">-11.5%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="36.8" x2="312" y2="36.8" class="mini-zero" />
-        <polyline points="8.0,36.8 13.1,33.4 18.1,39.3 23.2,46.5 28.3,55.3 33.3,57.2 38.4,66.2 43.5,56.0 48.5,61.3 53.6,69.9 58.7,84.2 63.7,79.6 68.8,75.6 73.9,79.7 78.9,79.6 84.0,73.0 89.1,73.4 94.1,73.9 99.2,80.8 104.3,84.1 109.3,86.1 114.4,68.8 119.5,72.0 124.5,70.8 129.6,69.5 134.7,57.8 139.7,56.7 144.8,54.5 149.9,51.0 154.9,38.4 160.0,40.0 165.1,40.1 170.1,42.4 175.2,53.2 180.3,51.8 185.3,61.3 190.4,60.3 195.5,50.9 200.5,40.6 205.6,37.1 210.7,26.8 215.7,21.9 220.8,30.1 225.9,27.3 230.9,45.2 236.0,54.2 241.1,49.5 246.1,53.0 251.2,54.7 256.3,64.2 261.3,58.7 266.4,53.6 271.5,62.6 276.5,68.6 281.6,65.7 286.7,83.4 291.7,88.1 296.8,87.5 301.9,82.0 306.9,84.3 312.0,73.1" fill="none" stroke="#0891b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="73.1" r="3.2" fill="#0891b2" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">88.5</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 16.5亿</span>
-                <span>2只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>医药医疗</strong>
-                <span class="neg">-11.3%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="47.7" x2="312" y2="47.7" class="mini-zero" />
-        <polyline points="8.0,47.7 13.1,41.0 18.1,43.2 23.2,47.0 28.3,49.5 33.3,46.5 38.4,44.7 43.5,42.9 48.5,48.9 53.6,54.1 58.7,69.3 63.7,59.0 68.8,56.4 73.9,60.2 78.9,44.5 84.0,42.3 89.1,43.1 94.1,24.9 99.2,24.4 104.3,32.4 109.3,33.7 114.4,27.1 119.5,31.7 124.5,30.2 129.6,31.9 134.7,28.8 139.7,22.2 144.8,21.9 149.9,30.8 154.9,32.2 160.0,35.5 165.1,32.8 170.1,36.6 175.2,37.5 180.3,38.3 185.3,33.6 190.4,34.0 195.5,35.0 200.5,34.5 205.6,32.1 210.7,37.5 215.7,30.0 220.8,31.2 225.9,35.0 230.9,45.2 236.0,47.8 241.1,54.5 246.1,53.7 251.2,54.2 256.3,51.0 261.3,55.9 266.4,60.1 271.5,60.8 276.5,61.9 281.6,69.1 286.7,62.7 291.7,67.3 296.8,73.5 301.9,78.8 306.9,83.3 312.0,88.1" fill="none" stroke="#be123c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="88.1" r="3.2" fill="#be123c" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">88.7</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 19.6亿</span>
-                <span>1只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>银行保险金融</strong>
-                <span class="neg">-0.4%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="65.5" x2="312" y2="65.5" class="mini-zero" />
-        <polyline points="8.0,65.5 13.2,63.2 18.3,53.7 23.5,45.8 28.6,40.5 33.8,36.5 38.9,26.3 44.1,32.2 49.2,34.4 54.4,38.2 59.5,75.2 64.7,52.6 69.8,44.1 75.0,40.5 80.1,46.0 85.3,41.0 90.4,31.5 95.6,31.9 100.7,26.4 105.9,38.8 111.1,49.7 116.2,41.0 121.4,49.6 126.5,51.2 131.7,50.6 136.8,42.1 142.0,29.5 147.1,32.5 152.3,39.0 157.4,26.1 162.6,21.9 167.7,30.3 172.9,26.4 178.0,29.0 183.2,33.1 188.3,29.4 193.5,33.9 198.6,41.2 203.8,50.0 208.9,54.3 214.1,54.7 219.3,54.8 224.4,58.1 229.6,60.2 234.7,56.3 239.9,63.4 245.0,74.3 250.2,69.6 255.3,78.8 260.5,75.1 265.6,78.3 270.8,79.0 275.9,75.0 281.1,80.0 286.2,88.1 291.4,66.1 296.5,54.3 301.7,47.7 306.8,57.7 312.0,69.6" fill="none" stroke="#4f46e5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="69.6" r="3.2" fill="#4f46e5" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">99.6</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 11.4亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>军工国防</strong>
-                <span class="neg">-12.1%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="26.5" x2="312" y2="26.5" class="mini-zero" />
-        <polyline points="8.0,26.5 13.1,21.9 18.1,28.3 23.2,36.6 28.3,47.6 33.3,48.2 38.4,57.3 43.5,52.2 48.5,62.4 53.6,71.6 58.7,87.8 63.7,78.3 68.8,72.6 73.9,79.2 78.9,77.2 84.0,73.4 89.1,75.0 94.1,73.2 99.2,78.9 104.3,83.4 109.3,82.9 114.4,67.1 119.5,68.9 124.5,63.6 129.6,60.6 134.7,56.7 139.7,59.0 144.8,57.0 149.9,55.1 154.9,44.9 160.0,46.9 165.1,46.0 170.1,43.8 175.2,52.6 180.3,54.2 185.3,59.2 190.4,58.0 195.5,53.5 200.5,45.9 205.6,43.4 210.7,36.7 215.7,34.7 220.8,39.1 225.9,32.3 230.9,49.6 236.0,58.3 241.1,60.9 246.1,59.8 251.2,61.3 256.3,69.2 261.3,65.6 266.4,61.8 271.5,68.2 276.5,74.3 281.6,69.0 286.7,83.9 291.7,86.4 296.8,88.1 301.9,87.4 306.9,84.5 312.0,73.6" fill="none" stroke="#c9362c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="73.6" r="3.2" fill="#c9362c" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">87.9</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 8.6亿</span>
-                <span>1只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>消费食品</strong>
-                <span class="neg">-17.6%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="29.0" x2="312" y2="29.0" class="mini-zero" />
-        <polyline points="8.0,29.0 13.2,28.0 18.3,26.3 23.5,24.3 28.6,24.2 33.8,21.9 38.9,24.7 44.1,27.0 49.2,34.3 54.4,37.1 59.5,52.1 64.7,48.6 69.8,44.2 75.0,47.6 80.1,42.6 85.3,43.0 90.4,47.2 95.6,42.9 100.7,42.1 105.9,47.7 111.1,46.0 116.2,39.6 121.4,44.5 126.5,45.5 131.7,44.5 136.8,41.2 142.0,40.5 147.1,39.2 152.3,44.0 157.4,44.2 162.6,44.3 167.7,46.8 172.9,48.4 178.0,49.5 183.2,52.4 188.3,52.4 193.5,46.6 198.6,46.5 203.8,48.3 208.9,50.1 214.1,52.0 219.3,51.2 224.4,56.2 229.6,58.9 234.7,58.6 239.9,63.6 245.0,68.6 250.2,67.9 255.3,69.5 260.5,72.5 265.6,75.6 270.8,75.1 275.9,74.5 281.1,76.4 286.2,80.9 291.4,75.4 296.5,73.9 301.7,78.9 306.8,82.4 312.0,88.1" fill="none" stroke="#2563a9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="88.1" r="3.2" fill="#2563a9" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">82.4</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 18.4亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card neg">
-              <div class="trend-head">
-                <strong>地产建筑</strong>
-                <span class="neg">-12.2%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="31.1" x2="312" y2="31.1" class="mini-zero" />
-        <polyline points="8.0,31.1 13.2,25.6 18.3,21.9 23.5,23.4 28.6,22.4 33.8,25.2 38.9,25.9 44.1,30.3 49.2,42.0 54.4,50.0 59.5,69.9 64.7,58.4 69.8,51.6 75.0,60.0 80.1,58.4 85.3,57.0 90.4,61.5 95.6,57.4 100.7,65.8 105.9,75.6 111.1,74.0 116.2,59.1 121.4,65.4 126.5,62.8 131.7,61.1 136.8,53.9 142.0,57.5 147.1,55.5 152.3,50.5 157.4,51.9 162.6,52.6 167.7,52.2 172.9,55.0 178.0,58.3 183.2,60.2 188.3,58.5 193.5,51.7 198.6,48.5 203.8,41.5 208.9,36.5 214.1,32.8 219.3,26.1 224.4,25.1 229.6,28.6 234.7,39.3 239.9,47.8 245.0,56.1 250.2,53.0 255.3,57.2 260.5,70.6 265.6,69.8 270.8,66.0 275.9,70.1 281.1,79.8 286.2,78.8 291.4,73.7 296.5,71.5 301.7,77.9 306.8,83.7 312.0,88.1" fill="none" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="88.1" r="3.2" fill="#7c3aed" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">87.8</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 4.0亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
-            <article class="trend-card pos">
-              <div class="trend-head">
-                <strong>机器人智能制造</strong>
-                <span class="pos">+10.9%</span>
-              </div>
-              
-      <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="65.3" x2="312" y2="65.3" class="mini-zero" />
-        <polyline points="8.0,65.3 13.2,60.0 18.3,60.1 23.5,63.5 28.6,67.9 33.8,68.4 38.9,72.6 44.1,71.0 49.2,76.4 54.4,80.4 59.5,88.0 64.7,85.2 69.8,81.4 75.0,84.4 80.1,82.9 85.3,83.5 90.4,85.8 95.6,80.9 100.7,85.7 105.9,87.8 111.1,88.1 116.2,76.4 121.4,78.4 126.5,74.8 131.7,74.4 136.8,70.4 142.0,73.4 147.1,68.5 152.3,66.3 157.4,64.7 162.6,65.0 167.7,62.6 172.9,65.3 178.0,67.2 183.2,62.5 188.3,67.5 193.5,63.9 198.6,60.9 203.8,55.6 208.9,47.5 214.1,41.7 219.3,38.0 224.4,40.7 229.6,36.4 234.7,43.3 239.9,35.0 245.0,30.3 250.2,27.5 255.3,28.9 260.5,28.4 265.6,23.6 270.8,21.9 275.9,24.1 281.1,34.2 286.2,33.9 291.4,45.0 296.5,49.9 301.7,45.6 306.8,43.2 312.0,41.5" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="41.5" r="3.2" fill="#d97706" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">110.9</text>
-      </svg>
-    
-              <div class="trend-meta">
-                <span>5日活跃 27.0亿</span>
-                <span>5只代表ETF</span>
-              </div>
-            </article>
-            
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>周期资源</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>证券券商</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>新能源电力</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>机器人智能制造</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>医药医疗</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>银行保险金融</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>地产建筑</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>消费食品</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>卫星航天航空</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                
             <article class="trend-card neg">
               <div class="trend-head">
                 <strong>传媒游戏</strong>
-                <span class="neg">-19.3%</span>
+                <span class="neg">-4.1%</span>
               </div>
               
       <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="25.8" x2="312" y2="25.8" class="mini-zero" />
-        <polyline points="8.0,25.8 13.2,21.9 18.3,24.0 23.5,28.7 28.6,33.7 33.8,32.7 38.9,35.9 44.1,32.9 49.2,39.5 54.4,48.9 59.5,64.3 64.7,57.2 69.8,50.9 75.0,57.0 80.1,52.8 85.3,53.4 90.4,54.9 95.6,44.5 100.7,52.5 105.9,59.6 111.1,57.5 116.2,38.2 121.4,45.8 126.5,40.9 131.7,48.2 136.8,45.0 142.0,46.7 147.1,39.0 152.3,40.6 157.4,38.4 162.6,40.0 167.7,42.4 172.9,45.5 178.0,52.7 183.2,52.3 188.3,54.8 193.5,49.2 198.6,53.0 203.8,46.9 208.9,40.8 214.1,39.4 219.3,42.5 224.4,47.3 229.6,43.4 234.7,55.1 239.9,55.2 245.0,57.8 250.2,52.3 255.3,59.2 260.5,67.2 265.6,67.5 270.8,70.9 275.9,73.8 281.1,76.2 286.2,78.7 291.4,80.0 296.5,73.0 301.7,81.0 306.8,84.2 312.0,88.1" fill="none" stroke="#16815d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="88.1" r="3.2" fill="#16815d" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-04</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">80.7</text>
+        <line x1="8" y1="63.1" x2="312" y2="63.1" class="mini-zero" />
+        <polyline points="8.0,63.1 13.2,55.4 18.3,47.2 23.5,54.9 28.6,51.1 33.8,52.5 38.9,54.6 44.1,41.7 49.2,50.9 54.4,58.0 59.5,56.3 64.7,32.3 69.8,39.5 75.0,32.1 80.1,40.4 85.3,37.0 90.4,38.4 95.6,30.4 100.7,32.0 105.9,27.2 111.1,29.0 116.2,28.2 121.4,32.3 126.5,40.8 131.7,39.0 136.8,42.5 142.0,36.0 147.1,39.8 152.3,31.9 157.4,22.9 162.6,21.9 167.7,22.9 172.9,28.4 178.0,22.4 183.2,36.4 188.3,38.1 193.5,40.3 198.6,32.8 203.8,40.8 208.9,49.4 214.1,46.7 219.3,49.3 224.4,51.8 229.6,56.0 234.7,57.7 239.9,63.5 245.0,57.9 250.2,63.6 255.3,64.7 260.5,66.5 265.6,66.8 270.8,76.1 275.9,69.5 281.1,77.4 286.2,88.1 291.4,85.9 296.5,77.9 301.7,79.2 306.8,79.2 312.0,77.3" fill="none" stroke="#d97706" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="312.0" cy="77.3" r="3.2" fill="#d97706" />
+        <text x="8" y="114" class="axis-label">03-23</text>
+        <text x="312" y="114" class="axis-label" text-anchor="end">06-18</text>
+        <text x="312" y="13" class="axis-label" text-anchor="end">95.9</text>
       </svg>
     
               <div class="trend-meta">
-                <span>5日活跃 7.8亿</span>
+                <span>5日活跃 6.6亿</span>
                 <span>5只代表ETF</span>
               </div>
             </article>
             
-            <article class="trend-card neg">
+            <article class="trend-card pos">
               <div class="trend-head">
-                <strong>汽车交运</strong>
-                <span class="neg">-2.8%</span>
+                <strong>军工国防</strong>
+                <span class="pos">+0.4%</span>
               </div>
               
       <svg class="mini-svg" viewBox="0 0 320 118" role="img" aria-label="行业回测折线">
-        <line x1="8" y1="38.8" x2="312" y2="38.8" class="mini-zero" />
-        <polyline points="8.0,38.8 13.1,30.4 18.1,31.1 23.2,36.2 28.3,43.2 33.3,41.5 38.4,47.4 43.5,46.7 48.5,59.6 53.6,68.6 58.7,88.1 63.7,83.2 68.8,70.9 73.9,79.8 78.9,75.9 84.0,78.1 89.1,81.1 94.1,70.4 99.2,79.3 104.3,85.3 109.3,87.8 114.4,62.4 119.5,65.4 124.5,56.5 129.6,58.4 134.7,54.3 139.7,55.8 144.8,47.0 149.9,48.1 154.9,44.9 160.0,47.3 165.1,41.8 170.1,47.1 175.2,53.7 180.3,47.8 185.3,61.3 190.4,55.8 195.5,53.1 200.5,44.5 205.6,33.0 210.7,27.2 215.7,25.0 220.8,27.4 225.9,22.8 230.9,38.1 236.0,34.3 241.1,31.6 246.1,28.4 251.2,36.0 256.3,29.5 261.3,23.0 266.4,21.9 271.5,24.6 276.5,36.6 281.6,43.0 286.7,63.0 291.7,67.8 296.8,61.8 301.9,62.1 306.9,60.8 312.0,54.8" fill="none" stroke="#0891b2" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="312.0" cy="54.8" r="3.2" fill="#0891b2" />
-        <text x="8" y="114" class="axis-label">03-09</text>
-        <text x="312" y="114" class="axis-label" text-anchor="end">06-05</text>
-        <text x="312" y="13" class="axis-label" text-anchor="end">97.2</text>
+        <line x1="8" y1="72.2" x2="312" y2="72.2" class="mini-zero" />
+        <polyline points="8.0,72.2 13.2,64.3 18.3,58.3 23.5,64.8 28.6,63.2 33.8,58.7 38.9,60.4 44.1,59.5 49.2,65.5 54.4,69.6 59.5,70.2 64.7,54.4 69.8,57.0 75.0,53.4 80.1,49.8 85.3,44.1 90.4,45.5 95.6,44.2 100.7,41.7 105.9,32.5 111.1,35.1 116.2,34.2 121.4,34.3 126.5,42.4 131.7,43.1 136.8,50.8 142.0,49.8 147.1,44.6 152.3,36.6 157.4,32.7 162.6,24.8 167.7,21.9 172.9,25.5 178.0,21.9 183.2,38.7 188.3,47.3 193.5,48.3 198.6,48.1 203.8,49.9 208.9,57.3 214.1,53.4 219.3,48.4 224.4,55.8 229.6,62.2 234.7,57.4 239.9,72.4 245.0,75.3 250.2,76.4 255.3,74.7 260.5,74.0 265.6,74.1 270.8,87.3 275.9,83.7 281.1,87.9 286.2,88.1 291.4,80.7 296.5,77.0 301.7,76.1 306.8,72.5 312.0,71.1" fill="none" stroke="#16815d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="312.0" cy="71.1" r="3.2" fill="#16815d" />
+        <text x="8" y="114" class="axis-label">03-23</text>
+        <text x="312" y="114" class="axis-label" text-anchor="end">06-18</text>
+        <text x="312" y="13" class="axis-label" text-anchor="end">100.4</text>
       </svg>
     
               <div class="trend-meta">
-                <span>5日活跃 1.6亿</span>
-                <span>1只代表ETF</span>
+                <span>5日活跃 8.8亿</span>
+                <span>4只代表ETF</span>
               </div>
             </article>
-            </div>
+            
+                <article class="trend-card unavailable">
+                  <div class="trend-head"><strong>汽车交运</strong><span>-</span></div>
+                  <div class="empty mini-empty">暂无趋势</div>
+                </article>
+                </div>
       </section>
     
 
@@ -1897,30 +1697,30 @@
           <div class="heat-list">
             <div class="heat-row">
               <div class="heat-head">
-                <strong>AI算力通信</strong>
-                <span>115只 · 70/42 涨/跌</span>
+                <strong>半导体芯片</strong>
+                <span>53只 · 53/0 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill pos" style="width:100.0%"></div>
+                <div class="bar-fill neutral" style="width:15.0%"></div>
               </div>
               <div class="heat-foot">
-                <span>59.4亿</span>
-                <span>成交 154.8亿 · 均涨跌 0.54%</span>
+                <span>5.9亿</span>
+                <span>成交 292.3亿 · 均涨跌 3.79%</span>
               </div>
             </div>
             
 
             <div class="heat-row">
               <div class="heat-head">
-                <strong>半导体芯片</strong>
-                <span>53只 · 1/52 涨/跌</span>
+                <strong>AI算力通信</strong>
+                <span>115只 · 102/13 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neg" style="width:33.8%"></div>
+                <div class="bar-fill neg" style="width:42.5%"></div>
               </div>
               <div class="heat-foot">
-                <span>-20.1亿</span>
-                <span>成交 238.5亿 · 均涨跌 -1.07%</span>
+                <span>-16.8亿</span>
+                <span>成交 169.5亿 · 均涨跌 2.38%</span>
               </div>
             </div>
             
@@ -1928,14 +1728,14 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>周期资源</strong>
-                <span>80只 · 76/4 涨/跌</span>
+                <span>81只 · 33/45 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neg" style="width:56.2%"></div>
+                <div class="bar-fill pos" style="width:100.0%"></div>
               </div>
               <div class="heat-foot">
-                <span>-33.4亿</span>
-                <span>成交 112.6亿 · 均涨跌 2.83%</span>
+                <span>39.5亿</span>
+                <span>成交 106.9亿 · 均涨跌 0.03%</span>
               </div>
             </div>
             
@@ -1943,14 +1743,14 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>证券券商</strong>
-                <span>25只 · 24/1 涨/跌</span>
+                <span>25只 · 1/24 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neutral" style="width:3.0%"></div>
+                <div class="bar-fill neutral" style="width:10.6%"></div>
               </div>
               <div class="heat-foot">
-                <span>-1.6亿</span>
-                <span>成交 82.2亿 · 均涨跌 3.27%</span>
+                <span>-4.2亿</span>
+                <span>成交 65.8亿 · 均涨跌 -2.74%</span>
               </div>
             </div>
             
@@ -1958,104 +1758,14 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>新能源电力</strong>
-                <span>106只 · 89/10 涨/跌</span>
+                <span>107只 · 9/97 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neg" style="width:27.6%"></div>
+                <div class="bar-fill neutral" style="width:21.6%"></div>
               </div>
               <div class="heat-foot">
-                <span>-16.4亿</span>
-                <span>成交 84.5亿 · 均涨跌 1.34%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>卫星航天航空</strong>
-                <span>21只 · 21/0 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:3.0%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>-1.4亿</span>
-                <span>成交 34.5亿 · 均涨跌 3.32%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>医药医疗</strong>
-                <span>61只 · 61/0 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:12.9%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>-7.7亿</span>
-                <span>成交 34.2亿 · 均涨跌 2.25%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>银行保险金融</strong>
-                <span>13只 · 13/0 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:13.8%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>8.2亿</span>
-                <span>成交 21.5亿 · 均涨跌 1.60%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>军工国防</strong>
-                <span>7只 · 7/0 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:3.0%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>-1.3亿</span>
-                <span>成交 15.6亿 · 均涨跌 2.33%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>消费食品</strong>
-                <span>70只 · 59/11 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:6.8%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>-4.0亿</span>
-                <span>成交 23.7亿 · 均涨跌 0.95%</span>
-              </div>
-            </div>
-            
-
-            <div class="heat-row">
-              <div class="heat-head">
-                <strong>地产建筑</strong>
-                <span>16只 · 16/0 涨/跌</span>
-              </div>
-              <div class="bar-track">
-                <div class="bar-fill neutral" style="width:3.0%"></div>
-              </div>
-              <div class="heat-foot">
-                <span>-0.9亿</span>
-                <span>成交 5.5亿 · 均涨跌 1.43%</span>
+                <span>-8.5亿</span>
+                <span>成交 92.8亿 · 均涨跌 -1.25%</span>
               </div>
             </div>
             
@@ -2063,14 +1773,89 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>机器人智能制造</strong>
-                <span>30只 · 12/18 涨/跌</span>
+                <span>31只 · 21/10 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neutral" style="width:5.3%"></div>
+                <div class="bar-fill neutral" style="width:15.6%"></div>
               </div>
               <div class="heat-foot">
-                <span>3.2亿</span>
-                <span>成交 37.9亿 · 均涨跌 0.12%</span>
+                <span>-6.2亿</span>
+                <span>成交 41.6亿 · 均涨跌 1.79%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>医药医疗</strong>
+                <span>62只 · 51/8 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:13.7%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>5.4亿</span>
+                <span>成交 41.7亿 · 均涨跌 1.46%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>银行保险金融</strong>
+                <span>13只 · 0/13 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:7.5%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-3.0亿</span>
+                <span>成交 22.6亿 · 均涨跌 -2.39%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>地产建筑</strong>
+                <span>16只 · 0/16 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-0.4亿</span>
+                <span>成交 5.4亿 · 均涨跌 -2.41%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>消费食品</strong>
+                <span>73只 · 5/66 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-0.7亿</span>
+                <span>成交 25.1亿 · 均涨跌 -1.20%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>卫星航天航空</strong>
+                <span>21只 · 11/10 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:9.6%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>-3.8亿</span>
+                <span>成交 29.9亿 · 均涨跌 0.27%</span>
               </div>
             </div>
             
@@ -2078,14 +1863,29 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>传媒游戏</strong>
-                <span>10只 · 9/1 涨/跌</span>
+                <span>10只 · 6/4 涨/跌</span>
               </div>
               <div class="bar-track">
-                <div class="bar-fill neutral" style="width:3.1%"></div>
+                <div class="bar-fill neutral" style="width:3.7%"></div>
               </div>
               <div class="heat-foot">
-                <span>-1.8亿</span>
-                <span>成交 9.8亿 · 均涨跌 0.82%</span>
+                <span>-1.5亿</span>
+                <span>成交 7.5亿 · 均涨跌 0.18%</span>
+              </div>
+            </div>
+            
+
+            <div class="heat-row">
+              <div class="heat-head">
+                <strong>军工国防</strong>
+                <span>7只 · 5/1 涨/跌</span>
+              </div>
+              <div class="bar-track">
+                <div class="bar-fill neutral" style="width:3.0%"></div>
+              </div>
+              <div class="heat-foot">
+                <span>0.8亿</span>
+                <span>成交 10.0亿 · 均涨跌 0.13%</span>
               </div>
             </div>
             
@@ -2093,14 +1893,14 @@
             <div class="heat-row">
               <div class="heat-head">
                 <strong>汽车交运</strong>
-                <span>19只 · 17/1 涨/跌</span>
+                <span>19只 · 10/7 涨/跌</span>
               </div>
               <div class="bar-track">
                 <div class="bar-fill neutral" style="width:3.0%"></div>
               </div>
               <div class="heat-foot">
                 <span>0.3亿</span>
-                <span>成交 2.4亿 · 均涨跌 1.01%</span>
+                <span>成交 3.3亿 · 均涨跌 -0.02%</span>
               </div>
             </div>
             </div>
@@ -2108,32 +1908,32 @@
         <aside class="panel">
           <div class="section-head">
             <h2>行业信号</h2>
-            <span>industry_etf_2026-06-12.csv</span>
+            <span>industry_etf_2026-06-18.csv</span>
           </div>
           <ul class="signals">
       <li class="pos">
         <strong>最强行业</strong>
-        <span>卫星航天航空 均涨跌 3.32%，21/0 涨/跌。</span>
+        <span>半导体芯片 均涨跌 3.79%，53/0 涨/跌。</span>
       </li>
     
       <li class="pos">
         <strong>申购靠前</strong>
-        <span>AI算力通信 估算净申购 59.4亿。</span>
+        <span>周期资源 估算净申购 39.5亿。</span>
       </li>
     
       <li class="neg">
         <strong>赎回靠前</strong>
-        <span>周期资源 估算净申赎 -33.4亿。</span>
+        <span>AI算力通信 估算净申赎 -16.8亿。</span>
       </li>
     
       <li class="neutral">
         <strong>成交核心</strong>
-        <span>半导体芯片 成交额 238.5亿，适合盯盘确认持续性。</span>
+        <span>半导体芯片 成交额 292.3亿，适合盯盘确认持续性。</span>
       </li>
     
       <li class="warn">
         <strong>二级市场主力</strong>
-        <span>证券券商 主力净额 13.2亿，和份额变化一起看。</span>
+        <span>周期资源 主力净额 5.1亿，和份额变化一起看。</span>
       </li>
     </ul>
         </aside>
@@ -2173,171 +1973,171 @@
           </thead>
           <tbody>
             <tr>
+              <td><strong>半导体芯片</strong></td>
+              <td class="num">53</td>
+              <td class="pos num">3.79%</td>
+              <td class="num">53/0</td>
+              <td class="neutral num">5.9亿</td>
+              <td class="neg num">-16.9亿</td>
+              <td class="num">292.3亿</td>
+              <td class="num">2405.1亿</td>
+              <td><div class="sub">科创芯片ETF嘉实 / 科创半导体ETF华夏 / 半导体设备ETF国泰</div></td>
+            </tr>
+            
+            <tr>
               <td><strong>AI算力通信</strong></td>
               <td class="num">115</td>
-              <td class="pos num">0.54%</td>
-              <td class="num">70/42</td>
-              <td class="pos num">59.4亿</td>
-              <td class="neg num">-8.0亿</td>
-              <td class="num">154.8亿</td>
-              <td class="num">1856.5亿</td>
+              <td class="pos num">2.38%</td>
+              <td class="num">102/13</td>
+              <td class="neg num">-16.8亿</td>
+              <td class="pos num">3.8亿</td>
+              <td class="num">169.5亿</td>
+              <td class="num">2092.2亿</td>
               <td><div class="sub">通信ETF国泰 / 通信ETF华夏 / 创业板人工智能ETF华宝</div></td>
             </tr>
             
             <tr>
-              <td><strong>半导体芯片</strong></td>
-              <td class="num">53</td>
-              <td class="neg num">-1.07%</td>
-              <td class="num">1/52</td>
-              <td class="neg num">-20.1亿</td>
-              <td class="neg num">-11.3亿</td>
-              <td class="num">238.5亿</td>
-              <td class="num">2031.8亿</td>
-              <td><div class="sub">科创芯片ETF嘉实 / 半导体设备ETF国泰 / 科创半导体ETF华夏</div></td>
-            </tr>
-            
-            <tr>
               <td><strong>周期资源</strong></td>
-              <td class="num">80</td>
-              <td class="pos num">2.83%</td>
-              <td class="num">76/4</td>
-              <td class="neg num">-33.4亿</td>
-              <td class="pos num">4.2亿</td>
-              <td class="num">112.6亿</td>
-              <td class="num">1596.6亿</td>
+              <td class="num">81</td>
+              <td class="pos num">0.03%</td>
+              <td class="num">33/45</td>
+              <td class="pos num">39.5亿</td>
+              <td class="pos num">5.1亿</td>
+              <td class="num">106.9亿</td>
+              <td class="num">1662.3亿</td>
               <td><div class="sub">有色金属ETF南方 / 化工ETF鹏华 / 煤炭ETF国泰</div></td>
             </tr>
             
             <tr>
               <td><strong>证券券商</strong></td>
               <td class="num">25</td>
-              <td class="pos num">3.27%</td>
-              <td class="num">24/1</td>
-              <td class="neutral num">-1.6亿</td>
-              <td class="pos num">13.2亿</td>
-              <td class="num">82.2亿</td>
-              <td class="num">1502.3亿</td>
+              <td class="neg num">-2.74%</td>
+              <td class="num">1/24</td>
+              <td class="neutral num">-4.2亿</td>
+              <td class="neg num">-7.3亿</td>
+              <td class="num">65.8亿</td>
+              <td class="num">1483.9亿</td>
               <td><div class="sub">证券ETF国泰 / 券商ETF华宝 / 证券保险ETF易方达</div></td>
             </tr>
             
             <tr>
               <td><strong>新能源电力</strong></td>
-              <td class="num">106</td>
-              <td class="pos num">1.34%</td>
-              <td class="num">89/10</td>
-              <td class="neg num">-16.4亿</td>
-              <td class="pos num">1.7亿</td>
-              <td class="num">84.5亿</td>
-              <td class="num">1400.2亿</td>
-              <td><div class="sub">电网设备ETF华夏 / 电池ETF广发 / 电池ETF汇添富</div></td>
+              <td class="num">107</td>
+              <td class="neg num">-1.25%</td>
+              <td class="num">9/97</td>
+              <td class="neutral num">-8.5亿</td>
+              <td class="neg num">-2.0亿</td>
+              <td class="num">92.8亿</td>
+              <td class="num">1439.0亿</td>
+              <td><div class="sub">电力ETF广发 / 电网设备ETF华夏 / 电池ETF广发</div></td>
             </tr>
             
             <tr>
-              <td><strong>卫星航天航空</strong></td>
-              <td class="num">21</td>
-              <td class="pos num">3.32%</td>
-              <td class="num">21/0</td>
-              <td class="neutral num">-1.4亿</td>
-              <td class="pos num">0.5亿</td>
-              <td class="num">34.5亿</td>
-              <td class="num">439.2亿</td>
-              <td><div class="sub">卫星ETF永赢 / 航空航天ETF华夏 / 卫星ETF富国</div></td>
+              <td><strong>机器人智能制造</strong></td>
+              <td class="num">31</td>
+              <td class="pos num">1.79%</td>
+              <td class="num">21/10</td>
+              <td class="neutral num">-6.2亿</td>
+              <td class="pos num">2.9亿</td>
+              <td class="num">41.6亿</td>
+              <td class="num">655.0亿</td>
+              <td><div class="sub">机器人ETF易方达 / 机器人ETF华夏 / 工业母机ETF国泰</div></td>
             </tr>
             
             <tr>
               <td><strong>医药医疗</strong></td>
-              <td class="num">61</td>
-              <td class="pos num">2.25%</td>
-              <td class="num">61/0</td>
-              <td class="neutral num">-7.7亿</td>
+              <td class="num">62</td>
+              <td class="pos num">1.46%</td>
+              <td class="num">51/8</td>
+              <td class="neutral num">5.4亿</td>
               <td class="pos num">3.4亿</td>
-              <td class="num">34.2亿</td>
-              <td class="num">1112.8亿</td>
-              <td><div class="sub">医药ETF易方达 / 创新药ETF银华 / 医疗ETF华宝</div></td>
+              <td class="num">41.7亿</td>
+              <td class="num">1107.9亿</td>
+              <td><div class="sub">创新药ETF银华 / 医疗ETF华宝 / 医药ETF易方达</div></td>
             </tr>
             
             <tr>
               <td><strong>银行保险金融</strong></td>
               <td class="num">13</td>
-              <td class="pos num">1.60%</td>
-              <td class="num">13/0</td>
-              <td class="neutral num">8.2亿</td>
-              <td class="pos num">1.4亿</td>
-              <td class="num">21.5亿</td>
-              <td class="num">273.9亿</td>
-              <td><div class="sub">银行ETF华宝 / 银行ETF易方达 / 银行ETF汇添富</div></td>
-            </tr>
-            
-            <tr>
-              <td><strong>军工国防</strong></td>
-              <td class="num">7</td>
-              <td class="pos num">2.33%</td>
-              <td class="num">7/0</td>
-              <td class="neutral num">-1.3亿</td>
-              <td class="pos num">1.0亿</td>
-              <td class="num">15.6亿</td>
-              <td class="num">238.9亿</td>
-              <td><div class="sub">军工龙头ETF富国 / 军工ETF国泰 / 国防ETF鹏华</div></td>
-            </tr>
-            
-            <tr>
-              <td><strong>消费食品</strong></td>
-              <td class="num">70</td>
-              <td class="pos num">0.95%</td>
-              <td class="num">59/11</td>
-              <td class="neutral num">-4.0亿</td>
-              <td class="pos num">1.3亿</td>
-              <td class="num">23.7亿</td>
-              <td class="num">706.3亿</td>
-              <td><div class="sub">酒ETF鹏华 / 消费ETF汇添富 / 旅游ETF富国</div></td>
+              <td class="neg num">-2.39%</td>
+              <td class="num">0/13</td>
+              <td class="neutral num">-3.0亿</td>
+              <td class="pos num">0.7亿</td>
+              <td class="num">22.6亿</td>
+              <td class="num">257.0亿</td>
+              <td><div class="sub">银行ETF华宝 / 金融ETF国泰 / 银行ETF易方达</div></td>
             </tr>
             
             <tr>
               <td><strong>地产建筑</strong></td>
               <td class="num">16</td>
-              <td class="pos num">1.43%</td>
-              <td class="num">16/0</td>
-              <td class="neutral num">-0.9亿</td>
-              <td class="pos num">0.1亿</td>
-              <td class="num">5.5亿</td>
-              <td class="num">92.8亿</td>
-              <td><div class="sub">房地产ETF南方 / 建材ETF国泰 / 地产ETF华宝</div></td>
+              <td class="neg num">-2.41%</td>
+              <td class="num">0/16</td>
+              <td class="neutral num">-0.4亿</td>
+              <td class="pos num">0.6亿</td>
+              <td class="num">5.4亿</td>
+              <td class="num">89.0亿</td>
+              <td><div class="sub">房地产ETF南方 / 房地产ETF华夏 / 建材ETF国泰</div></td>
             </tr>
             
             <tr>
-              <td><strong>机器人智能制造</strong></td>
-              <td class="num">30</td>
-              <td class="pos num">0.12%</td>
-              <td class="num">12/18</td>
-              <td class="neutral num">3.2亿</td>
-              <td class="neg num">-1.5亿</td>
-              <td class="num">37.9亿</td>
-              <td class="num">609.7亿</td>
-              <td><div class="sub">机器人ETF易方达 / 机器人ETF华夏 / 机器人ETF天弘</div></td>
+              <td><strong>消费食品</strong></td>
+              <td class="num">73</td>
+              <td class="neg num">-1.20%</td>
+              <td class="num">5/66</td>
+              <td class="neutral num">-0.7亿</td>
+              <td class="neg num">-1.6亿</td>
+              <td class="num">25.1亿</td>
+              <td class="num">679.5亿</td>
+              <td><div class="sub">酒ETF鹏华 / 消费ETF汇添富 / 旅游ETF富国</div></td>
+            </tr>
+            
+            <tr>
+              <td><strong>卫星航天航空</strong></td>
+              <td class="num">21</td>
+              <td class="pos num">0.27%</td>
+              <td class="num">11/10</td>
+              <td class="neutral num">-3.8亿</td>
+              <td class="pos num">1.6亿</td>
+              <td class="num">29.9亿</td>
+              <td class="num">450.2亿</td>
+              <td><div class="sub">卫星ETF永赢 / 航空航天ETF华夏 / 卫星ETF富国</div></td>
             </tr>
             
             <tr>
               <td><strong>传媒游戏</strong></td>
               <td class="num">10</td>
-              <td class="pos num">0.82%</td>
-              <td class="num">9/1</td>
-              <td class="neutral num">-1.8亿</td>
-              <td class="pos num">0.5亿</td>
-              <td class="num">9.8亿</td>
-              <td class="num">150.7亿</td>
+              <td class="pos num">0.18%</td>
+              <td class="num">6/4</td>
+              <td class="neutral num">-1.5亿</td>
+              <td class="pos num">0.7亿</td>
+              <td class="num">7.5亿</td>
+              <td class="num">145.4亿</td>
               <td><div class="sub">游戏ETF华夏 / 传媒ETF广发 / 游戏ETF国泰</div></td>
+            </tr>
+            
+            <tr>
+              <td><strong>军工国防</strong></td>
+              <td class="num">7</td>
+              <td class="pos num">0.13%</td>
+              <td class="num">5/1</td>
+              <td class="neutral num">0.8亿</td>
+              <td class="pos num">0.4亿</td>
+              <td class="num">10.0亿</td>
+              <td class="num">244.0亿</td>
+              <td><div class="sub">军工龙头ETF富国 / 军工ETF国泰 / 船舶ETF富国</div></td>
             </tr>
             
             <tr>
               <td><strong>汽车交运</strong></td>
               <td class="num">19</td>
-              <td class="pos num">1.01%</td>
-              <td class="num">17/1</td>
+              <td class="neg num">-0.02%</td>
+              <td class="num">10/7</td>
               <td class="neutral num">0.3亿</td>
-              <td class="pos num">0.1亿</td>
-              <td class="num">2.4亿</td>
-              <td class="num">28.3亿</td>
-              <td><div class="sub">智能驾驶ETF华泰柏瑞 / 智能汽车ETF华夏 / 汽车零部件ETF华夏</div></td>
+              <td class="pos num">0.4亿</td>
+              <td class="num">3.3亿</td>
+              <td class="num">29.7亿</td>
+              <td><div class="sub">智能驾驶ETF华泰柏瑞 / 汽车ETF国泰 / 智能汽车ETF华夏</div></td>
             </tr>
             </tbody>
         </table>
@@ -2377,255 +2177,255 @@
           </thead>
           <tbody>
             <tr>
-              <td class="code">515880</td>
+              <td class="code">159516</td>
               <td>
-                <div class="name">通信ETF国泰</div>
-                <div class="sub">份额 25.24亿份 · 更新 2026-06-12 16:12:02+08:00</div>
+                <div class="name">半导体设备ETF国泰</div>
+                <div class="sub">份额 7.42亿份 · 更新 2026-06-18 15:34:48+08:00</div>
               </td>
-              <td>AI算力通信</td>
-              <td class="neg num">-1.19%</td>
-              <td class="pos num">40.0亿</td>
-              <td class="neg num">-8.1亿</td>
-              <td class="num">63.4亿</td>
-              <td class="num">417.6亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">512880</td>
-              <td>
-                <div class="name">证券ETF国泰</div>
-                <div class="sub">份额 -2.08亿份 · 更新 2026-06-12 16:11:39+08:00</div>
-              </td>
-              <td>证券券商</td>
-              <td class="pos num">3.67%</td>
-              <td class="neg num">-2.2亿</td>
-              <td class="pos num">6.4亿</td>
-              <td class="num">35.3亿</td>
-              <td class="num">560.1亿</td>
+              <td>半导体芯片</td>
+              <td class="pos num">1.60%</td>
+              <td class="pos num">11.3亿</td>
+              <td class="neg num">-6.0亿</td>
+              <td class="num">37.5亿</td>
+              <td class="num">265.2亿</td>
             </tr>
             
             <tr>
               <td class="code">588200</td>
               <td>
                 <div class="name">科创芯片ETF嘉实</div>
-                <div class="sub">份额 -1.92亿份 · 更新 2026-06-12 16:11:41+08:00</div>
+                <div class="sub">份额 1.05亿份 · 更新 2026-06-18 16:11:57+08:00</div>
               </td>
               <td>半导体芯片</td>
-              <td class="neg num">-1.22%</td>
-              <td class="neg num">-6.7亿</td>
-              <td class="neg num">-2.1亿</td>
-              <td class="num">52.0亿</td>
-              <td class="num">429.8亿</td>
+              <td class="pos num">4.48%</td>
+              <td class="pos num">4.3亿</td>
+              <td class="neg num">-0.4亿</td>
+              <td class="num">53.9亿</td>
+              <td class="num">511.7亿</td>
             </tr>
             
             <tr>
-              <td class="code">159516</td>
+              <td class="code">515880</td>
               <td>
-                <div class="name">半导体设备ETF国泰</div>
-                <div class="sub">份额 -3.96亿份 · 更新 2026-06-12 15:34:27+08:00</div>
+                <div class="name">通信ETF国泰</div>
+                <div class="sub">份额 -2.77亿份 · 更新 2026-06-18 16:11:39+08:00</div>
               </td>
-              <td>半导体芯片</td>
-              <td class="neg num">-2.65%</td>
-              <td class="neg num">-5.2亿</td>
-              <td class="neg num">-2.1亿</td>
-              <td class="num">38.3亿</td>
-              <td class="num">214.8亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">512400</td>
-              <td>
-                <div class="name">有色金属ETF南方</div>
-                <div class="sub">份额 -4.80亿份 · 更新 2026-06-12 16:11:38+08:00</div>
-              </td>
-              <td>周期资源</td>
-              <td class="pos num">5.11%</td>
-              <td class="neg num">-9.5亿</td>
-              <td class="pos num">2.4亿</td>
-              <td class="num">17.5亿</td>
-              <td class="num">248.7亿</td>
+              <td>AI算力通信</td>
+              <td class="pos num">3.64%</td>
+              <td class="neg num">-5.1亿</td>
+              <td class="neg num">-1.0亿</td>
+              <td class="num">43.3亿</td>
+              <td class="num">491.8亿</td>
             </tr>
             
             <tr>
               <td class="code">588170</td>
               <td>
                 <div class="name">科创半导体ETF华夏</div>
-                <div class="sub">份额 -0.58亿份 · 更新 2026-06-12 16:11:39+08:00</div>
+                <div class="sub">份额 -0.22亿份 · 更新 2026-06-18 16:11:55+08:00</div>
               </td>
               <td>半导体芯片</td>
-              <td class="neg num">-2.84%</td>
-              <td class="neutral num">-1.5亿</td>
-              <td class="neg num">-2.2亿</td>
-              <td class="num">29.7亿</td>
-              <td class="num">99.9亿</td>
+              <td class="pos num">1.56%</td>
+              <td class="neutral num">-0.7亿</td>
+              <td class="neg num">-2.8亿</td>
+              <td class="num">44.5亿</td>
+              <td class="num">122.3亿</td>
             </tr>
             
             <tr>
-              <td class="code">512000</td>
+              <td class="code">512400</td>
               <td>
-                <div class="name">券商ETF华宝</div>
-                <div class="sub">份额 -3.14亿份 · 更新 2026-06-12 16:11:52+08:00</div>
-              </td>
-              <td>证券券商</td>
-              <td class="pos num">3.53%</td>
-              <td class="neutral num">-1.6亿</td>
-              <td class="pos num">2.6亿</td>
-              <td class="num">17.3亿</td>
-              <td class="num">368.4亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">560860</td>
-              <td>
-                <div class="name">工业有色ETF万家</div>
-                <div class="sub">份额 -0.87亿份 · 更新 2026-06-12 16:11:47+08:00</div>
+                <div class="name">有色金属ETF南方</div>
+                <div class="sub">份额 8.67亿份 · 更新 2026-06-18 16:11:54+08:00</div>
               </td>
               <td>周期资源</td>
-              <td class="pos num">6.14%</td>
-              <td class="neutral num">-1.5亿</td>
-              <td class="pos num">0.7亿</td>
-              <td class="num">6.5亿</td>
-              <td class="num">96.6亿</td>
+              <td class="pos num">0.24%</td>
+              <td class="pos num">17.8亿</td>
+              <td class="pos num">1.7亿</td>
+              <td class="num">18.2亿</td>
+              <td class="num">274.8亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">512880</td>
+              <td>
+                <div class="name">证券ETF国泰</div>
+                <div class="sub">份额 -1.38亿份 · 更新 2026-06-18 16:11:55+08:00</div>
+              </td>
+              <td>证券券商</td>
+              <td class="neg num">-2.87%</td>
+              <td class="neutral num">-1.4亿</td>
+              <td class="neg num">-3.6亿</td>
+              <td class="num">26.8亿</td>
+              <td class="num">551.9亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159819</td>
+              <td>
+                <div class="name">人工智能ETF易方达</div>
+                <div class="sub">份额 -1.50亿份 · 更新 2026-06-18 15:34:21+08:00</div>
+              </td>
+              <td>AI算力通信</td>
+              <td class="pos num">5.03%</td>
+              <td class="neg num">-3.2亿</td>
+              <td class="pos num">1.7亿</td>
+              <td class="num">11.0亿</td>
+              <td class="num">238.2亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159995</td>
+              <td>
+                <div class="name">芯片ETF华夏</div>
+                <div class="sub">份额 -0.87亿份 · 更新 2026-06-18 15:34:30+08:00</div>
+              </td>
+              <td>半导体芯片</td>
+              <td class="pos num">4.68%</td>
+              <td class="neg num">-2.4亿</td>
+              <td class="pos num">0.2亿</td>
+              <td class="num">21.5亿</td>
+              <td class="num">295.4亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">515050</td>
+              <td>
+                <div class="name">通信ETF华夏</div>
+                <div class="sub">份额 1.54亿份 · 更新 2026-06-18 16:11:35+08:00</div>
+              </td>
+              <td>AI算力通信</td>
+              <td class="pos num">3.75%</td>
+              <td class="pos num">2.1亿</td>
+              <td class="neg num">-2.1亿</td>
+              <td class="num">15.8亿</td>
+              <td class="num">202.3亿</td>
             </tr>
             
             <tr>
               <td class="code">159870</td>
               <td>
                 <div class="name">化工ETF鹏华</div>
-                <div class="sub">份额 -1.57亿份 · 更新 2026-06-12 15:34:03+08:00</div>
+                <div class="sub">份额 5.68亿份 · 更新 2026-06-18 15:34:39+08:00</div>
               </td>
               <td>周期资源</td>
-              <td class="pos num">3.43%</td>
-              <td class="neutral num">-1.3亿</td>
-              <td class="neg num">-1.7亿</td>
-              <td class="num">14.1亿</td>
-              <td class="num">163.8亿</td>
+              <td class="neg num">-1.98%</td>
+              <td class="pos num">4.8亿</td>
+              <td class="pos num">2.6亿</td>
+              <td class="num">12.5亿</td>
+              <td class="num">175.2亿</td>
             </tr>
             
             <tr>
-              <td class="code">516650</td>
+              <td class="code">512070</td>
               <td>
-                <div class="name">有色金属ETF华夏</div>
-                <div class="sub">份额 -1.15亿份 · 更新 2026-06-12 16:11:42+08:00</div>
+                <div class="name">证券保险ETF易方达</div>
+                <div class="sub">份额 6.00亿份 · 更新 2026-06-18 16:11:58+08:00</div>
               </td>
-              <td>周期资源</td>
-              <td class="pos num">5.44%</td>
-              <td class="neg num">-2.2亿</td>
-              <td class="pos num">0.0亿</td>
-              <td class="num">3.9亿</td>
-              <td class="num">106.2亿</td>
+              <td>证券券商</td>
+              <td class="neg num">-4.18%</td>
+              <td class="pos num">4.5亿</td>
+              <td class="neg num">-0.6亿</td>
+              <td class="num">8.5亿</td>
+              <td class="num">129.1亿</td>
             </tr>
             
             <tr>
-              <td class="code">561330</td>
+              <td class="code">515980</td>
               <td>
-                <div class="name">矿业ETF国泰</div>
-                <div class="sub">份额 -0.20亿份 · 更新 2026-06-12 16:11:45+08:00</div>
+                <div class="name">人工智能ETF华富</div>
+                <div class="sub">份额 -1.41亿份 · 更新 2026-06-18 16:11:39+08:00</div>
               </td>
-              <td>周期资源</td>
-              <td class="pos num">5.99%</td>
-              <td class="neutral num">-0.4亿</td>
-              <td class="pos num">0.1亿</td>
-              <td class="num">0.9亿</td>
-              <td class="num">18.7亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">159652</td>
-              <td>
-                <div class="name">有色ETF汇添富</div>
-                <div class="sub">份额 -0.12亿份 · 更新 2026-06-12 15:34:27+08:00</div>
-              </td>
-              <td>周期资源</td>
-              <td class="pos num">5.52%</td>
-              <td class="neutral num">-0.2亿</td>
-              <td class="pos num">0.0亿</td>
-              <td class="num">2.3亿</td>
-              <td class="num">33.1亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">159227</td>
-              <td>
-                <div class="name">航空航天ETF华夏</div>
-                <div class="sub">份额 -0.33亿份 · 更新 2026-06-12 15:34:54+08:00</div>
-              </td>
-              <td>卫星航天航空</td>
-              <td class="pos num">4.46%</td>
-              <td class="neutral num">-0.4亿</td>
-              <td class="pos num">0.2亿</td>
-              <td class="num">7.1亿</td>
-              <td class="num">51.4亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">159157</td>
-              <td>
-                <div class="name">有色金属ETF天弘</div>
-                <div class="sub">份额 -0.11亿份 · 更新 2026-06-12 15:34:03+08:00</div>
-              </td>
-              <td>周期资源</td>
-              <td class="pos num">5.23%</td>
-              <td class="neutral num">-0.1亿</td>
-              <td class="pos num">0.3亿</td>
-              <td class="num">2.2亿</td>
-              <td class="num">80.0亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">512800</td>
-              <td>
-                <div class="name">银行ETF华宝</div>
-                <div class="sub">份额 11.20亿份 · 更新 2026-06-12 16:11:58+08:00</div>
-              </td>
-              <td>银行保险金融</td>
-              <td class="pos num">1.50%</td>
-              <td class="pos num">9.1亿</td>
+              <td>AI算力通信</td>
+              <td class="pos num">5.76%</td>
+              <td class="neutral num">-1.7亿</td>
               <td class="pos num">0.6亿</td>
-              <td class="num">12.3亿</td>
-              <td class="num">127.3亿</td>
+              <td class="num">5.1亿</td>
+              <td class="num">69.3亿</td>
             </tr>
             
             <tr>
-              <td class="code">159168</td>
+              <td class="code">512480</td>
               <td>
-                <div class="name">有色ETF富国</div>
-                <div class="sub">份额 -0.08亿份 · 更新 2026-06-12 15:34:42+08:00</div>
+                <div class="name">半导体ETF国联安</div>
+                <div class="sub">份额 0.18亿份 · 更新 2026-06-18 16:11:42+08:00</div>
               </td>
-              <td>周期资源</td>
-              <td class="pos num">5.59%</td>
-              <td class="neutral num">-0.1亿</td>
-              <td class="pos num">0.1亿</td>
-              <td class="num">0.5亿</td>
-              <td class="num">2.6亿</td>
-            </tr>
-            
-            <tr>
-              <td class="code">159032</td>
-              <td>
-                <div class="name">工业有色ETF易方达</div>
-                <div class="sub">份额 -0.03亿份 · 更新 2026-06-12 15:34:12+08:00</div>
-              </td>
-              <td>周期资源</td>
-              <td class="pos num">5.62%</td>
-              <td class="neutral num">-0.0亿</td>
+              <td>半导体芯片</td>
+              <td class="pos num">3.94%</td>
+              <td class="neutral num">0.4亿</td>
               <td class="pos num">0.0亿</td>
-              <td class="num">0.3亿</td>
-              <td class="num">2.7亿</td>
+              <td class="num">19.2亿</td>
+              <td class="num">207.2亿</td>
             </tr>
             
             <tr>
-              <td class="code">159029</td>
+              <td class="code">159530</td>
               <td>
-                <div class="name">有色ETF广发</div>
-                <div class="sub">份额 -0.10亿份 · 更新 2026-06-12 15:34:09+08:00</div>
+                <div class="name">机器人ETF易方达</div>
+                <div class="sub">份额 -2.43亿份 · 更新 2026-06-18 15:34:51+08:00</div>
+              </td>
+              <td>机器人智能制造</td>
+              <td class="pos num">3.20%</td>
+              <td class="neg num">-4.0亿</td>
+              <td class="pos num">0.6亿</td>
+              <td class="num">11.5亿</td>
+              <td class="num">171.4亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159611</td>
+              <td>
+                <div class="name">电力ETF广发</div>
+                <div class="sub">份额 0.30亿份 · 更新 2026-06-18 15:34:24+08:00</div>
+              </td>
+              <td>新能源电力</td>
+              <td class="neg num">-3.45%</td>
+              <td class="neutral num">0.3亿</td>
+              <td class="neg num">-1.4亿</td>
+              <td class="num">13.8亿</td>
+              <td class="num">101.6亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">515220</td>
+              <td>
+                <div class="name">煤炭ETF国泰</div>
+                <div class="sub">份额 -3.75亿份 · 更新 2026-06-18 16:11:37+08:00</div>
               </td>
               <td>周期资源</td>
-              <td class="pos num">5.57%</td>
-              <td class="neutral num">-0.1亿</td>
-              <td class="pos num">0.1亿</td>
-              <td class="num">0.3亿</td>
-              <td class="num">3.1亿</td>
+              <td class="neg num">-3.26%</td>
+              <td class="neg num">-4.3亿</td>
+              <td class="neg num">-0.8亿</td>
+              <td class="num">9.0亿</td>
+              <td class="num">126.7亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">512760</td>
+              <td>
+                <div class="name">芯片ETF国泰</div>
+                <div class="sub">份额 -1.50亿份 · 更新 2026-06-18 16:11:33+08:00</div>
+              </td>
+              <td>半导体芯片</td>
+              <td class="pos num">4.44%</td>
+              <td class="neutral num">-2.0亿</td>
+              <td class="pos num">0.4亿</td>
+              <td class="num">9.6亿</td>
+              <td class="num">113.4亿</td>
+            </tr>
+            
+            <tr>
+              <td class="code">159667</td>
+              <td>
+                <div class="name">工业母机ETF国泰</div>
+                <div class="sub">份额 5.97亿份 · 更新 2026-06-18 15:34:45+08:00</div>
+              </td>
+              <td>机器人智能制造</td>
+              <td class="pos num">3.65%</td>
+              <td class="pos num">5.4亿</td>
+              <td class="neg num">-0.4亿</td>
+              <td class="num">3.2亿</td>
+              <td class="num">28.5亿</td>
             </tr>
             </tbody>
         </table>
@@ -2637,8 +2437,8 @@
         <article class="panel"><div class="rank-title">行业ETF净申购靠前</div>
             <div class="rank-row">
               <div class="rank-meta">
-                <span>515880 通信ETF国泰</span>
-                <strong class="pos">40.0亿</strong>
+                <span>512400 有色金属ETF南方</span>
+                <strong class="pos">17.8亿</strong>
               </div>
               <div class="bar-track compact"><div class="bar-fill pos" style="width:100.0%"></div></div>
             </div>
@@ -2646,71 +2446,71 @@
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>512800 银行ETF华宝</span>
-                <strong class="neutral">9.1亿</strong>
+                <span>159516 半导体设备ETF国泰</span>
+                <strong class="pos">11.3亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:22.8%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill pos" style="width:63.5%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>515050 通信ETF华夏</span>
-                <strong class="neutral">3.2亿</strong>
+                <span>560860 工业有色ETF万家</span>
+                <strong class="neutral">9.9亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:8.0%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:55.6%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>159530 机器人ETF易方达</span>
-                <strong class="neutral">2.9亿</strong>
+                <span>562800 稀有金属ETF嘉实</span>
+                <strong class="neutral">5.8亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:7.2%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:32.4%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159667 工业母机ETF国泰</span>
+                <strong class="neutral">5.4亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:30.5%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159870 化工ETF鹏华</span>
+                <strong class="neutral">4.8亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:26.9%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
                 <span>512070 证券保险ETF易方达</span>
-                <strong class="neutral">2.7亿</strong>
+                <strong class="neutral">4.5亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:6.8%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:25.5%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>159246 创业板人工智能ETF富国</span>
-                <strong class="neutral">2.5亿</strong>
+                <span>588200 科创芯片ETF嘉实</span>
+                <strong class="neutral">4.3亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:6.3%"></div></div>
-            </div>
-            
-
-            <div class="rank-row">
-              <div class="rank-meta">
-                <span>159583 通信ETF富国</span>
-                <strong class="neutral">1.9亿</strong>
-              </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:4.7%"></div></div>
-            </div>
-            
-
-            <div class="rank-row">
-              <div class="rank-meta">
-                <span>159994 通信ETF银华</span>
-                <strong class="neutral">1.9亿</strong>
-              </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:4.7%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:24.4%"></div></div>
             </div>
             </article>
         <article class="panel"><div class="rank-title">行业ETF净赎回靠前</div>
             <div class="rank-row">
               <div class="rank-meta">
-                <span>512400 有色金属ETF南方</span>
-                <strong class="neutral">-9.5亿</strong>
+                <span>159326 电网设备ETF华夏</span>
+                <strong class="neutral">-7.8亿</strong>
               </div>
               <div class="bar-track compact"><div class="bar-fill neutral" style="width:100.0%"></div></div>
             </div>
@@ -2718,64 +2518,64 @@
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>588200 科创芯片ETF嘉实</span>
-                <strong class="neutral">-6.7亿</strong>
+                <span>515880 通信ETF国泰</span>
+                <strong class="neutral">-5.1亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:70.8%"></div></div>
-            </div>
-            
-
-            <div class="rank-row">
-              <div class="rank-meta">
-                <span>159516 半导体设备ETF国泰</span>
-                <strong class="neutral">-5.2亿</strong>
-              </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:55.2%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:64.8%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
                 <span>515220 煤炭ETF国泰</span>
-                <strong class="neutral">-4.1亿</strong>
+                <strong class="neutral">-4.3亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:42.9%"></div></div>
-            </div>
-            
-
-            <div class="rank-row">
-              <div class="rank-meta">
-                <span>159326 电网设备ETF华夏</span>
-                <strong class="neutral">-3.6亿</strong>
-              </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:37.8%"></div></div>
-            </div>
-            
-
-            <div class="rank-row">
-              <div class="rank-meta">
-                <span>561380 电网设备ETF国泰</span>
-                <strong class="neutral">-2.7亿</strong>
-              </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:28.4%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:55.6%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
                 <span>516160 新能源ETF南方</span>
-                <strong class="neutral">-2.7亿</strong>
+                <strong class="neutral">-4.0亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:28.4%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:51.7%"></div></div>
             </div>
             
 
             <div class="rank-row">
               <div class="rank-meta">
-                <span>512010 医药ETF易方达</span>
-                <strong class="neutral">-2.5亿</strong>
+                <span>159530 机器人ETF易方达</span>
+                <strong class="neutral">-4.0亿</strong>
               </div>
-              <div class="bar-track compact"><div class="bar-fill neutral" style="width:25.9%"></div></div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:51.2%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>562500 机器人ETF华夏</span>
+                <strong class="neutral">-3.9亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:50.6%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159819 人工智能ETF易方达</span>
+                <strong class="neutral">-3.2亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:40.6%"></div></div>
+            </div>
+            
+
+            <div class="rank-row">
+              <div class="rank-meta">
+                <span>159841 证券ETF天弘</span>
+                <strong class="neutral">-2.8亿</strong>
+              </div>
+              <div class="bar-track compact"><div class="bar-fill neutral" style="width:36.2%"></div></div>
             </div>
             </article>
       </section>
