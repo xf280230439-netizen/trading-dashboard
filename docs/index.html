@@ -644,6 +644,151 @@
       background: var(--unavailable);
       opacity: .45;
     }
+    .crowding-panel {
+      padding: 18px;
+      background:
+        linear-gradient(135deg, rgba(37, 99, 169, .035), transparent 34%),
+        var(--panel);
+    }
+    .crowding-titlebar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+    .crowding-titlebar h2 { font-size: 19px; }
+    .crowding-titlebar p {
+      max-width: 820px;
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .crowding-total {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      column-gap: 10px;
+      min-width: 180px;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      padding: 9px 12px;
+      background: #fbfcfd;
+    }
+    .crowding-total.warn, .crowding-total.warm { border-left-color: var(--warn); background: var(--warn-bg); }
+    .crowding-total.severe, .crowding-total.extreme { border-left-color: var(--pos); background: var(--pos-bg); }
+    .crowding-total.unavailable { border-left-color: var(--unavailable); background: var(--unavailable-bg); }
+    .crowding-total span { grid-column: 1; color: var(--muted); font-size: 11px; }
+    .crowding-total strong { grid-column: 2; grid-row: 1 / span 2; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+    .crowding-total em { grid-column: 1; color: var(--text); font-size: 13px; font-style: normal; font-weight: 800; }
+    .crowding-focus {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      margin-top: 14px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--warn);
+      padding: 9px 11px;
+      background: #fbfcfd;
+      font-size: 12px;
+    }
+    .crowding-focus strong { white-space: nowrap; }
+    .crowding-focus span { min-width: 0; color: var(--text); font-weight: 750; }
+    .crowding-focus em { color: var(--muted); font-size: 11px; font-style: normal; text-align: right; }
+    .amount-wave-card {
+      min-width: 0;
+      margin-top: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfd;
+      padding: 12px 14px 6px;
+    }
+    .amount-wave-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-end; }
+    .amount-wave-head span { display: block; color: var(--muted); font-size: 11px; }
+    .amount-wave-head strong { display: block; margin-top: 2px; font-size: 20px; font-variant-numeric: tabular-nums; }
+    .amount-wave-legend { display: flex; gap: 12px; }
+    .amount-wave-legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .amount-wave-legend i { width: 16px; height: 2px; background: var(--blue); }
+    .amount-wave-legend i.ma { height: 0; border-top: 2px dashed var(--warn); background: transparent; }
+    .amount-wave-svg { display: block; width: 100%; height: 190px; overflow: visible; }
+    .amount-grid line { stroke: rgba(104, 115, 134, .18); stroke-width: 1; }
+    .amount-grid text, .amount-date { fill: var(--muted); font-size: 10px; }
+    .amount-area { fill: url(#amountArea); }
+    .amount-path { fill: none; stroke: var(--blue); stroke-width: 2; vector-effect: non-scaling-stroke; }
+    .amount-ma-path { fill: none; stroke: var(--warn); stroke-width: 1.6; stroke-dasharray: 6 4; vector-effect: non-scaling-stroke; }
+    .amount-last-dot { fill: var(--panel); stroke: var(--blue); stroke-width: 3; vector-effect: non-scaling-stroke; }
+    .crowding-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .crowding-card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--blue);
+      border-radius: 8px;
+      padding: 11px;
+      background: #fbfcfd;
+    }
+    .crowding-card.warm, .crowding-card.warn { border-top-color: var(--warn); }
+    .crowding-card.severe, .crowding-card.extreme { border-top-color: var(--pos); }
+    .crowding-card.unavailable { border-top-color: var(--unavailable); background: var(--unavailable-bg); color: var(--unavailable); }
+    .crowding-card-head, .crowding-card-head > div { display: flex; align-items: center; gap: 7px; }
+    .crowding-card-head { justify-content: space-between; }
+    .crowding-card-head span { color: var(--text); font-size: 13px; font-weight: 800; }
+    .crowding-card-head em {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--muted);
+      font-size: 9px;
+      font-style: normal;
+      white-space: nowrap;
+    }
+    .crowding-card-head > strong { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
+    .crowding-card-value { margin-top: 9px; color: var(--text); font-size: 24px; font-weight: 850; line-height: 1; font-variant-numeric: tabular-nums; }
+    .crowding-card-context { min-height: 18px; margin-top: 5px; color: var(--muted); font-size: 11px; }
+    .crowding-scale {
+      position: relative;
+      height: 7px;
+      margin: 9px 0;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #95abc5 0 34%, #d1a14b 55% 70%, #c9362c 100%);
+      opacity: .88;
+    }
+    .crowding-scale span {
+      position: absolute;
+      top: 50%;
+      width: 3px;
+      height: 13px;
+      border: 1px solid var(--panel);
+      border-radius: 2px;
+      background: var(--text);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 1px rgba(29, 36, 48, .22);
+    }
+    .crowding-card-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+    .crowding-card-items > div { min-width: 0; padding: 7px 7px 5px 0; }
+    .crowding-card-items span, .crowding-card-items strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .crowding-card-items span { color: var(--muted); font-size: 9px; }
+    .crowding-card-items strong { margin-top: 2px; color: var(--text); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .crowding-card p { min-height: 34px; margin: 6px 0 0; color: var(--muted); font-size: 10px; line-height: 1.55; }
+    .crowding-card-date { margin-top: 6px; color: var(--muted); font-size: 9px; }
+    .crowding-method {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      margin-top: 12px;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .crowding-method strong { color: var(--text); }
+    .crowding-method em { font-style: normal; white-space: nowrap; }
     .tdx-metric-grid {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -741,6 +886,7 @@
       white-space: nowrap;
     }
     .tdx-leader-code { flex: 0 0 auto; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tdx-leader-aux { flex: 0 0 auto; color: var(--muted); font-size: 10px; font-variant-numeric: tabular-nums; }
     .tdx-leader-row strong { flex: 0 0 auto; font-variant-numeric: tabular-nums; }
     .tdx-unusual {
       display: grid;
@@ -1264,6 +1410,7 @@
       .signal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .social-action-grid { grid-template-columns: 1fr; }
       .social-chart-grid { grid-template-columns: 1fr; }
+      .crowding-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .down-rain-layout { grid-template-columns: 1fr; }
       .tdx-metric-grid, .tdx-index-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .tdx-leader-grid { grid-template-columns: 1fr; }
@@ -1280,6 +1427,12 @@
       .summary-grid, .data-status, .heat-list { grid-template-columns: 1fr; }
       .trend-grid { grid-template-columns: 1fr; }
       .top-signal-hero, .signal-grid, .integration-grid, .wechat-index-grid { grid-template-columns: 1fr; }
+      .crowding-panel { padding: 14px; }
+      .crowding-titlebar, .crowding-focus, .crowding-method { grid-template-columns: 1fr; }
+      .crowding-total { width: 100%; }
+      .crowding-focus em, .crowding-method em { text-align: left; white-space: normal; }
+      .crowding-grid { grid-template-columns: 1fr; }
+      .amount-wave-svg { width: 100%; height: 176px; }
       .tdx-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .tdx-index-grid { grid-template-columns: 1fr; }
       .down-rain-chart { height: 200px; gap: 5px; }
@@ -1471,7 +1624,7 @@
     <div class="topline">
       <div>
         <h1>A股资金复盘</h1>
-        <div class="subtitle">快照：etf_watchlist_2026-07-17.csv · 生成：2026-07-19 00:06</div>
+        <div class="subtitle">快照：etf_watchlist_2026-07-17.csv · 生成：2026-07-19 23:59</div>
       </div>
       <div class="head-actions">
         <nav class="site-nav" aria-label="页面导航">
@@ -1643,6 +1796,184 @@
               </ul>
             </div>
           </div>
+        </div>
+      </section>
+    
+
+      
+      <section class="panel crowding-panel">
+        <div class="crowding-titlebar">
+          <div>
+            <h2>全市场拥挤雷达</h2>
+            <p>从量能、集中度、涨跌侧、风格、ETF方向、短线情绪和杠杆七个角度观察，不把科技当成唯一拥挤来源。</p>
+          </div>
+          <div class="crowding-total warn">
+            <span>综合极端度</span>
+            <strong>59</strong>
+            <em>偏拥挤</em>
+          </div>
+        </div>
+        <div class="crowding-focus">
+          <strong>当前高信号</strong>
+          <span>涨跌侧极端度 87分、个股资金集中 55分、短线情绪集中 55分；1项陈旧数据只展示、不计分</span>
+          <em>高分表示交易更集中或更极端，不直接等于看多或看空。</em>
+        </div>
+        
+      <article class="amount-wave-card">
+        <div class="amount-wave-head">
+          <div>
+            <span>全市场成交额波形</span>
+            <strong>2.83万亿</strong>
+          </div>
+          <div class="amount-wave-legend"><span><i></i>单日</span><span><i class="ma"></i>5日均</span></div>
+        </div>
+        <svg class="amount-wave-svg" viewBox="0 0 780 188" role="img" aria-label="最近交易日全市场成交额与5日均量">
+          <defs>
+            <linearGradient id="amountArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2563a9" stop-opacity=".20"></stop>
+              <stop offset="100%" stop-color="#2563a9" stop-opacity="0"></stop>
+            </linearGradient>
+          </defs>
+          <g class="amount-grid"><line x1="54" y1="154.0" x2="762" y2="154.0"></line><text x="6" y="158.0">1.4万亿</text></g><g class="amount-grid"><line x1="54" y1="86.0" x2="762" y2="86.0"></line><text x="6" y="90.0">2.7万亿</text></g><g class="amount-grid"><line x1="54" y1="18.0" x2="762" y2="18.0"></line><text x="6" y="22.0">4.0万亿</text></g>
+          <path class="amount-area" d="M54.0,154.0 L54.0,70.9 L62.0,57.1 L69.9,77.4 L77.9,90.4 L85.8,92.6 L93.8,95.8 L101.7,111.7 L109.7,113.2 L117.6,107.7 L125.6,115.6 L133.6,121.6 L141.5,113.3 L149.5,121.7 L157.4,110.4 L165.4,96.9 L173.3,93.0 L181.3,95.6 L189.2,68.0 L197.2,62.2 L205.1,101.7 L213.1,100.4 L221.1,110.4 L229.0,87.2 L237.0,100.2 L244.9,94.5 L252.9,97.9 L260.8,100.1 L268.8,104.1 L276.7,110.0 L284.7,118.4 L292.7,115.0 L300.6,106.1 L308.6,98.6 L316.5,116.6 L324.5,111.9 L332.4,123.7 L340.4,128.5 L348.3,125.3 L356.3,121.5 L364.2,120.3 L372.2,128.8 L380.2,138.5 L388.1,140.8 L396.1,98.6 L404.0,114.0 L412.0,104.4 L419.9,113.2 L427.9,101.2 L435.8,99.5 L443.8,103.7 L451.8,98.4 L459.7,90.5 L467.7,100.3 L475.6,91.8 L483.6,79.3 L491.5,88.4 L499.5,90.6 L507.4,93.3 L515.4,90.5 L523.3,82.7 L531.3,57.6 L539.3,61.7 L547.2,66.4 L555.2,41.6 L563.1,56.7 L571.1,74.9 L579.0,74.5 L587.0,70.9 L594.9,75.5 L602.9,81.5 L610.9,65.0 L618.8,79.3 L626.8,87.5 L634.7,88.5 L642.7,92.1 L650.6,58.1 L658.6,67.6 L666.5,65.8 L674.5,64.4 L682.4,53.2 L690.4,31.2 L698.4,46.3 L706.3,54.5 L714.3,59.7 L722.2,64.5 L730.2,90.8 L738.1,91.7 L746.1,73.8 L754.0,49.5 L762.0,78.7 L762.0,154.0 Z"></path>
+          <path class="amount-path" d="M54.0,70.9 L62.0,57.1 L69.9,77.4 L77.9,90.4 L85.8,92.6 L93.8,95.8 L101.7,111.7 L109.7,113.2 L117.6,107.7 L125.6,115.6 L133.6,121.6 L141.5,113.3 L149.5,121.7 L157.4,110.4 L165.4,96.9 L173.3,93.0 L181.3,95.6 L189.2,68.0 L197.2,62.2 L205.1,101.7 L213.1,100.4 L221.1,110.4 L229.0,87.2 L237.0,100.2 L244.9,94.5 L252.9,97.9 L260.8,100.1 L268.8,104.1 L276.7,110.0 L284.7,118.4 L292.7,115.0 L300.6,106.1 L308.6,98.6 L316.5,116.6 L324.5,111.9 L332.4,123.7 L340.4,128.5 L348.3,125.3 L356.3,121.5 L364.2,120.3 L372.2,128.8 L380.2,138.5 L388.1,140.8 L396.1,98.6 L404.0,114.0 L412.0,104.4 L419.9,113.2 L427.9,101.2 L435.8,99.5 L443.8,103.7 L451.8,98.4 L459.7,90.5 L467.7,100.3 L475.6,91.8 L483.6,79.3 L491.5,88.4 L499.5,90.6 L507.4,93.3 L515.4,90.5 L523.3,82.7 L531.3,57.6 L539.3,61.7 L547.2,66.4 L555.2,41.6 L563.1,56.7 L571.1,74.9 L579.0,74.5 L587.0,70.9 L594.9,75.5 L602.9,81.5 L610.9,65.0 L618.8,79.3 L626.8,87.5 L634.7,88.5 L642.7,92.1 L650.6,58.1 L658.6,67.6 L666.5,65.8 L674.5,64.4 L682.4,53.2 L690.4,31.2 L698.4,46.3 L706.3,54.5 L714.3,59.7 L722.2,64.5 L730.2,90.8 L738.1,91.7 L746.1,73.8 L754.0,49.5 L762.0,78.7"></path>
+          <path class="amount-ma-path" d="M54.0,70.9 L62.0,64.0 L69.9,68.5 L77.9,74.0 L85.8,77.7 L93.8,82.7 L101.7,93.6 L109.7,100.7 L117.6,104.2 L125.6,108.8 L133.6,113.9 L141.5,114.3 L149.5,116.0 L157.4,116.5 L165.4,112.8 L173.3,107.1 L181.3,103.5 L189.2,92.8 L197.2,83.2 L205.1,84.1 L213.1,85.6 L221.1,88.6 L229.0,92.4 L237.0,100.0 L244.9,98.5 L252.9,98.0 L260.8,96.0 L268.8,99.4 L276.7,101.3 L284.7,106.1 L292.7,109.5 L300.6,110.7 L308.6,109.6 L316.5,110.9 L324.5,109.6 L332.4,111.4 L340.4,115.9 L348.3,121.2 L356.3,122.2 L364.2,123.9 L372.2,124.9 L380.2,126.9 L388.1,130.0 L396.1,125.4 L404.0,124.2 L412.0,119.3 L419.9,114.2 L427.9,106.3 L435.8,106.5 L443.8,104.4 L451.8,103.2 L459.7,98.7 L467.7,98.5 L475.6,96.9 L483.6,92.1 L491.5,90.1 L499.5,90.1 L507.4,88.7 L515.4,88.4 L523.3,89.1 L531.3,82.9 L539.3,77.2 L547.2,71.8 L555.2,62.0 L563.1,56.8 L571.1,60.3 L579.0,62.8 L587.0,63.7 L594.9,70.5 L602.9,75.5 L610.9,73.5 L618.8,74.5 L626.8,77.8 L634.7,80.4 L642.7,82.5 L650.6,81.1 L658.6,78.8 L666.5,74.4 L674.5,69.6 L682.4,61.8 L690.4,56.4 L698.4,52.2 L706.3,49.9 L714.3,49.0 L722.2,51.2 L730.2,63.2 L738.1,72.3 L746.1,76.1 L754.0,74.1 L762.0,76.9"></path>
+          <circle class="amount-last-dot" cx="762.0" cy="78.7" r="4"></circle>
+          <text class="amount-date" x="54.0" y="180" text-anchor="middle">01-28</text><text class="amount-date" x="412.0" y="180" text-anchor="middle">04-10</text><text class="amount-date" x="762.0" y="180" text-anchor="middle">07-13</text>
+        </svg>
+      </article>
+    
+        <div class="crowding-grid">
+      <article class="crowding-card warm">
+        <div class="crowding-card-head">
+          <div>
+            <span>全市场量能</span>
+            <em>升温</em>
+          </div>
+          <strong>48</strong>
+        </div>
+        <div class="crowding-card-value">2.83万亿</div>
+        <div class="crowding-card-context">90日 70 分位</div>
+        <div class="crowding-scale" aria-label="拥挤度 48 分">
+          <span style="left:48.3%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>5日均</span><strong>2.87万亿</strong></div><div><span>20日均</span><strong>3.04万亿</strong></div><div><span>较20日均</span><strong>-6.78%</strong></div><div><span>样本</span><strong>90日</strong></div></div>
+        <p>总成交额、历史分位与均量偏离共同判断放量是否透支。</p>
+        <div class="crowding-card-date">2026-07-13 · 滞后4天</div>
+      </article>
+    
+      <article class="crowding-card warn">
+        <div class="crowding-card-head">
+          <div>
+            <span>个股资金集中</span>
+            <em>偏拥挤</em>
+          </div>
+          <strong>55</strong>
+        </div>
+        <div class="crowding-card-value">8.84%</div>
+        <div class="crowding-card-context">成交额 Top10 / 全市场</div>
+        <div class="crowding-scale" aria-label="拥挤度 55 分">
+          <span style="left:55.4%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>Top3占比</span><strong>3.57%</strong></div><div><span>下跌股占Top10</span><strong>76.92%</strong></div><div><span>Top10平均换手</span><strong>9.80%</strong></div><div><span>换手超10%</span><strong>3只</strong></div></div>
+        <p>识别资金是否挤在少数个股，以及高成交是否主要发生在下跌侧。</p>
+        <div class="crowding-card-date">2026-07-13 · 滞后4天</div>
+      </article>
+    
+      <article class="crowding-card extreme">
+        <div class="crowding-card-head">
+          <div>
+            <span>涨跌侧极端度</span>
+            <em>极端</em>
+          </div>
+          <strong>87</strong>
+        </div>
+        <div class="crowding-card-value">85.42%</div>
+        <div class="crowding-card-context">下跌侧集中</div>
+        <div class="crowding-scale" aria-label="拥挤度 87 分">
+          <span style="left:86.9%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>上涨占比</span><strong>14.58%</strong></div><div><span>下跌占比</span><strong>85.42%</strong></div><div><span>涨跌差</span><strong>-3,937</strong></div><div><span>方向距离</span><strong>35.4点</strong></div></div>
+        <p>上涨或下跌家数越单边，市场越极端；高分只表示集中，不等于继续同向。</p>
+        <div class="crowding-card-date">2026-07-13 · 滞后4天</div>
+      </article>
+    
+      <article class="crowding-card warm">
+        <div class="crowding-card-head">
+          <div>
+            <span>风格偏斜</span>
+            <em>升温</em>
+          </div>
+          <strong>42</strong>
+        </div>
+        <div class="crowding-card-value">-1.48%</div>
+        <div class="crowding-card-context">权重占优</div>
+        <div class="crowding-scale" aria-label="拥挤度 42 分">
+          <span style="left:42.5%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>成长表现</span><strong>-3.26%</strong></div><div><span>沪深300</span><strong>-1.79%</strong></div><div><span>绝对分化</span><strong>1.48%</strong></div><div><span>参照</span><strong>创业/科创 vs 300</strong></div></div>
+        <p>不预设科技拥挤，直接比较成长与权重的相对强弱是否一边倒。</p>
+        <div class="crowding-card-date">2026-07-13 · 滞后4天</div>
+      </article>
+    
+      <article class="crowding-card warm">
+        <div class="crowding-card-head">
+          <div>
+            <span>ETF方向集中</span>
+            <em>升温</em>
+          </div>
+          <strong>47</strong>
+        </div>
+        <div class="crowding-card-value">64.92%</div>
+        <div class="crowding-card-context">前三分类；第一为宽基核心</div>
+        <div class="crowding-scale" aria-label="拥挤度 47 分">
+          <span style="left:47.4%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>第一分类</span><strong>23.96%</strong></div><div><span>前三分类</span><strong>64.92%</strong></div><div><span>观察池成交</span><strong>1604.6亿</strong></div><div><span>覆盖分类</span><strong>10类</strong></div></div>
+        <p>用ETF观察池判断交易集中在哪些方向；这是风格代理，不等于全市场行业占比。</p>
+        <div class="crowding-card-date">2026-07-17 · 最新可用</div>
+      </article>
+    
+      <article class="crowding-card warm">
+        <div class="crowding-card-head">
+          <div>
+            <span>短线情绪集中</span>
+            <em>升温</em>
+          </div>
+          <strong>55</strong>
+        </div>
+        <div class="crowding-card-value">5板</div>
+        <div class="crowding-card-context">电力占涨停 27%</div>
+        <div class="crowding-scale" aria-label="拥挤度 55 分">
+          <span style="left:54.9%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>涨停</span><strong>33只</strong></div><div><span>连板</span><strong>9只</strong></div><div><span>连板占比</span><strong>27.27%</strong></div><div><span>开板压力</span><strong>38.89%</strong></div></div>
+        <p>连板高度、连板占比和领涨行业集中度共同刻画短线抱团。</p>
+        <div class="crowding-card-date">2026-07-17 · 最新可用</div>
+      </article>
+    
+      <article class="crowding-card warm">
+        <div class="crowding-card-head">
+          <div>
+            <span>换手与杠杆</span>
+            <em>升温</em>
+          </div>
+          <strong>48</strong>
+        </div>
+        <div class="crowding-card-value">2.97%</div>
+        <div class="crowding-card-context">全A成交 / 流通市值</div>
+        <div class="crowding-scale" aria-label="拥挤度 48 分">
+          <span style="left:48.4%"></span>
+        </div>
+        <div class="crowding-card-items"><div><span>融资/流通市值</span><strong>2.81%</strong></div><div><span>融资买入占成交</span><strong>9.05%</strong></div><div><span>买入距20日峰值</span><strong>-25.88%</strong></div><div><span>融资余额</span><strong>2.90万亿</strong></div></div>
+        <p>换手率衡量筹码交换速度，融资数据衡量杠杆交易拥挤；陈旧数据不计综合分。</p>
+        <div class="crowding-card-date">2026-06-05 · 数据陈旧，不计综合</div>
+      </article>
+    </div>
+        <div class="crowding-method">
+          <strong>阅读顺序</strong>
+          <span>先看总成交额是否高于5日/20日均，再看资金是否集中到少数个股或方向，最后结合上涨/下跌侧和杠杆判断是健康放量、抱团冲顶还是恐慌换手。</span>
+          <em>分位与阈值为复盘启发式口径，不是交易所标准。</em>
         </div>
       </section>
     
@@ -2813,53 +3144,61 @@
         <div class="tdx-leader-grid">
           
       <div class="tdx-leader-block">
-        <h3>成交拥挤</h3>
+        <h3>个股成交额 Top8</h3>
         
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">中际旭创</span>
               <span class="tdx-leader-code">300308</span>
+              <span class="tdx-leader-aux">换手 3.10%</span>
               <strong class="pos">383.9亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">兆易创新</span>
               <span class="tdx-leader-code">603986</span>
+              <span class="tdx-leader-aux">换手 9.92%</span>
               <strong class="neg">377.4亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">长电科技</span>
               <span class="tdx-leader-code">600584</span>
+              <span class="tdx-leader-aux">换手 13.59%</span>
               <strong class="neg">250.1亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">寒武纪</span>
               <span class="tdx-leader-code">688256</span>
+              <span class="tdx-leader-aux">换手 2.62%</span>
               <strong class="neg">236.0亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">东山精密</span>
               <span class="tdx-leader-code">002384</span>
+              <span class="tdx-leader-aux">换手 6.77%</span>
               <strong class="neg">227.1亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">京东方Ａ</span>
               <span class="tdx-leader-code">000725</span>
+              <span class="tdx-leader-aux">换手 8.98%</span>
               <strong class="neg">224.0亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">新易盛</span>
               <span class="tdx-leader-code">300502</span>
+              <span class="tdx-leader-aux">换手 3.28%</span>
               <strong class="neg">213.9亿</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">华天科技</span>
               <span class="tdx-leader-code">002185</span>
+              <span class="tdx-leader-aux">换手 24.55%</span>
               <strong class="neg">207.7亿</strong>
             </div>
             
@@ -2872,48 +3211,56 @@
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">万邦医药</span>
               <span class="tdx-leader-code">301520</span>
+              <span class="tdx-leader-aux">9.1亿</span>
               <strong class="pos">20.01%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">陇神戎发</span>
               <span class="tdx-leader-code">300534</span>
+              <span class="tdx-leader-aux">4.6亿</span>
               <strong class="pos">20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">日科化学</span>
               <span class="tdx-leader-code">300214</span>
+              <span class="tdx-leader-aux">0.8亿</span>
               <strong class="pos">20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">优机股份</span>
               <span class="tdx-leader-code">920943</span>
+              <span class="tdx-leader-aux">1.7亿</span>
               <strong class="pos">18.71%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">鑫宏业</span>
               <span class="tdx-leader-code">301310</span>
+              <span class="tdx-leader-aux">16.2亿</span>
               <strong class="pos">17.39%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">上海凯宝</span>
               <span class="tdx-leader-code">300039</span>
+              <span class="tdx-leader-aux">4.6亿</span>
               <strong class="pos">15.81%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">亚虹医药</span>
               <span class="tdx-leader-code">688176</span>
+              <span class="tdx-leader-aux">7.5亿</span>
               <strong class="pos">14.84%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">争光股份</span>
               <span class="tdx-leader-code">301092</span>
+              <span class="tdx-leader-aux">9.9亿</span>
               <strong class="pos">11.42%</strong>
             </div>
             
@@ -2926,48 +3273,56 @@
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">美利信</span>
               <span class="tdx-leader-code">301307</span>
+              <span class="tdx-leader-aux">14.3亿</span>
               <strong class="neg">-20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">香农芯创</span>
               <span class="tdx-leader-code">300475</span>
+              <span class="tdx-leader-aux">131.2亿</span>
               <strong class="neg">-20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">长盈通</span>
               <span class="tdx-leader-code">688143</span>
+              <span class="tdx-leader-aux">21.9亿</span>
               <strong class="neg">-20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">捷邦科技</span>
               <span class="tdx-leader-code">301326</span>
+              <span class="tdx-leader-aux">5.2亿</span>
               <strong class="neg">-20.00%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">光格科技</span>
               <span class="tdx-leader-code">688450</span>
+              <span class="tdx-leader-aux">2.8亿</span>
               <strong class="neg">-19.99%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">*ST香雪</span>
               <span class="tdx-leader-code">300147</span>
+              <span class="tdx-leader-aux">2.7亿</span>
               <strong class="neg">-19.96%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">欧林生物</span>
               <span class="tdx-leader-code">688319</span>
+              <span class="tdx-leader-aux">12.5亿</span>
               <strong class="neg">-19.56%</strong>
             </div>
             
             <div class="tdx-leader-row">
               <span class="tdx-leader-name">美新科技</span>
               <span class="tdx-leader-code">301588</span>
+              <span class="tdx-leader-aux">4.5亿</span>
               <strong class="neg">-19.48%</strong>
             </div>
             
